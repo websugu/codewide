@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/Profile.css">
+    <!-- font-family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <!-- icons -->
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+</head>
+<style>
+ 
+ #profileImagePreview {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 5px;
+    object-fit: cover;
+}
+
+
+#modal-content-edit {
+    background-color: var(--popup-bg-color);
+    text-align: var(--text-color);
+    margin: 8% auto; /* 15% from the top and centered */
+    padding: 20px;
+    width: 50%; /* Could be more or less, depending on screen size */
+}
+
+#editUsername{
+    text-transform: lowercase;
+}
+
+</style>
+<body>
+    <div class="container mt-4">
+    <button class="back" onclick="window.location.href='Posts.html' "><i class="ri-arrow-left-line"></i> back</button>
+        <!-- Profile Information -->
+        <div id="profileContainer">
+                <div class="prof-page-f">
+                    <div class="prof-self">
+                        <div>
+                            <img id="profileImage" src="images/defauld-profile.jpg" alt="Profile Image">
+                        </div>
+                        <div class="prof-details">
+                            <div class="prof-ajust">
+                                <h2 id="name"><span id="isverified"></span></h2>
+                                <p id="username"></p>
+                            </div>
+                            <div class="features">
+                            <p id="followerCount"> 0 Followers</p>
+                            •
+                            <p id="profileLikes">0 Likes</p>
+                            •
+                            <p id="viewsCount">0 Visitors</p>
+                            <button id="themeToggle" class="Toggle" style="border: none;background:transparent;display: none;"><i class="ri-toggle-line"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                   
+                    <div>
+                        <button id="followButton">Follow</button>
+                        <button id="viewFollowersBtn" class="btn-followers"><i class="ri-user-follow-line"></i></button>
+                    </div>
+                    <!-- Button to View Followers -->
+
+
+                <!-- Modal for displaying followers -->
+                <div id="followersModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" id="closeFollowersModal">&times;</span>
+                        <h4>Followers</h4>
+                        <div id="followersList">
+                            <!-- Followers will be dynamically added here -->
+                        </div>
+                        
+                    </div>
+                </div>
+
+                </div>
+                <div style="text-align: left" class="pt">
+                    <small style="font-weight: 550;">Bio: </small>
+                    <p id="bio"></p>
+                    <a href="" id="addlink"></a>
+                </div>
+                <div class="prof-posts">
+                <button id="createPostButton" class="" style="display:none;"><i class="ri-add-large-fill"></i> New Post</button>
+                <button id="editProfileButton" class="" style="display: none;"><i class="ri-edit-box-line"></i> Edit Profile</button>
+                <button id="editProfileBtn" style="display: none;" onclick="openEditProfilePopup()">Edit Profile</button>
+                <button id="deleteProfileButton" style="display: none;"><i class="ri-delete-bin-6-line"></i></button> 
+                
+                
+
+                
+            <hr>
+            <!-- Create New Post Button -->
+            <!-- My Posts Section -->
+            <hp class="text-center">Projects</p>
+        <div id="myPostsSection">
+            
+            <!-- Posts will be dynamically added here -->
+        </div>
+    </div>
+        </div>
+        <!-- Popup Form for Creating New Post -->
+        <div id="createPostPopup" class="popup" style="display:none;">
+            <div class="popup-content position-relative">
+                <span class="close" id="closePopup">&times;</span>
+                <h2>Create New Post</h2>
+               
+                <form id="createPostForm">
+
+                    <div class="form-group-1">
+                        <div class="prof-mid" style="position: relative;">
+                        <input type="file" class="form-control-file" id="postImage" accept="image/*" required style="display: none;">
+                        <!-- Image preview element -->
+                        <img id="imagePreview" src="https://i.pinimg.com/originals/02/0d/f4/020df4bc7befef7191316aee72586eb0.gif" alt="Image Preview"  />
+                        </div>
+                        <div class="ulpload-btn" style="position: absolute;top: 6%;right: 7%;">
+                            <label for="postImage"><i class="ri-upload-cloud-2-line"></i></label>
+                        </div>                        
+                    </div>
+                    
+
+                    <div class="form-group">
+                        <label for="description" style="font-size: small;font-weight: 200;">Description:</label>
+                        <textarea id="description" class="form-control" placeholder="Add a detailed description" required></textarea>
+                        <div class="popup-bottom">
+                            <div class="form-group">
+                                <input type="file" class="form-control-file" id="zipFile" accept=".zip" required style="display: none;">
+                                <button type="button" id="selectZipFileBtn">Select ZIP File</button>
+                                <small id="zipFileName" style="font-style: italic; color: var(--text-color-p)">No file chosen</sm>
+
+                            </div>
+                            <div>
+                                <button type="submit" class="submit-post">Submit Post</button>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+
+        <!-- Edit Profile Popup -->
+<div id="editProfilePopup" class="modal" style="display:none;">
+    <div class="modal-content" id="modal-content-edit">
+        <span class="close" onclick="closeEditProfilePopup()">&times;</span>
+        <h2>Edit Profile</h2>
+        <form id="editProfileForm">
+            <div class="form-group">
+                <img id="profileImagePreview" src="images/defauld-profile.jpeg" alt="Profile Image Preview" style=" width: 150px; height: 150px; margin-top: 10px;"><br>
+                <label for="editProfileImage">Click to change Image</label>
+                <input type="file" id="editProfileImage" accept="image/*" style="display: none;">               
+            </div>
+           <div>
+            <input type="text" id="editUsername" placeholder="Username"><br><br>
+    
+            <input type="text" id="editName" placeholder="Name" height="200"><br><br>
+    
+            <input type="email" id="editEmail" placeholder="Email"><br><br>
+    
+            <textarea id="editBio" placeholder="Bio:"></textarea><br><br>
+    
+            <input type="text" id="editAddlink" placeholder="Social Media Link:"><br><br>
+    
+            <button type="submit">Update Profile</button>
+           </div>
+            
+        </form>
+    </div>
+</div>
+
+        <!-- Success Modal -->
+<div id="successModal" class="modal" style="display:none;">
+    <div class="modal-content" id="modal-content-suc">
+        <!-- <div>
+            <img src="https://i.pinimg.com/564x/76/d2/b0/76d2b08aa833d3c4e32f50f20a393d5d.jpg" alt="">
+        </div> -->
+        <span class="close" onclick="closeSuccessModal()">&times;</span>
+        <h2><i class="ri-checkbox-circle-fill" style="color: rgb(30, 146, 30);"></i></h2>
+        <h3>Post Created Successfully!</h3>
+        <p>Your post has been created and is now live.</p>
+        <div>
+            <button onclick="closeSuccessModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Success Message Modal -->
+<div id="successModal" class="modal" style="display:none;">
+    <div class="modal-content" id="modal-content-suc">
+        <span class="close" onclick="closeSuccessModal()">&times;</span>
+        <h2><i class="ri-refresh-fill" style="color: rgb(45, 45, 146);"></i></h2>
+        <h3>Profile Updated Successfully!</h3>
+        <p>Your profile has been updated.</p>
+        <div>
+            <button onclick="closeSuccessModal()">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Profile Confirmation Modal -->
+<div id="deleteProfilePopup" class="modal" style="display:none;">
+    <div class="modal-content" id="modal-content-suc">
+        <span class="close" onclick="closeSuccessModal()">&times;</span>
+        <h2><i class="ri-alert-fill" style="color: rgb(128, 28, 28);"></i></h2>
+        <h3>Confirm Deletion</h3>
+        <p>Are you sure you want to delete your profile?</p>
+        <div>
+            <button id="confirmDeleteButton" class="delete-btn" style="background-color: rgb(136, 28, 28);color: white;">Yes, Delete</button>
+        </div>
+        <!-- <button class="cancel-btn" onclick="closeDeleteProfilePopup()">Cancel</button> -->
+    </div>
+</div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap JS and Firebase -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+    <script src="firebaseConfig.js"></script>
+     <script src="scripts.js"></script>
+     <script>
+        document.getElementById('editProfileImage').addEventListener('change', function(event) {
+    const file = event.target.files[0]; // Get the selected file
+
+    if (file) {
+        const reader = new FileReader(); // Create a FileReader object
+
+        reader.onload = function(e) {
+            // Display the image preview
+            const previewImage = document.getElementById('profileImagePreview');
+            previewImage.src = e.target.result; // Set the preview image source to the file content
+            previewImage.style.display = 'block'; // Show the preview image
+        };
+
+        reader.readAsDataURL(file); // Read the selected image as a data URL
+    } else {
+        // Hide the preview image if no file is selected
+        document.getElementById('profileImagePreview').style.display = 'none';
+    }
+});
+
+     </script>
+     <script>
+        // zip file preview
+        document.getElementById('selectZipFileBtn').addEventListener('click', () => {
+    document.getElementById('zipFile').click(); // Trigger file input click
+});
+
+document.getElementById('zipFile').addEventListener('change', (event) => {
+    const fileInput = event.target;
+    const file = fileInput.files[0]; // Get the selected file
+
+    if (file) {
+        document.getElementById('zipFileName').textContent = `Selected file: ${file.name}`;
+    } else {
+        document.getElementById('zipFileName').textContent = 'No file chosen';
+    }
+});
+
+     </script>
+    <script>
+        // profile.js
+        
+        // Function to display formatted followers and likes
+function displayProfileData(profileId) {
+    const profileDocRef = db.collection('profiles').doc(profileId);
+    
+    profileDocRef.get().then(doc => {
+        if (doc.exists) {
+            const data = doc.data();
+            const followersCount = data.followers ? data.followers.length : 0; // Assuming followers are stored as an array
+            const likesCount = data.totalLikes || 0; // Assuming total likes are stored as an integer
+
+            // Format and display followers and likes
+            document.getElementById('followersCount').innerHTML = `${formatLargeNumbers(followersCount)} Followers`;
+            document.getElementById('likesCount').innerHTML = `${formatLargeNumbers(likesCount)} Likes`;
+        } else {
+            console.log('No such profile document!');
+        }
+    }).catch(error => {
+        console.error('Error fetching profile data:', error);
+    });
+}
+
+// Call this function when the profile page is loaded
+window.onload = function() {
+    const profileId = getProfileIdFromUrl(); // Assume this function fetches the profile ID from the URL
+    displayProfileData(profileId);
+};
+
+
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+        
+        // Get profileId from URL
+        const profileId = getUrlParameter('profileId');
+        if (!profileId) {
+            alert('No profile ID provided.');
+            window.location.href = 'ProfileCreation.html'; // Redirect to profile creation if no profile ID
+        }
+        
+        // Get the current logged-in user's profile ID from localStorage or however you store it
+        const currentUserProfileId = localStorage.getItem('profileId'); // Assuming you store the current user's profileId in localStorage
+        
+        // Function to display profile information and handle follow/unfollow logic
+        function displayProfile() {
+            db.collection('profiles').doc(profileId).get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('profileImage').src = data.profileImageUrl || 'default-profile-image.jpg';
+                    document.getElementById('username').innerText = data.username || 'No username';
+                    document.getElementById('name').innerText = data.name || 'No name';
+                    document.getElementById('bio').innerText = data.bio || 'No bio';
+                    document.getElementById('addlink').innerHTML = '<i class="ri-link"></i> ' + (data.addlink ? data.addlink : 'No link added');
+                    document.getElementById('followerCount').innerText = ` ${data.followers ? data.followers.length : 0} Followers`;
+         
+                    // Function to toggle follow/unfollow  
+        function toggleFollow(currentFollowers) {
+            const profileDoc = db.collection('profiles').doc(profileId);
+        
+            if (currentFollowers.includes(currentUserProfileId)) {
+                // User is already following, unfollow
+                const updatedFollowers = currentFollowers.filter(followerId => followerId !== currentUserProfileId);
+        
+                profileDoc.update({ followers: updatedFollowers }).then(() => {
+                    document.getElementById('followButton').innerText = 'Follow';
+                    document.getElementById('followerCount').innerText = `${updatedFollowers.length} Followers`;
+                }).catch(error => {
+                    console.error('Error unfollowing profile:', error);
+                });
+        
+            } else {
+                // User is not following, follow
+                const updatedFollowers = [...currentFollowers, currentUserProfileId];
+        
+                profileDoc.update({ followers: updatedFollowers }).then(() => {
+                    document.getElementById('followButton').innerText = 'Unfollow';
+                    document.getElementById('followerCount').innerText = `${updatedFollowers.length} Followers`;
+                }).catch(error => {
+                    console.error('Error following profile:', error);
+                });
+            }
+        }
+        
+        // Function to display profile information
+        function displayProfile() {
+            db.collection('profiles').doc(profileId).get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    document.getElementById('profileImage').src = data.profileImageUrl || 'images/defauld-profile.jpg';
+                    document.getElementById('username').innerText = data.username || 'No username';
+                    document.getElementById('name').innerText = data.name || 'No name';
+                    document.getElementById('bio').innerText = data.bio || 'No bio';
+                    document.getElementById('addlink').innerHTML = '<i class="ri-link"></i> ' + (data.addlink ? data.addlink : 'No link added');
+                    document.getElementById('followerCount').innerText = `${data.followers ? data.followers.length : 0} Followers`;
+        
+                    // Check if the current user is following this profile
+                    if (data.followers && data.followers.includes(currentUserProfileId)) {
+                        // User is already following
+                        document.getElementById('followButton').innerText = 'Unfollow';
+                    } else {
+                        // User is not following
+                        document.getElementById('followButton').innerText = 'Follow';
+                    }
+        
+                    // Add event listener to follow/unfollow button
+                    document.getElementById('followButton').addEventListener('click', () => {
+                        toggleFollow(data.followers || []);
+                    });
+        
+                    // Check if the current user is the owner of the profile
+                    if (profileId === currentUserProfileId) {
+                        // The user is the owner, show the Edit button and Create New Post button
+                        document.getElementById('editProfileButton').style.display = 'none';
+                        document.getElementById('createPostButton').style.display = 'inline';
+                        document.getElementById('followButton').style.display = 'none'
+                        document.getElementById('editProfileBtn').style.display = 'inline'
+                        document.getElementById('deleteProfileButton').style.display = 'inline'
+        
+                        // Handle edit button click 
+                        document.getElementById('editProfileButton').addEventListener('click', () => {
+                            window.location.href = `ProfileCreation.html?profileId=${profileId}`; // Redirect to edit page
+                        });
+        
+                        // Show the post creation section for the profile owner
+                        document.getElementById('createPostContainer').style.display = 'block';
+                    } else {
+                        // The user is not the owner, hide the Edit button and Create New Post button
+                        document.getElementById('editProfileButton').style.display = 'none';
+                        document.getElementById('createPostButton').style.display = 'none';
+                        document.getElementById('createPostContainer').style.display = 'none';
+                        document.getElementById('signOutButton').style.display = 'none'
+                        document.getElementById('followButton').style.display = 'inline'
+                        document.getElementById('editProfileBtn').style.display = 'none'
+                        document.getElementById('deleteProfileButton').style.display = 'none'
+                    }
+                } else {
+                    console.error('No profile found with the given ID.');
+                    alert('Profile not found.');
+                }
+            }).catch(error => {
+                console.error('Error fetching profile:', error);
+            });
+        }
+        
+        // Initialize page
+        displayProfile();
+        
+
+
+        
+                    // Check if the current user is the owner of the profile
+                    if (profileId === currentUserProfileId) {
+                        // The user is the owner, show the Edit button and Create New Post button
+                        document.getElementById('editProfileButton').style.display = 'none';
+                        document.getElementById('createPostButton').style.display = 'inline';
+                        document.getElementById('followButton').style.display = 'none'
+                        document.getElementById('editProfileBtn').style.display = 'inline'
+                        document.getElementById('deleteProfileButton').style.display = 'inline'
+                        
+        
+                        // Handle edit button click
+                        document.getElementById('editProfileButton').addEventListener('click', () => {
+                            window.location.href = `ProfileCreation.html?profileId=${profileId}`; // Redirect to edit page
+                        });
+        
+                        // Show the post creation section for the profile owner
+                        document.getElementById('createPostContainer').style.display = 'block';
+                    } else {
+                        // The user is not the owner, hide the Edit button and Create New Post button
+                        document.getElementById('editProfileButton').style.display = 'none';
+                        document.getElementById('createPostButton').style.display = 'none';
+                        document.getElementById('createPostContainer').style.display = 'none';
+                        document.getElementById('followButton').style.display = 'inline'
+                        document.getElementById('editProfileBtn').style.display = 'none'
+                        document.getElementById('deleteProfileButton').style.display = 'none'
+
+                    }
+                } else {
+                    console.error('No profile found with the given ID.');
+                    alert('Profile not found.');
+                }
+            }).catch(error => {
+                console.error('Error fetching profile:', error);
+            });
+        }
+        
+        // Function to delete post (only for profile owner)
+        function deletePost(postId) {
+            if (profileId === currentUserProfileId) {
+                db.collection('posts').doc(postId).delete().then(() => {
+                    alert('Post deleted successfully.');
+                    displayMyPosts();  // Refresh the posts section
+                }).catch(error => {
+                    console.error('Error deleting post:', error);
+                });
+            } else {
+                alert('You do not have permission to delete this post.');
+            }
+        }
+        
+        // Initialize page
+        displayProfile();
+        displayMyPosts();  // Ensure posts are displayed initially
+        
+        
+    </script>
+        
+    <script>
+               // Toggle popup visibility
+        document.getElementById('createPostButton').addEventListener('click', () => {
+            document.getElementById('createPostPopup').style.display = 'block';
+        });
+        document.getElementById('closePopup').addEventListener('click', () => {
+            document.getElementById('createPostPopup').style.display = 'none';
+        });
+        
+        // Handle post submission
+document.getElementById('createPostForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Get file inputs and description
+    const postImage = document.getElementById('postImage').files[0];
+    const zipFile = document.getElementById('zipFile').files[0];
+    const description = document.getElementById('description').value;
+
+    // Reference to Firestore and Storage
+    const postsCollection = db.collection('posts');
+    const storageRef = firebase.storage().ref();
+    
+    // Upload post image and ZIP file to Firebase Storage
+    const postImageRef = storageRef.child(`posts/${profileId}/images/${postImage.name}`);
+    const zipFileRef = storageRef.child(`posts/${profileId}/zips/${zipFile.name}`);
+
+    Promise.all([
+        postImageRef.put(postImage),
+        zipFileRef.put(zipFile)
+    ]).then(async (snapshot) => {
+        const postImageUrl = await postImageRef.getDownloadURL();
+        const zipFileUrl = await zipFileRef.getDownloadURL();
+
+        // Add post to Firestore
+        return postsCollection.add({
+            profileId: profileId,
+            ownerName: document.getElementById('name').innerText,
+            ownerImage: document.getElementById('profileImage').src,
+            description: description,
+            postImageUrl: postImageUrl,
+            zipFileUrl: zipFileUrl,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    }).then(() => {
+        showSuccessModal(); // Show the success modal instead of alert
+        document.getElementById('createPostPopup').style.display = 'none';
+        displayMyPosts();  // Refresh the posts section
+    }).catch(error => {
+        console.error('Error creating post:', error);
+    });
+});
+function showSuccessModal() {
+    document.getElementById('successModal').style.display = 'block';
+}
+
+function closeSuccessModal() {
+    document.getElementById('successModal').style.display = 'none';
+}
+
+        
+
+        // Function to truncate description
+        function truncateDescription(description, wordLimit) {
+            const words = description.split(' ');
+            if (words.length > wordLimit) {
+                return words.slice(0, wordLimit).join(' ') + '...';
+            }
+            return description;
+        }
+        // Function to display user's posts on Profile.html
+        function displayMyPosts() {
+            const postsSection = document.getElementById('myPostsSection');
+            postsSection.innerHTML = '';  // Clear existing posts
+        
+            db.collection('posts').where('profileId', '==', profileId).get().then(snapshot => {
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const isOwner = profileId === currentUserProfileId;
+                    const deleteButton = isOwner ? `<button class="delete" onclick="deletePost('${doc.id}')"><i class="ri-delete-bin-line"></i> Remove</button>` : '';
+                    const truncatedDescription = truncateDescription(data.description, 7);
+        
+                    const postElement = `
+                    <div class="post">
+                            <img src="${data.postImageUrl}" alt="Post Image" width="100"><br>
+                            <p>${truncatedDescription}</p>
+                            <a href="${data.zipFileUrl}" download style="display:none">Get Code</a>
+                            ${deleteButton}
+                            <button onclick="openCodePreview('${doc.id}')" class="code-pev"><i class="ri-code-s-slash-line"></i> Get code</button>
+                    </div>
+                        
+                    `;
+                    postsSection.innerHTML += postElement;
+                });
+            }).catch(error => {
+                console.error('Error displaying posts:', error);
+            });
+        }
+        
+        // Function to handle "Code Preview" button click
+        function openCodePreview(postId) {
+            window.location.href = `code-preview.html?postId=${postId}`;
+        }
+        
+        
+        // Function to delete post (only for profile owner)
+        function deletePost(postId) {
+            if (profileId === currentUserProfileId) {
+                db.collection('posts').doc(postId).delete().then(() => {
+                    alert('Post deleted successfully.');
+                    displayMyPosts();  // Refresh the posts section
+                }).catch(error => {
+                    console.error('Error deleting post:', error);
+                });
+            }
+        }
+        
+        // Load posts initially
+        displayMyPosts();
+        
+        
+    </script>
+    <script>
+            // post image prew
+
+            // Function to handle image preview
+document.getElementById('postImage').addEventListener('change', function(e) {
+    const file = e.target.files[0]; // Get the selected file
+    const preview = document.getElementById('imagePreview'); // Get the image preview element
+    
+    if (file) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            preview.src = e.target.result; // Set the image preview src to the file data
+            preview.style.display = 'block'; // Show the image preview
+        }
+        
+        reader.readAsDataURL(file); // Read the file as a data URL
+    } else {
+        preview.src = '#'; // Reset the preview if no file is selected
+        preview.style.display = 'none'; // Hide the image preview
+    }
+});
+
+    </script>  
+            
+    <script>
+                // Function to update profile page with total likes of all posts
+function updateProfileLikes(profileId) {
+    const profileLikesElement = document.getElementById('profileLikes');
+    let totalLikes = 0;
+
+    db.collection('posts').where('profileId', '==', profileId).get().then(snapshot => {
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            totalLikes += (data.likes && data.likes.length) || 0;
+        });
+
+        profileLikesElement.innerText = `${totalLikes} Likes`;
+    }).catch(error => {
+        console.error('Error fetching posts for profile likes:', error);
+    });
+}
+
+// Initialize likes count on profile page load
+updateProfileLikes(profileId);
+
+    </script>
+    <script>
+               // Function to format large numbers for views (e.g., 10k)
+function formatViewsCount(number) {
+    if (number >= 1000000) {
+        return (number / 1000000).toFixed(1) + 'M'; // For 1 million or more
+    } else if (number >= 1000) {
+        return (number / 1000).toFixed(1) + 'k'; // For 1 thousand or more
+    } else {
+        return number; // For less than 1 thousand
+    }
+}
+
+// Function to increment and display profile views
+function incrementProfileViews(profileId) {
+    const profileDocRef = db.collection('profiles').doc(profileId);
+
+    // Increment views count
+    profileDocRef.update({
+        views: firebase.firestore.FieldValue.increment(1) // Increment views by 1
+    }).then(() => {
+        // After updating, fetch the updated views count to display it
+        profileDocRef.get().then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                const views = data.views || 0;
+                document.getElementById('viewsCount').innerHTML = `${formatViewsCount(views)} Visitors`; // Display formatted views
+            }
+        });
+    }).catch(error => {
+        console.error('Error updating views:', error);
+    });
+}
+
+// Call this function when the profile page is loaded
+window.onload = function() {
+    const profileId = getProfileIdFromUrl(); // Assume this function fetches the profile ID from the URL
+    incrementProfileViews(profileId);
+};
+// Function to get the profile ID from the URL (assuming it's passed as a query parameter)
+function getProfileIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('profileId');
+}
+    </script>
+    <script>
+       // Function to open the modal and fetch followers
+document.getElementById('viewFollowersBtn').addEventListener('click', function () {
+    const profileId = getProfileIdFromUrl(); // Assume this gets the current profileId
+    fetchFollowers(profileId);  // Fetch followers when the modal opens
+    document.getElementById('followersModal').style.display = 'block';
+});
+
+// Function to close the modal
+document.getElementById('closeFollowersModal').addEventListener('click', function () {
+    document.getElementById('followersModal').style.display = 'none';
+});
+
+function fetchFollowers(profileId) {
+    const profileDocRef = db.collection('profiles').doc(profileId);
+    const followersList = document.getElementById('followersList');
+    followersList.innerHTML = '';  // Clear the list before loading followers
+
+    profileDocRef.get().then(doc => {
+        if (doc.exists) {
+            const data = doc.data();
+            const followers = data.followers || [];
+
+            if (followers.length === 0) {
+                followersList.innerHTML = '<div class="not-yet">No followers yet.</div>';
+            } else {
+                followers.forEach(followerId => {
+                    // Fetch each follower's profile information
+                    db.collection('profiles').doc(followerId).get().then(followerDoc => {
+                        if (followerDoc.exists) {
+                            const followerData = followerDoc.data();
+                            
+                            const followerElement = `
+                            <div class="follower-item">
+                                <div class="follower-item-1">
+                                    <img src="${followerData.profileImageUrl || 'https://via.placeholder.com/150'}" 
+                                    alt="${followerData.username}" class="follower-img">
+                                 <div class="follower-item-1-dm">
+                                    <p>${followerData.name}</p>
+                                    <small>${followerData.username}</small>
+                                 </div>
+                                </div>
+                            
+                                <div>
+                                    <a href="Profile.html?profileId=${followerId}"><button>Follow</button></a>
+                                </div>
+                                
+                            </div>
+                                    
+                            `;
+                            followersList.innerHTML += followerElement;
+                        } else {
+                            console.log(`No profile found for follower: ${followerId}`);
+                        }
+                    }).catch(error => {
+                        console.error('Error fetching follower profile:', error);
+                    });
+                });
+            }
+        } else {
+            console.log('No profile document found for this profileId!');
+        }
+    }).catch(error => {
+        console.error('Error fetching profile data:', error);
+    });
+}
+
+console.log(followerData.profileImage);  // Log to see the fetched image URL
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+    const currentUserProfileId = localStorage.getItem('profileId'); // Get the current user's profile ID
+
+    // Show delete button only for the profile owner
+    if (currentUserProfileId === profileId) { // Assuming profileId is defined
+        document.getElementById('deleteProfileButton').style.display = 'inline';
+    }
+
+    // Open the delete profile popup
+function openDeleteProfilePopup() {
+    document.getElementById('deleteProfilePopup').style.display = 'block';
+}
+
+// Close the delete profile popup
+function closeDeleteProfilePopup() {
+    document.getElementById('deleteProfilePopup').style.display = 'none';
+}
+
+// Attach the click event to the delete profile button
+document.getElementById('deleteProfileButton').addEventListener('click', openDeleteProfilePopup);
+
+// When the user clicks "Yes, Delete", proceed with profile deletion
+document.getElementById('confirmDeleteButton').addEventListener('click', () => {
+    deleteProfile(currentUserProfileId); // Your delete profile function
+    closeDeleteProfilePopup(); // Close the modal after deletion
+});
+
+// Close modal if clicked outside
+window.onclick = function(event) {
+    const modal = document.getElementById('deleteProfilePopup');
+    if (event.target === modal) {
+        closeDeleteProfilePopup();
+    }
+}
+
+});
+
+// Function to delete profile
+function deleteProfile(profileId) {
+    db.collection('profiles').doc(profileId).delete().then(() => {s
+        window.location.href = 'ProfileCreation.html'; // Redirect after deletion
+    }).catch(error => {
+        console.error('Error deleting profile:', error);
+    });
+}
+
+
+    </script>
+    <script>
+
+    function openEditProfilePopup() {
+    // Fetch current profile data
+    db.collection('profiles').doc(profileId).get().then(doc => {
+        const data = doc.data();
+
+        // Populate form fields with current profile data
+        document.getElementById('editUsername').value = data.username;
+        document.getElementById('editName').value = data.name;
+        document.getElementById('editEmail').value = data.email;
+        document.getElementById('editBio').value = data.bio;
+        document.getElementById('editAddlink').value = data.addlink;
+        
+        // Show the popup form
+        document.getElementById('editProfilePopup').style.display = 'block';
+    });
+}
+document.getElementById('editProfileForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const updatedUsername = document.getElementById('editUsername').value;
+    const updatedName = document.getElementById('editName').value;
+    const updatedEmail = document.getElementById('editEmail').value;
+    const updatedBio = document.getElementById('editBio').value;
+    const updatedAddlink = document.getElementById('editAddlink').value;
+
+    const profileImageFile = document.getElementById('editProfileImage').files[0];
+
+    if (profileImageFile) {
+        // If a new profile image is uploaded, upload it to Firebase Storage
+        const storageRef = firebase.storage().ref(`profileImages/${profileId}`);
+        storageRef.put(profileImageFile).then(snapshot => {
+            return snapshot.ref.getDownloadURL();
+        }).then(downloadURL => {
+            // Update Firestore with new profile data including new image URL
+            return db.collection('profiles').doc(profileId).update({
+                username: updatedUsername,
+                name: updatedName,
+                email: updatedEmail,
+                bio: updatedBio,
+                addlink: updatedAddlink,
+                profileImageUrl: downloadURL
+            });
+        }).then(() => {
+            showSuccessModal(); // Show the success modal
+        }).catch(error => {
+            console.error('Error updating profile:', error);
+        });
+    } else {
+        // Update Firestore with new profile data without changing the image
+        db.collection('profiles').doc(profileId).update({
+            username: updatedUsername,
+            name: updatedName,
+            email: updatedEmail,
+            bio: updatedBio,
+            addlink: updatedAddlink
+        }).then(() => {
+            showSuccessModal(); // Show the success modal
+        }).catch(error => {
+            console.error('Error updating profile:', error);
+        });
+    }
+});
+
+// Function to show the success modal
+function showSuccessModal() {
+    document.getElementById('successModal').style.display = 'block';
+}
+
+// Function to close the success modal
+function closeSuccessModal() {
+    document.getElementById('successModal').style.display = 'none';
+    location.reload(); // Refresh the page after closing the modal
+}
+
+
+function openEditProfilePopup() {
+    document.getElementById('editProfilePopup').style.display = 'block';
+}
+
+function closeEditProfilePopup() {
+    document.getElementById('editProfilePopup').style.display = 'none';
+}
+
+// Close the modal when the user clicks outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById('editProfilePopup');
+    if (event.target === modal) {
+        closeEditProfilePopup();
+    }
+}
+document.getElementById('editProfileBtn').onclick = openEditProfilePopup;
+    </script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts</title>
+    <!-- font-family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <!-- icons -->
+     <link rel="stylesheet" href="Profile.html">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/Posts.css">
+</head>
+
+<body class="light-theme">
+    
+    <!-- Navbar (Optional) -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <div>
+                <img src="images/codewide-black.png" alt="" class="logo">
+            </div>
+            <div style="display: flex;align-items: center;gap: 10px;">
+                <button onclick="myprofile()" id="myprof" class="full-prof">My profile</button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="ri-menu-search-line"></i>
+                </button>
+            </div>
+                    
+                <div class="collapse navbar-collapse" id="navbarNav" >
+                    <div class="links">
+                        <a href="">Bolgs</a>
+                        <a href="">Features</a>
+                        <a href="">community</a>
+                        <button id="themeToggle" class="Toggle" style="border: none;background:transparent;"><i class="ri-toggle-line" style="color: rgb(40, 37, 37);"></i></button>
+                     </div>
+                    <div id="onpen-search">
+                        <input id="searchInput" type="text" class="form-inp" placeholder="Search posts or name...">
+                    </div>  
+               
+                    <ul class="navbar-nav ml-auto" >
+                        <li class="nav-item">
+                            <button onclick="myprofile()" id="myprof">My Profile</button>
+                        </li>
+                    </ul>
+                </div>
+                
+        </div>
+        
+    </nav>
+    
+    <div class="container-nav-down">
+      
+    <div>
+        <div>
+            <h1>Puzzel Out</h1>
+        </div>
+        <div class="links-2">
+                <a href="#" class="Elements" style="border-bottom: 2px solid var(--text-color);color: var(--text-color)">Elements</a>
+                <a href="#" class="Full-project">Full project</a>
+                <a href="#" class="UX-Design">UI/UX Design</a>
+                <a href="#" class="Mark-etplace">Marketplace</a>
+        </div>
+        
+    </div>
+    
+        <!-- Tag Buttons -->
+        <div class="sticky">
+            <div class="tag-buttons-container">
+                <div>
+                    <a href="create-post.html"><button class="btn btn-outline-primary me-3" style="font-size: 16px;font-weight: 460;border-radius: 20px;text-wrap: nowrap"><i class="ri-add-large-line" style="font-weight: 600;"></i> Add New Post</button></a>
+                </div>
+                <button class="prev btn-light" onclick="scrollTags(-1)"><i class="ri-arrow-left-line"></i></button>
+                <div class="tag-buttons">
+                    <button class="btn btn-outline-primary active me-2" onclick="filterByTag('all')">All</button>
+                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('login forms')">Login Forms</button>
+                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('navbars')">Navbars</button>
+                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('inputs')">Inputs</button>
+                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('landing pages')">Landing Pages</button>
+                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('buttons')">Buttons</button>
+                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('toggles')">Toggles</button> 
+                                
+                </div>
+                <button class="next btn-light" onclick="scrollTags(1)"><i class="ri-arrow-right-line"></i></button>
+            </div>
+        </div>
+        
+        
+
+        <!-- Skeleton Loader Section -->
+        <div id="skeletonSection" class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="skeleton-card">
+                    <div class="skeleton-image"></div>
+                    <div class="skeleton-text"></div>
+                    <div class="skeleton-text"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Not Found Message -->
+        <div id="notFoundMessage">No posts found.</div>
+
+        <!-- Posts Section -->
+        <div id="allPostsSection" class="row" style="display:none;">
+            <!-- Posts will be dynamically loaded here -->
+
+        </div>
+    </div>
+    <!-- Profile Not Found Modal -->
+<div id="profileNotFoundModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <h2><i class="ri-account-box-fill"></i></h2>
+        <h3>Profile Not Found</h3>
+        <p>Your profile was not found. Please create a profile first.</p>
+        <div>
+            <button id="createProfileBtn" onclick="redirectToProfileCreation()">Create Profile</button>
+            <button class="close-btn" onclick="closeProfileNotFoundModal()" style=" background-color: transparent;
+            color: var(--text-color);
+            border:1px solid var(--text-color);">Close</button>
+        </div>
+        
+    </div>
+</div>
+
+  <!-- tooptip -->
+  <!-- <h6 class="mb-0 custom-tooltip">
+    <strong>${profileLink}</strong>
+    <span class="moment">• ${postedMoment}</span>
+    <div class="tooltip-text">
+        <div class="tol-1">
+            <div>
+                <img src="${data.ownerImage}" alt="Owner Image" width="40" height="40">
+            </div>
+            <div class="tol-n-f">
+            <p>${profileLink}</p>
+            <span id="followerCount">0 followes</span>
+            </div> 
+        </div>
+         <div>
+            <button id="followButton">Follow</button>
+        </div>
+    </div>
+</h6> -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap and Firebase Scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js"></script> -->
+    <script src="auth-check.js"></script>
+    <script src="firebaseConfig.js"></script>
+    <script src="scripts.js"></script>
+    <script>
+    function scrollTags(direction) {
+    const container = document.querySelector('.tag-buttons');
+    const scrollAmount = 200; // Adjust this value as needed
+    container.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+    });
+   }
+    </script>
+    <script>
+        // Function to calculate time ago
+        function timeAgo(timestamp) {
+            const now = new Date();
+            const timePosted = new Date(timestamp);
+            const seconds = Math.floor((now - timePosted) / 1000);
+            
+            const intervals = [
+                { label: 'year', seconds: 31536000 },
+                { label: 'month', seconds: 2592000 },
+                { label: 'day', seconds: 86400 },
+                { label: 'hour', seconds: 3600 },
+                { label: 'min', seconds: 60 },
+                { label: 'second', seconds: 1 }
+            ];
+
+            for (const interval of intervals) {
+                const count = Math.floor(seconds / interval.seconds);
+                if (count >= 1) {
+                    return `${count} ${interval.label}${count > 1 ? 's' : ''} ago`;
+                }
+            }
+            return 'Just now';
+        }
+        
+
+        // Function to open the Profile Not Found modal
+function openProfileNotFoundModal() {
+    document.getElementById('profileNotFoundModal').style.display = 'block';
+}
+
+// Function to close the Profile Not Found modal
+function closeProfileNotFoundModal() {
+    document.getElementById('profileNotFoundModal').style.display = 'none';
+}
+
+// Function to redirect to the profile creation page
+function redirectToProfileCreation() {
+    window.location.href = 'ProfileCreation.html';
+}
+
+// Function to redirect to the user's profile
+function myprofile() {
+    const profileId = localStorage.getItem('profileId');
+
+    if (profileId) {
+        // If profileId is found in localStorage, redirect to the profile page
+        window.location.href = `Profile.html?profileId=${profileId}`;
+    } else {
+        // If profileId is not in localStorage, check Firestore
+        fetchProfileFromFirestore()
+            .then(fetchedProfileId => {
+                if (fetchedProfileId) {
+                    // Save the fetched profileId in localStorage for future use
+                    localStorage.setItem('profileId', fetchedProfileId);
+                    window.location.href = `Profile.html?profileId=${fetchedProfileId}`;
+                } else {
+                    // No profile found in Firestore, show the modal instead of alert
+                    openProfileNotFoundModal();
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching profile from Firestore:', error);
+                alert('Error retrieving profile. Please try again later.');
+            });
+    }
+}
+
+
+// Function to fetch profileId from Firestore
+function fetchProfileFromFirestore() {
+    return new Promise((resolve, reject) => {
+        // Assuming the user’s unique identifier (could be IP address, device info, or a saved identifier)
+        const userIdentifier = getUserIdentifier(); 
+
+        // Fetch profile from Firestore using the identifier
+        db.collection('profiles')
+            .where('userIdentifier', '==', userIdentifier)
+            .get()
+            .then(querySnapshot => {
+                if (!querySnapshot.empty) {
+                    // If profile exists, resolve with the profileId
+                    const profileDoc = querySnapshot.docs[0];
+                    resolve(profileDoc.id); // This is the profileId
+                } else {
+                    // No profile found
+                    resolve(null);
+                }
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
+// Function to generate a user identifier (could be customized)
+function getUserIdentifier() {
+    // Example: use a combination of browser fingerprinting or other unique device/user-based methods
+    // For simplicity, we could use a random UUID stored in localStorage the first time
+    let userIdentifier = localStorage.getItem('userIdentifier');
+    
+    if (!userIdentifier) {
+        userIdentifier = generateUUID(); // Function to generate a unique identifier (UUID)
+        localStorage.setItem('userIdentifier', userIdentifier);
+    }
+    
+    return userIdentifier;
+}
+
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+        // Function to truncate description
+        function truncateDescription(description, wordLimit) {
+            const words = description.split(' ');
+            if (words.length > wordLimit) {
+                return words.slice(0, wordLimit).join(' ') + '...';
+            }
+            return description;
+        }
+
+        // Function to show the skeleton loader
+        function showSkeletonLoader() {
+            document.getElementById('skeletonSection').style.display = 'flex';
+            document.getElementById('allPostsSection').style.display = 'none';
+            document.getElementById('notFoundMessage').style.display = 'none'; // Hide "Not Found" message
+        }
+        
+        
+        // Function to hide the skeleton loader
+        function hideSkeletonLoader() {
+            document.getElementById('skeletonSection').style.display = 'none';
+            document.getElementById('allPostsSection').style.display = 'flex';
+        }
+      
+        // Function to display all posts
+        function displayAllPosts(searchQuery = '', selectedTag = 'all') {
+            const postsSection = document.getElementById('allPostsSection');
+            postsSection.innerHTML = '';  // Clear existing posts
+            let postsFound = false;  // To track if any posts match the filters
+
+            // Function to truncate ownerName
+function truncateOwnerName(name, maxLength) {
+    if (name.length > maxLength) {
+        return name.substring(0, maxLength) + '...';
+    }
+    return name;
+}
+
+db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
+    snapshot.forEach(doc => {
+        const data = doc.data();
+        const truncatedOwnerName = truncateOwnerName(data.ownerName, 13); // Truncate ownerName to 10 characters
+        const profileLink = `<a href="Profile.html?profileId=${data.profileId}"  class="link-pro">${truncatedOwnerName}</a>`;
+        const truncatedDescription = truncateDescription(data.description, 3);
+        const postedMoment = timeAgo(data.timestamp.toDate());
+
+        // Filter based on search query and selected tag
+        const searchText = (data.ownerName + ' ' + data.description).toLowerCase();
+        const hasTag = selectedTag === 'all' || data.tags.includes(selectedTag);
+
+        if (searchText.includes(searchQuery.toLowerCase()) && hasTag) {
+            const postElement = `
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card">
+                        <img class="card-img-top" src="${data.postImageUrl}" alt="Post Image" height="230">
+                        <div class="card-body">
+                            <div class="own-prof">
+                                <div class="own-prof-1">
+                                    <img src="${data.ownerImage}" alt="Owner Image" width="43" height="43">
+                                    <div class="own-de">
+                                        <h6 class="mb-0"><strong>${profileLink}</strong><span class="moment">• ${postedMoment}</span></h6>
+                                        <p class="card-text">${truncatedDescription}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="get-code" onclick="openCodePreview('${doc.id}')"><i class="ri-code-s-slash-line"></i> Get code</button>
+                        </div>
+                    </div>
+                </div>
+                
+            `;
+            postsSection.innerHTML += postElement;
+            postsFound = true;  // A post has been found
+        }
+    });
+
+    // Show "Not Found" message if no posts match the filters
+    if (!postsFound) {
+        document.getElementById('notFoundMessage').style.display = 'block';
+    } else {
+        document.getElementById('notFoundMessage').style.display = 'none';
+    }
+}).finally(() => {
+    hideSkeletonLoader();
+});
+
+        }
+
+        // Function to handle "Code Preview" button click
+        function openCodePreview(postId) {
+            window.location.href = `code-preview.html?postId=${postId}`;
+        }
+      
+        
+        // Function to filter posts by tag
+    function filterByTag(tag) {
+    const searchQuery = document.getElementById('searchInput').value;
+    
+    // Display posts filtered by tag and search query
+    displayAllPosts(searchQuery, tag);
+    
+    // Get all tag buttons and remove the 'active' class from them
+    const tagButtons = document.querySelectorAll('.tag-buttons .btn');
+    tagButtons.forEach(button => button.classList.remove('active'));
+    
+    // Find the clicked button using the tag and add the 'active' class
+    const clickedButton = Array.from(tagButtons).find(button => button.innerText.toLowerCase() === tag.toLowerCase());
+    if (clickedButton) {
+        clickedButton.classList.add('active');
+    }
+}
+
+
+        // Event listener for search input
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const searchQuery = this.value;
+            filterByTag('all');
+        });
+
+        // Display the skeleton loader for 3 seconds and then load posts
+        showSkeletonLoader();
+        setTimeout(() => {
+            displayAllPosts();
+        }, 1000);
+    </script>
+</body>
+
+</html>

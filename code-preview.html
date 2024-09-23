@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Preview</title>
+    <link rel="stylesheet" href="styles/code-preview.css">  <!-- Your CSS file -->
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles/Profile.css">
+    <!-- font-family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <!-- icons -->
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+    
+</head>
+<body class="light-theme">
+    <div id="loading" class="loading">Loading...</div>
+    <div id="postContainer" style="display: none;margin-top: 20px;margin-bottom: 20px;">
+        <!-- <div>
+        <img id="profileImage" src="" alt="Profile Image">
+        <p id="followerCount">0 Followers</p>
+        </div> -->
+        
+        <div id="postContent"></div>
+        <button id="themeToggle" class="Toggle" style="border: none;background:transparent;display: none;"><i class="ri-toggle-line"></i></button>
+        <div id="commentsSection">
+            <!-- Comments will be dynamically loaded here -->
+        </div>
+    
+        <form id="commentForm">
+            <input type="text" id="commentInput" placeholder="Add a comment..." required>
+            <button type="submit">Comment</button>
+        </form>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+    <script src="scripts.js"></script>
+
+    <!-- <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"></script> -->
+    <script>
+        // Firebase configuration and initialization
+const firebaseConfig = {
+    apiKey: "AIzaSyChHJORSiWCfP94HFA7b2-zu1tewsSCNIU",
+    authDomain: "codewide-9c807.firebaseapp.com",
+    projectId: "codewide-9c807",
+    storageBucket: "codewide-9c807.appspot.com",
+    messagingSenderId: "402735947518",
+    appId: "1:402735947518:web:93c1c91954727b40148faf"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Function to get URL parameters
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Get postId from URL
+const postId = getUrlParameter('postId');
+const currentUserProfileId = localStorage.getItem('profileId'); // Assuming you store the current user's profileId in localStorage
+
+if (!postId) {
+    alert('No post ID provided.');
+    window.location.href = 'Profile.html'; // Redirect to profile page if no post ID
+}
+
+// Function to calculate time ago
+function timeAgo(timestamp) {
+    const now = new Date();
+    const timePosted = new Date(timestamp);
+    const seconds = Math.floor((now - timePosted) / 1000);
+    
+    const intervals = [
+        { label: 'year', seconds: 31536000 },
+        { label: 'month', seconds: 2592000 },
+        { label: 'day', seconds: 86400 },
+        { label: 'hour', seconds: 3600 },
+        { label: 'minute', seconds: 60 },
+        { label: 'second', seconds: 1 }
+    ];
+
+    for (const interval of intervals) {
+        const count = Math.floor(seconds / interval.seconds);
+        if (count >= 1) {
+            return `${count} ${interval.label}${count > 1 ? 's' : ''} ago`;
+        }
+    }
+    return 'Just now'; // Fallback
+}
+
+// Function to display post details, comments, and likes
+function displayPost() {
+    const loading = document.getElementById('loading');
+    const postContainer = document.getElementById('postContainer');
+
+    // Show loading animation
+    loading.classList.remove('hidden');
+
+    db.collection('posts').doc(postId).get().then(doc => {
+        if (doc.exists) {
+            const data = doc.data();
+            const postedMoment = timeAgo(data.timestamp.toDate());
+            const profileLink = `<a href="Profile.html?profileId=${data.profileId}" class="own-pro">${data.ownerName}</a>`;
+
+            document.getElementById('postContent').innerHTML = `
+            <div>
+                <img src="${data.postImageUrl}" alt="Post Image" width="200" height="350" class="img-1"><br>
+                <div class="own-v-code">
+                    <div>
+                        <img src="${data.ownerImage}" alt="Owner Image" width="45" height="45" style="border-radius:5px;border:1px solid gray">
+                    </div>
+                    <div class="own-v-code-1">
+                        <h3><strong>${profileLink}</strong></h3>
+                        <small>Post Owner</small>
+                    </div>
+                </div><br>
+
+                <div>
+                    <span class="moment" style="float:left">Posted on : ${postedMoment}</span>
+                </div><br>
+                <div>
+                    <p id="viewsCount"><i class="ri-organization-chart"></i> 0 Views</p>
+                </div><br>
+                <p>${data.description}</p>
+                <div class="dow-lik">
+                <a class="download-c" href="${data.zipFileUrl}" download><i class="ri-download-2-line"></i> Download Code</a><br>
+                <button id="likeButton"><i class="ri-thumb-up-line"></i> ${data.likes ? data.likes.length : 0}</button>
+                </div>
+            </div>   
+            <div class="comment-h">
+                <h3>Comments :</h3> 
+            </div>
+            `;
+
+            // Check if current user has already liked the post
+            if (data.likes && data.likes.includes(currentUserProfileId)) {
+                document.getElementById('likeButton').innerHTML = `<i class="ri-thumb-up-fill"></i> ${data.likes.length}`;
+            }
+
+            // Hide loading animation
+            loading.classList.add('hidden');
+            postContainer.style.display = 'block';
+
+            // Display comments
+            displayComments();
+
+            // Handle likes
+            document.getElementById('likeButton').addEventListener('click', () => {
+                toggleLike(data.likes || []);
+            });
+        } else {
+            console.error('No post found with the given ID.');
+            alert('Post not found.');
+        }
+    }).catch(error => {
+        console.error('Error fetching post:', error);
+    });
+}
+
+// Function to toggle likes
+function toggleLike(currentLikes) {
+    const postDoc = db.collection('posts').doc(postId);
+
+    if (currentLikes.includes(currentUserProfileId)) {
+        // User has already liked the post, so unlike
+        const updatedLikes = currentLikes.filter(likeId => likeId !== currentUserProfileId);
+        postDoc.update({ likes: updatedLikes }).then(() => {
+            document.getElementById('likeButton').innerHTML = `<i class="ri-thumb-up-line"></i> ${updatedLikes.length}`;
+        }).catch(error => {
+            console.error('Error unliking post:', error);
+        });
+    } else {
+        // User has not liked the post, so like it
+        const updatedLikes = [...currentLikes, currentUserProfileId];
+        postDoc.update({ likes: updatedLikes }).then(() => {
+            document.getElementById('likeButton').innerHTML = `<i class="ri-thumb-up-fill"></i> ${updatedLikes.length}`;
+        }).catch(error => {
+            console.error('Error liking post:', error);
+        });
+    }
+}
+
+// Function to display comments
+function displayComments() {
+    const commentsSection = document.getElementById('commentsSection');
+    commentsSection.innerHTML = ''; // Clear existing comments
+
+    db.collection('posts').doc(postId).collection('comments').orderBy('timestamp', 'asc').get().then(snapshot => {
+        if (snapshot.empty) {
+            commentsSection.innerHTML = '<p style="text-align:center;padding-top:140px"><i class="ri-question-answer-fill"></i> No comments yet</p>'; // Show "No comments yet" if no comments
+        } else {
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const isOwner = data.userId === currentUserProfileId; // Check if the current user is the owner of the comment
+                const deleteButton = isOwner ? `<button onclick="deleteComment('${doc.id}')" class="comment-delete"><i class="ri-delete-bin-6-line"></i> Delete your comment</button>` : '';
+
+                const commentElement = `
+                    <div class="comment">
+                        <div class="comment-header">
+                            <a href="Profile.html?profileId=${data.userId}" class="own-pro">${data.username}</a>
+                        </div>
+                        <p><i class="ri-corner-down-right-fill"></i> ${data.text} <small>(${timeAgo(data.timestamp.toDate())})</small></p>
+                        ${deleteButton}
+                    </div>
+                `;
+                commentsSection.innerHTML += commentElement;
+            });
+        }
+    }).catch(error => {
+        console.error('Error fetching comments:', error);
+        commentsSection.innerHTML = '<p>Error loading comments</p>'; // Handle error case
+    });
+}
+
+
+// Function to delete a comment
+function deleteComment(commentId) {
+    db.collection('posts').doc(postId).collection('comments').doc(commentId).delete().then(() => {
+        displayComments(); // Refresh comments after deletion
+    }).catch(error => {
+        console.error('Error deleting comment:', error);
+    });
+}
+
+// Function to handle comment submission
+document.getElementById('commentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const commentText = document.getElementById('commentInput').value;
+    let username = localStorage.getItem('username'); // Assuming the username is stored in localStorage
+    if (!username) {
+        username.innerHTML = "Anonymous"; // Default to "Anonymous" if username is null or not found
+    }
+
+    if (commentText.trim()) {
+        const comment = {
+            userId: currentUserProfileId,  // Assuming current user's profile ID is available
+            username: username,
+            text: commentText,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        // Add the comment to Firestore
+        db.collection('posts').doc(postId).collection('comments').add(comment).then(() => {
+            document.getElementById('commentInput').value = ''; // Clear the comment input
+            displayComments(); // Refresh the comment section
+        }).catch(error => {
+            console.error('Error posting comment:', error);
+        });
+    }
+});
+
+
+// Initialize page
+displayPost();
+
+    </script>  <!-- Your JS file -->
+
+    <script>
+
+        // Helper function to format large numbers
+function formatViewsCount(number) {
+    if (number >= 1000000) {
+        return (number / 1000000).toFixed(1) + 'M'; // For 1 million or more
+    } else if (number >= 1000) {
+        return (number / 1000).toFixed(1) + 'k'; // For 1 thousand or more
+    } else {
+        return number; // For less than 1 thousand
+    }
+}
+        // Function to increment views count for the post
+function incrementViews(postId) {
+    const postRef = db.collection('posts').doc(postId);
+    
+    // Increment the view count using Firestore's increment function
+    postRef.update({
+        views: firebase.firestore.FieldValue.increment(1)
+    }).then(() => {
+        console.log('View count incremented successfully.');
+        displayViews(postId);  // Call function to display the updated views
+    }).catch(error => {
+        console.error('Error incrementing view count:', error);
+    });
+}
+
+// Function to display views on the code-preview page
+function displayViews(postId) {
+    const viewsElement = document.getElementById('viewsCount');
+
+    db.collection('posts').doc(postId).get().then(doc => {
+        if (doc.exists) {
+            const data = doc.data();
+            const views = data.views || 0;
+            viewsElement.innerHTML =`<i class="ri-organization-chart"></i>  ${formatViewsCount(views)} Views`; // Use the format function
+        }
+    }).catch(error => {
+        console.error('Error fetching views:', error);
+    });
+}
+
+
+// Initialize views on page load
+incrementViews(postId);
+    </script>
+
+    <script></script>
+</body>
+</html>
