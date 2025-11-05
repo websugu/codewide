@@ -1,36 +1,49 @@
 body {
-    font-family: "Rubik", sans-serif;
-    font-weight: 500;
+    font-family: "Outfit", sans-serif;
+    font-weight: 400;
+    box-sizing: border-box;
+    font-style: normal;
     background-color: var(--bg-color);
     color: var(--text-color);
 }
-
+#topContributorBadge {
+    background-color: rgba(255, 149, 0, 0.63);
+    width: fit-content;
+    color: white;
+    font-weight: 450;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
 /* Profile Container */
 #profileContainer {
     text-align: center;
-    background-color: var(--owner-bg-color);
+    /* background-color: var(--owner-bg-color); */
     color: var(--text-color);
-    padding: 30px;
     border-radius: 10px;
-    border: 1px solid rgba(117, 117, 117, 0.274);
-    margin: 20px auto;
-    max-width: 90%;
+    /* border: 1px solid rgba(117, 117, 117, 0.274); */
+    margin: 5px auto;
+    max-width: 100%;
+
 }
 .features{
-    display: flex;gap: 10px;
+    display: flex;gap: 10px;justify-content: center;
+}
+.actions{
+    display: flex;
 }
 #profileImage {
-    width: 100px;
-    height: 100px;
-    border-radius: 10px;
+    /* width: 100px;
+    height: 100px; */
+    border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 15px;
-    border: 2px solid var(--text-color);
+    margin:auto;
+    border: 2px solid rgba(103, 103, 103, 0.585);
+}
+.prof-details h2{
+   padding-top: 5px;
 }
 
-#createPostButton {
-    margin-top: 20px;
-}
 
 /* Popup container */
 .popup {
@@ -39,41 +52,75 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: hsl(0deg 0% 0% / 60%);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 #createPostForm{
-    margin: auto;
+  
+}
+.c-post-main{
+    width: 488px;
+    margin-left: 15%;
 }
 /* Popup content */
 .popup-content {
     background-color: var( --popup-bg-color);
     color: var(--text-color);
     padding: 20px;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 40%;
+    /* border-radius: 10px; */
+    max-width: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* text-align: left; */
-    margin:40px auto;
+    /* margin:30px auto; */
+    height: 100vh;
+}
+.create-post-ctn{
+    display:flex;
+    width:100%;
+
+}
+.fixed-btn{
+    background-color: var( --popup-bg-color);
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    left: 0%;
+    text-align: center;
+    padding: 16px 0px;
+    box-shadow: 0 4px 8px rgba(222, 222, 222, 0.1);
+}
+.fixed-btn div{
+  
 }
 .form-group{
-    margin: 10px 0;
-}
-.form-group textarea{
- height: 20vh;
- resize: none;
+    
+}.live-preview{
  margin-bottom: 20px;
- font-size: 20px;
+ font-size: 15px;
  font-weight: 400;
  background-color: var(--bg-color);
  color: var(--text-color);
  border: 1px solid var(--text-color-p);
+ border-radius: 5px;
+ padding: 5px;
+}
+.form-group textarea{
+height: 15vh;
+resize: none;
+margin-bottom: 10px;
+font-size: 18px;
+font-weight: 450;
+border: none;
+outline-offset: 2px;
+background-color:hsla(0, 0%, 60%, 0.132);
+color: var(--text-color);
+padding: 10px;
+border-radius: 10px;
 }
 .form-group textarea:focus {
-    border-color: #007bff;
+    border:1px solid var(--text-color);
     outline: none;
     background: none;
     color: var(--text-color);
@@ -84,13 +131,13 @@ body {
     align-items: center;
 }
 hr{
-    border: 1px solid var(--text-color-p);
+    border: 1px solid rgba(117, 117, 117, 0.274);
 }
 .form-group-1{
     width: 100%;
 }#imagePreview{
     width: 100%;
-    height:42vh;
+    height:270px;
     border-radius: 10px;
 }
 .ulpload-btn{
@@ -99,23 +146,27 @@ hr{
 .submit-post{
     background-color: var(--create-btn-bg-color);
     color: var(--txts-btn-color);
-    border-radius: 50px;
+    border-radius: 10px;
     border: 1px solid;
-    padding:10px 30px;
+    padding:10px 20px;
     border-radius: 50px;
     cursor: pointer;
     font-weight: 550;
     font-size: 15px;
+    margin-top: 5px;
 
 }
 #selectZipFileBtn {
-    background-color:transparent;
-    color: var(--text-color);
     border: 1px solid rgba(117, 117, 117, 0.274); 
-    padding: 10px;
+    padding: 5px;
     cursor: pointer;
-    border-radius: 4px;
     font-size: 15px;
+    border: none;
+    outline-offset: 2px;
+    background-color:hsla(0, 0%, 60%, 0.132);
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 10px;
 }
 
 #selectZipFileBtn:hover {
@@ -134,7 +185,7 @@ hr{
     font-size: 20px;
     cursor: pointer;
     border-radius: 50px;
-    margin-top: 20px;
+    margin: 25px auto;
 }.ulpload-btn label:hover{
     color: blue;
     text-decoration: underline;
@@ -163,17 +214,17 @@ hr{
     color: var(--create-btn-bg-color);
 }
 .post {
-    width: 300px;
+    width: 100%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 2px 10px;
     padding: 5px;
     border-radius: 10px;
-    margin-bottom: 20px;
-    background-color: var(--scroll-item-bg-color);
+    background-color: var(--popup-bg-color);
+    margin: auto;
 }
 
 .post img {
     width: 100%;
-    height: 23vh;
+    height: 25vh;
     margin-bottom: 10px;
     border-radius: 5px;
 }
@@ -185,76 +236,105 @@ hr{
 
 /* My Projects Section */
 #myPostsSection {
-    margin: auto;
-    max-width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+    /* margin: auto;
+    max-width: 100%; */
+    display: grid;
+    grid-template-columns: repeat(4, minmax(200px, 1fr));
+    place-content: center;
     gap: 10px;
+}
+.prof-posts{
     text-align: left;
 }
-
 /* Button Styles */
-#deleteProfileButton, #createPostButton,#editProfileBtn{
-    background-color:transparent;
-    color: var(--text-color);
+#createPostButton{
+    background-color:var(--create-btn-bg-color);
+    color: var(--txts-btn-color);
     border: none;
-    padding: 7px 20px;
-    border-radius: 2px;
+    padding: 9px;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 550;
-    border: 1px solid rgba(117, 117, 117, 0.274);
+}#createPostButton i{
+    font-weight: 650;
 }
 #followButton{
     background-color: var(--create-btn-bg-color);
     color: var(--txts-btn-color);
-    border-radius: 50px;
+    border-radius: 10px;
     border: 1px solid;
     padding: 10px 30px;
-    border-radius: 50px;
     cursor: pointer;
     font-weight: 550;
+}
+.post{
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.5s cubic-bezier(0.100, 0.600, 0.10, 1);
+}.post:hover{
+    border: 1px solid rgb(161, 161, 161);
+
 }
 .code-pev{
     background-color: var(--btn-bg-color);
     color: var(--text-color);
-    border-radius: 50px;
+    border-radius: 10px;
     padding: 5px 10px;
     font-size: 14px;
     font-weight: 550;
     border: 1px solid var(--create-btn-bg-color);
+    position: absolute;
+    top: 135px;right: 10px;
 }
 .delete{
     background-color: rgba(199, 7, 7, 0.927);
     color: white;
-    border-radius: 50px;
+    border-radius: 10px;
     font-size: 14px;
     border: none;
     padding: 5px 10px;
+    position: absolute;
+    top: 200px;right:10px;
+}.delete:hover{
+    background-color: rgb(149, 11, 11);
 }
 #followButton:hover{
     box-shadow: 0 5px 15px rgba(128, 127, 127, 0.211);
 }
-#deleteProfileButton:hover, #createPostButton:hover{
-    background-color: #29292a0e;
+
+#deleteProfileButton{
+    color: rgb(217, 20, 20);
+    font-weight: 600;
 }
-#followerCount {
+
+#followerCount,#profileLikes,#viewsCount {
     font-weight: 500;
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all ease-out 0.40s;
+    background-color:var(--popup-bg-color);
+    font-size: 15px;
+}#followerCount:hover ,#profileLikes:hover ,#viewsCount:hover{
+    
 }
-#username{
+.username-link{
+    display: flex;font-size: 14px;font-weight: 450;justify-content: center;gap: 10px;
+}
+#username, .addlink{
     color: var(--text-color-p);
-    font-weight: 450;
+    font-weight: 500;
+}.addlink:hover{
+    color: var(--text-color);
 }
 .prof-page-f{
-    display: flex;
-    justify-content: space-between;
+    /* display: flex; */
+    text-align: center;
+    margin: auto;
 }
 .prof-self{
-    display: flex;
-    align-items: start;
-    text-align: left;
-    gap: 12px;
+    text-align: center;
+    gap: 20px;
 }
 .prof-self h2{
     font-weight: 700;
@@ -263,18 +343,23 @@ hr{
 .prof-ajust{
     line-height: 10px;
 }
+.top-1{
+    width: 50%;
+    margin: auto;
+    text-align: center;
+}
 #bio{
-    font-size: 16px;
-    font-weight: 420;
     color: var(--text-color-p);
-    text-align: left;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 400;
 }
 hr{
     border: 1px solid var(--text-color-p);
+    visibility: hidden;
 }
 #addlink{
-    font-size: small;
-    font-weight: 450;
+    font-weight: 400;
 }
 #addlink i{
     color: var(--text-color);
@@ -294,14 +379,23 @@ hr{
     top: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: hsl(0deg 0% 0% / 60%);
 }
-
+#linkDeviceModal{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: hsl(0deg 0% 0% / 60%);
+}
 .modal-content {
     background-color: var(--popup-bg-color);
-    margin: 15% auto;
+    margin: 7% auto;
     padding: 30px 20px;
-    border-radius: 10px;
+    border-radius: 20px;
     width: 35%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -309,13 +403,11 @@ hr{
     margin: 50px auto;
 }
 .btn-followers{
-    background-color:transparent;
-    color: var(--text-color);
+    background-color:var(--create-btn-bg-color);
+    color: var(--txts-btn-color);
     border: 1px solid rgba(117, 117, 117, 0.274);
-    border-radius: 50px;
-    padding: 10px 13px;
-    font-weight: 600;
-    
+    border-radius: 10px;
+    padding: 5px 10px;
 }
 .follower-item{
     display: flex;
@@ -325,7 +417,7 @@ hr{
 }.follower-item button{
     background-color: var(--create-btn-bg-color);
     color: var(--txts-btn-color);
-    border-radius: 50px;
+    border-radius: 10px;
     border: 1px solid;
     padding: 10px 20px;
     border-radius: 50px;
@@ -358,24 +450,80 @@ hr{
 .follower-img {
     width: 43px;
     height: 43px;
-    border-radius: 10%;
+    border-radius: 50%;
     border: 2px solid var(--text-color);
 }
 /* edit css start here */
 #editProfileForm{
-    display: flex;
     margin: auto;
-    gap: 30px;
+    text-align: center;
+    padding: 10px;
 }
-#editProfileForm input,#editProfileForm textarea {
-    width: 300px;
+#editProfileForm::-webkit-scrollbar {
+    display: none;
+  }
+/* width */
+::-webkit-scrollbar {
+    width: 2px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #807f7f83; 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #cbcaca9a; 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+.inputs{
+    max-width: 100%;
+    margin: auto;
+    text-align: center;
+}
+.inputs div{
+    width: 100%;
+    margin: 20px auto;
+}#editBio{
+    width: 100%;
+}
+#editProfileForm input{
+    margin: 5px;
+    border: none;
+    outline-offset: 2px;
+    background-color:hsla(0, 0%, 60%, 0.132);
+    color: var(--text-color);
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid var(--text-color);
+}
+#editProfileForm textarea::-webkit-scrollbar{
+    display: none;
+}#editProfileForm textarea{
+    height: 100px;
+    border-radius: 10px;
+    font-size: 16px;
+    resize: none;
+    background-color:hsla(0, 0%, 60%, 0.132);
+    color: var(--text-color);
+    border: none;
+    outline-offset: 2px;
+    padding: 10px;
+    
+}
+#generatedCode {
+    padding: 10px;
+    border-radius: 10px;
     font-size: 16px;
     resize: none;
     background-color: var(--bg-color);
     color: var(--text-color);
+    border: none;
+    outline-offset: 2px;
 }
 #editProfileForm button{
     background-color: var(--create-btn-bg-color);
@@ -385,10 +533,16 @@ hr{
     padding: 10px 20px;
     border-radius: 50px;
     cursor: pointer;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 15px;
 }
-
+#modal-content-edit {
+    background-color: var(--popup-bg-color);
+    text-align: var(--text-color);
+    margin: 3% auto;
+    padding: 10px;
+    width: 40%;
+}
 #editProfileForm label{
     padding: 10px;
     text-align:center;
@@ -402,18 +556,49 @@ hr{
 
 /* modal suc css */
     
-
-
-
+#followersList{
+    overflow-y: scroll;
+    height: 50vh;
+    width: 100%;
+}
+#followersList::-webkit-scrollbar{
+    display: none;
+}
+.ul{
+    text-align: left;
+    overflow-y: scroll;
+    height: 50vh;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.ul div{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 550;
+}.ul i{
+    font-size: 22px;
+}
+.ul div:hover{
+    background: #7c7b7b46;
+}
+#modal-content-suc{
+    text-align: center;
+}
 #modal-content-suc h3{
     font-size: 1.50rem;
     font-weight: 450;
     padding-bottom: 10px;
     color: var(--text-color);
+    text-align: center;
+}#modal-content-suc h2{
+    font-size: 5rem;
 }
 #modal-content-suc p{
-    font-size: 1.00rem;
+    font-size: 1rem;
     color: var(--text-color-p);
+    font-weight: 400;
 }
 #modal-content-suc button{
     background-color: var(--create-btn-bg-color);
@@ -423,7 +608,8 @@ hr{
     border: none;
     font-size: 16px;
     font-weight: 550;
-    float: right;
+    margin-top: 10px;
+    margin-bottom: 20px;
 }
 #modal-content-suc img{
     width: 100%;
@@ -454,6 +640,216 @@ hr{
 .cancel-btn:hover {
     background-color: darkgray;
 } */
+/* tooltip */
+#notificationsSection {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.notification {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.notification small {
+    color: #888;
+}
+/* skeleton */
+/* Base styles for the skeleton loader */
+.skeleton {
+    margin: auto;
+    width: 180px;
+    height: 180px;
+    background-color: #e0e0e0;
+    border-radius: 50%; /* Make it round like a profile image */
+    animation: pulse 2s infinite;
+}
+
+/* Skeleton pulse animation */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Skeleton loader for text */
+.skeleton-text {
+    width: 200px; /* adjust according to your design */
+    height: 40px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    /* margin: auto; */
+    animation: pulse 2s infinite;
+}
+.skeleton-text#name-skeleton{
+    width: 240px; /* adjust width for username */
+    height: 40px; /* smaller height for username */
+    margin: auto;
+}
+.skeleton-text#username-skeleton {
+    width: 150px; /* adjust width for username */
+    height: 15px; /* smaller height for username */
+    margin: auto;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+/* Skeleton loader for text */
+
+
+.skeleton-text#likes-skeleton {
+    width: 70px; /* Slightly shorter for likes */
+}
+
+.skeleton-text#views-skeleton {
+    width: 90px; /* Slightly longer for views */
+}
+
+.dot-skeleton {
+    display: none;
+    margin: 0 5px;
+    color: #ccc; /* Gray color for dots while skeletons are loading */
+}
+/* Custom checkbox styles */
+.custom-checkbox {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+    font-size: 16px;
+    user-select: none;
+}
+
+/* Hide default checkbox */
+.custom-checkbox input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create custom checkbox design */
+.custom-checkbox .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #ffffff; /* Black background color */
+}
+
+/* When the checkbox is checked, add a green tick */
+.custom-checkbox input:checked ~ .checkmark {
+    background-color: #ffffff; /* Green background when checked */
+}
+
+/* Create the checkmark (tick) inside the checkbox */
+.custom-checkbox .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark (tick) when checked */
+.custom-checkbox input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark (tick) */
+.custom-checkbox .checkmark:after {
+    left: 7px;
+    top: 3px;
+    width: 5px;
+    height: 10px;
+    border: solid rgb(0, 0, 0);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+}
+
+/* Styling the input fields for each option */
+.input-container {
+    
+}
+.hover-content{
+   cursor: pointer;
+   color:var(--text-color);
+}.hover-content:hover{
+    color: var(--text-color-p);
+}
+.features-inputs div{
+    width: 100%;
+    margin-top: 20px;
+}
+.features-inputs label{
+    font-size: 12px;
+    font-weight: 400;
+}
+.hover-content div{
+    padding: 8px;
+    font-size: 14px;
+}
+.hover-content div:hover{
+    background-color: rgba(98, 98, 98, 0.384);
+    border-radius: 5px;
+    color: white;
+}
+.features-inputs input,.title{
+    font-size: 15px;
+    font-weight: 400;
+    border: none;
+    outline-offset: 2px;
+    background-color:hsla(0, 0%, 60%, 0.132);
+    color: var(--text-color);
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+}.title{
+    font-size: 15px;
+    font-weight: 400;
+    margin-bottom: 5px;
+    border: none;
+    outline-offset: 2px;
+    background-color:hsla(0, 0%, 60%, 0.132);
+    color: var(--text-color);
+    padding: 15px;
+    border-radius: 10px;
+    width: 100%;
+}
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+/* setting */
+@media (min-width: 1200px) {
+    .container, .container-lg, .container-md, .container-sm, .container-xl {
+        max-width: 90%;
+    }
+}
 @media (max-width: 391px){
     .popup-content {
         background-color: var( --popup-bg-color);
@@ -504,7 +900,7 @@ hr{
     padding: 10px;
     border-radius: 10px;
     box-shadow:none;
-    margin: 20px auto;
+    margin: 10px auto;
     max-width: 100%;
     background: none;
 }
@@ -538,7 +934,7 @@ hr{
 #profileImage {
     width: 80px;
     height: 80px;
-    border-radius: 10px;
+    border-radius: 50%;
     object-fit: cover;
     margin-bottom: 15px;
 }
@@ -580,7 +976,7 @@ hr{
     padding: 10px;
     border-radius: 10px;
     box-shadow:none;
-    margin: 20px auto;
+    margin: 10px auto;
     max-width: 100%;
     background: none;
     border: none;
@@ -615,7 +1011,7 @@ hr{
 #profileImage {
     width: 80px;
     height: 80px;
-    border-radius: 10px;
+    border-radius: 50%;
     object-fit: cover;
     margin-bottom: 15px;
 }
@@ -627,7 +1023,6 @@ hr{
     font-size: 15px;
     font-weight: 420;
     color: var(--text-color-p);
-    text-align: left;
 }
 }
 @media (max-width: 376px){
@@ -722,6 +1117,165 @@ hr{
         font-size: 13px;
     }
 }
+/* New modal styles */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--text-color-p);
+}
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.modal-header .close {
+    font-size: 24px;
+    cursor: pointer;
+}
+.modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+.modal-footer {
+    padding: 10px 20px;
+    border-top: 1px solid var(--text-color-p);
+    text-align: center;
+}
+.form-section {
+    margin-bottom: 20px;
+}
+.image-upload-container {
+    position: relative;
+    text-align: center;
+}
+.image-upload-container img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid var(--text-color-p);
+}
+.upload-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--create-btn-bg-color);
+    color: var(--txts-btn-color);
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.upload-btn label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.form-section input, .form-section textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid var(--text-color-p);
+    border-radius: 5px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+.form-section textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+.features-inputs .input-container {
+    margin-top: 10px;
+}
+.features-inputs label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.dropdown-btn {
+    cursor: pointer;
+    padding: 10px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--text-color-p);
+    border-radius: 5px;
+    width: 100%;
+    text-align: left;
+}
+.dropdown-content {
+    display: none;
+    padding: 10px;
+    background-color: var(--popup-bg-color);
+    border: 1px solid var(--text-color-p);
+    border-radius: 5px;
+    margin-top: 5px;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.custom-checkbox {
+    margin-bottom: 10px;
+}
+.custom-checkbox label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.custom-checkbox input {
+    margin: 0;
+}
+.checkmark {
+    width: 20px;
+    height: 20px;
+    background-color: var(--bg-color);
+    border: 1px solid var(--text-color-p);
+    border-radius: 3px;
+    position: relative;
+}
+.custom-checkbox input:checked ~ .checkmark {
+    background-color: var(--create-btn-bg-color);
+}
+.custom-checkbox input:checked ~ .checkmark:after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+@media (max-width: 768px) {
+    .popup-content {
+        width: 95%;
+        margin: 10px auto;
+        height: 90vh;
+    }
+    .modal-body {
+        padding: 10px;
+    }
+    .modal-header h2 {
+        font-size: 1.2rem;
+    }
+    .image-upload-container img {
+        max-width: 100%;
+    }
+    .upload-btn {
+        position: static;
+        margin-top: 10px;
+    }
+    .modal-footer {
+        padding: 10px;
+    }
+    .submit-post {
+        width: 100%;
+    }
+}
 @media (max-width: 1077px){
     #editProfileForm{
         display: block;
@@ -782,5 +1336,34 @@ hr{
         font-size: 1.00rem;
         color: var(--text-color-p);
     }
+
+    /*  */
+
+    #myPostsSection {
+    display: grid;
+    grid-template-columns: none;
+    place-content: center;
+    gap: 10px;
+    margin: auto;
+}
+.prof-page-f{
+    text-align: center;
+}
+#name{
+    font-size:larger;
+}
+#profileImagePreview{
+    width: 30%;
+}
+#modal-content-edit{
+    width: 100%;
+    margin: 0 auto;
+    padding: 0px;
+    height: 100vh;
+    border-radius: 0px;
+}
+.delete{
+    top: 180px;right:10px;
+}
 }
 
