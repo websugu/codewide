@@ -1,4 +1,5 @@
 body.light-theme {
+    --logo-color:#202020;
     --image-color: 0;
     --bg-color:  #ffffff;
     --text-color: #000000;
@@ -16,6 +17,7 @@ body.light-theme {
 }
 
 body.dark-theme {
+    --logo-color:#e2e1de;
     --image-color: 1;
     --bg-color:#090c12;
     --text-color: #ffffff;
@@ -40,4 +42,5 @@ div.sticky {
     z-index: 100;
     padding: 10px 0;
     margin-bottom: 30px;
+
   }
