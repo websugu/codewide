@@ -118,6 +118,7 @@ background-color:hsla(0, 0%, 60%, 0.132);
 color: var(--text-color);
 padding: 10px;
 border-radius: 10px;
+width: 100%;
 }
 .form-group textarea:focus {
     border:1px solid var(--text-color);
@@ -1275,6 +1276,7 @@ hr{
     .submit-post {
         width: 100%;
     }
+    
 }
 @media (max-width: 1077px){
     #editProfileForm{
