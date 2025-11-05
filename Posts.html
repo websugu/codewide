@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,15 +7,21 @@
     <!-- font-family -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <!-- font-family 2 -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="images/bintcode-fav - Copy.png">
     <!-- icons -->
      <link rel="stylesheet" href="Profile.html">
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
     rel="stylesheet"
 />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/Posts.css">
@@ -25,75 +30,87 @@
 <body class="light-theme">
     
     <!-- Navbar (Optional) -->
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: #7676762e 1px solid;">
         <div class="container-fluid">
-            <div>
-                <img src="images/codewide-black.png" alt="" class="logo">
+            <div onclick="window.location.href='Posts.html'" style="cursor: pointer;">
+                <div style="display: flex;align-items: center;gap: 5px;font-weight: 700;font-size: 25px;">
+                    <div>
+                        <i class="fa-solid fa-fire-flame-curved" style="color: #f26507;"></i>
+                    </div>
+                    <div class="logo-streakcode">
+                        StreakCode
+                    </div>
+                </div>
+                <!-- <img src="images/Screenshot_2025-07-05_233237-removebg-preview.png" alt="" class="logo"> -->
+                <!-- <div style="background:var(--create-btn-bg-color);width:fit-content;padding:10px 15px;border-radius:50%">
+                    <div style="padding:4px;background:var(--txts-btn-color); border-radius:0px 50px 50px 0px"></div>
+                    <div style="padding:7px;background:var(--txts-btn-color); border-radius:0px 50px 50px 0px; margin-top:2px"></div>
+                </div> -->
             </div>
-            <div style="display: flex;align-items: center;gap: 10px;">
-                <button onclick="myprofile()" id="myprof" class="full-prof">My profile</button>
+            <div style="display: flex;align-items: center;gap: 0px;">
+                <button onclick="myprofile()" id="myprof" class="full-prof">Profile</button>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="ri-menu-search-line"></i>
+                    <i class="ri-search-2-line"></i>
                 </button>
             </div>
                     
                 <div class="collapse navbar-collapse" id="navbarNav" >
                     <div class="links">
-                        <a href="">Bolgs</a>
                         <a href="">Features</a>
                         <a href="">community</a>
                         <button id="themeToggle" class="Toggle" style="border: none;background:transparent;"><i class="ri-toggle-line" style="color: rgb(40, 37, 37);"></i></button>
                      </div>
-                    <div id="onpen-search">
-                        <input id="searchInput" type="text" class="form-inp" placeholder="Search posts or name...">
-                    </div>  
-               
+                     
                     <ul class="navbar-nav ml-auto" >
+                        <div id="onpen-search">
+                        <input id="searchInput" type="text" class="form-inp" placeholder="Search posts or name..." oninput="showSuggestions(this.value)">
+                        <!-- <ul id="suggestionsList" class="dropdown-list" style="display: none;"></ul> Dropdown List -->
+                     </div>
                         <li class="nav-item">
-                            <button onclick="myprofile()" id="myprof">My Profile</button>
+                            <button  id="myprof"  onclick="myprofile()">
+                                <img id="profileImage" src="images/defauld-profile.jpg" alt="" style="width: 40px; height: 40px; border-radius: 50%;border: 2px solid var(--txts-btn-color);">
+                            </button>
                         </li>
                     </ul>
-                </div>
-                
-        </div>
-        
+                </div> 
+        </div>  
     </nav>
     
     <div class="container-nav-down">
       
     <div>
         <div>
-            <h1>Puzzel Out</h1>
+            <h1>Discover</h1>
         </div>
-        <div class="links-2">
+        <!-- <div class="links-2">
                 <a href="#" class="Elements" style="border-bottom: 2px solid var(--text-color);color: var(--text-color)">Elements</a>
                 <a href="#" class="Full-project">Full project</a>
                 <a href="#" class="UX-Design">UI/UX Design</a>
                 <a href="#" class="Mark-etplace">Marketplace</a>
+        </div> -->
+    </div>
+    <!-- Tag Buttons -->
+    <div class="sticky">
+        <div class="tag-buttons-container">
+            <div>
+                <a href="create-post.html"><button class="btn btn-outline-primary me-3" style="font-size: 15px;font-weight: 460;border-radius: 20px;text-wrap: nowrap"><i class="ri-book-shelf-line"></i> Categories</button></a>
+            </div>
+            <!-- <button class="prev btn-light" onclick="scrollTags(-1)"><i class="ri-arrow-left-line"></i></button> -->
+            <div class="tag-buttons">
+                <!-- <button class="btn btn-outline-primary active me-2" onclick="filterByTag('all')">All</button> -->
+                <button class="btn btn-outline-primary active me-2" onclick="filterByTag('all')">All</button>
+                <button class="btn btn-outline-primary me-2">Login Forms</button>
+                <button class="btn btn-outline-primary me-2">Navbars</button>
+                <button class="btn btn-outline-primary me-2" >Inputs</button>
+                <button class="btn btn-outline-primary me-2" >Landing Pages</button>
+                <button class="btn btn-outline-primary me-2" >Buttons</button>
+                <button class="btn btn-outline-primary me-2" >Toggles</button>          
+            </div>
+            <!-- <button class="next btn-light" onclick="scrollTags(1)"><i class="ri-arrow-right-line"></i></button> -->
         </div>
-        
     </div>
     
-        <!-- Tag Buttons -->
-        <div class="sticky">
-            <div class="tag-buttons-container">
-                <div>
-                    <a href="create-post.html"><button class="btn btn-outline-primary me-3" style="font-size: 16px;font-weight: 460;border-radius: 20px;text-wrap: nowrap"><i class="ri-add-large-line" style="font-weight: 600;"></i> Add New Post</button></a>
-                </div>
-                <button class="prev btn-light" onclick="scrollTags(-1)"><i class="ri-arrow-left-line"></i></button>
-                <div class="tag-buttons">
-                    <button class="btn btn-outline-primary active me-2" onclick="filterByTag('all')">All</button>
-                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('login forms')">Login Forms</button>
-                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('navbars')">Navbars</button>
-                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('inputs')">Inputs</button>
-                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('landing pages')">Landing Pages</button>
-                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('buttons')">Buttons</button>
-                    <button class="btn btn-outline-primary me-2" onclick="filterByTag('toggles')">Toggles</button> 
-                                
-                </div>
-                <button class="next btn-light" onclick="scrollTags(1)"><i class="ri-arrow-right-line"></i></button>
-            </div>
-        </div>
+        
         
         
 
@@ -123,27 +140,28 @@
         </div>
 
         <!-- Not Found Message -->
-        <div id="notFoundMessage">No posts found.</div>
+        <div id="notFoundMessage">No posts found</div>
 
         <!-- Posts Section -->
         <div id="allPostsSection" class="row" style="display:none;">
             <!-- Posts will be dynamically loaded here -->
-
         </div>
     </div>
     <!-- Profile Not Found Modal -->
 <div id="profileNotFoundModal" class="modal" style="display:none;">
     <div class="modal-content">
-        <h2><i class="ri-account-box-fill"></i></h2>
-        <h3>Profile Not Found</h3>
-        <p>Your profile was not found. Please create a profile first.</p>
+        <span onclick="closeProfileNotFoundModal()" style="text-align: right;" >x</span>
+        <div class="modal-content2">
+        <h2><i class="ri-account-circle-fill"></i></h2>
+        <h3>Create Profile</h3>
+        <p>Start your activities by creating your own prodile.<br> safely</p>
         <div>
-            <button id="createProfileBtn" onclick="redirectToProfileCreation()">Create Profile</button>
-            <button class="close-btn" onclick="closeProfileNotFoundModal()" style=" background-color: transparent;
+            <button id="createProfileBtn" onclick="redirectToProfileCreation()">Create now</button>
+            <!-- <button class="close-btn" style=" background-color: transparent;
             color: var(--text-color);
-            border:1px solid var(--text-color);">Close</button>
+            border:1px solid var(--text-color);">Close</button> -->
         </div>
-        
+        </div>
     </div>
 </div>
 
@@ -175,9 +193,71 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
     <!-- <script src="https://www.gstatic.com/firebasejs/9.18.0/firebase-auth.js"></script> -->
-    <script src="auth-check.js"></script>
+    <script src="auth-check.js"></script> 
     <script src="firebaseConfig.js"></script>
     <script src="scripts.js"></script>
+    <script>
+
+    </script>
+    <script>
+        // Function to redirect to the user's profile
+function myprofile() {
+    const profileId = localStorage.getItem('profileId');
+    
+    if (profileId) {
+        // If profileId is found in localStorage, fetch the profile data
+        db.collection('profiles').doc(profileId).get().then(doc => {
+            if (doc.exists) {
+                const profileData = doc.data();
+                const profileImageUrl = profileData.profileImageUrl || 'images/default-profile.jpeg';
+                
+                // Set the profile image on the "My Profile" button
+                document.getElementById('profileImage').src = profileImageUrl;
+
+                // Redirect to the profile page
+                window.location.href = `Profile.html?profileId=${profileId}`;
+            } else {
+                // No profile found, show default profile image and redirect to profile creation
+                document.getElementById('profileImage').src = 'images/defauld-profile.jpg';
+                alert('Profile not found. Please create a profile first.');
+                window.location.href = 'ProfileCreation.html';
+            }
+        }).catch(error => {
+            console.error('Error fetching profile from Firestore:', error);
+            alert('Error retrieving profile. Please try again later.');
+        });
+    } else {
+        // If profileId is not in localStorage, check Firestore or show default image
+        document.getElementById('profileImage').src = 'images/defauld-profile.jpg';
+        alert('Profile not found. Please create a profile first.');
+        window.location.href = 'ProfileCreation.html';
+    }
+}
+
+// Call this function to display the profile image when the page loads
+function setProfileImage() {
+    const profileId = localStorage.getItem('profileId');
+    if (profileId) {
+        // Fetch the profile data from Firestore and set the profile image
+        db.collection('profiles').doc(profileId).get().then(doc => {
+            if (doc.exists) {
+                const profileData = doc.data();
+                const profileImageUrl = profileData.profileImageUrl || 'images/defauld-profile.jpg';
+                document.getElementById('profileImage').src = profileImageUrl;
+            }
+        }).catch(error => {
+            console.error('Error fetching profile:', error);
+        });
+    } else {
+        // Show default profile image if no profile exists
+        document.getElementById('profileImage').src = 'images/defauld-profile.jpg';
+    }
+}
+
+// Call setProfileImage when the page loads
+setProfileImage();
+
+    </script>
     <script>
     function scrollTags(direction) {
     const container = document.querySelector('.tag-buttons');
@@ -339,13 +419,21 @@ function truncateOwnerName(name, maxLength) {
     }
     return name;
 }
-
+function formatViews(views) {
+    if (views >= 1000000) {
+      return (views / 1000000).toFixed(1).replace(/\.0$/, '') + 'M'; // Formats millions
+    } else if (views >= 1000) {
+      return (views / 1000).toFixed(1).replace(/\.0$/, '') + 'K'; // Formats thousands
+    } else {
+      return views; // Returns views as is if below 1,000
+    }
+  }
 db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
     snapshot.forEach(doc => {
         const data = doc.data();
-        const truncatedOwnerName = truncateOwnerName(data.ownerName, 13); // Truncate ownerName to 10 characters
+        const truncatedOwnerName = truncateOwnerName(data.ownerName, 30); // Truncate ownerName to 10 characters
         const profileLink = `<a href="Profile.html?profileId=${data.profileId}"  class="link-pro">${truncatedOwnerName}</a>`;
-        const truncatedDescription = truncateDescription(data.description, 3);
+        const truncatedDescription = truncateDescription(data.description, 7);
         const postedMoment = timeAgo(data.timestamp.toDate());
 
         // Filter based on search query and selected tag
@@ -355,14 +443,17 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
         if (searchText.includes(searchQuery.toLowerCase()) && hasTag) {
             const postElement = `
                 <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card">
-                        <img class="card-img-top" src="${data.postImageUrl}" alt="Post Image" height="230">
+                    <div class="card" onclick="openCodePreview('${doc.id}')">
+                        <div>
+                            <img class="card-img-top" src="${data.postImageUrl}" alt="Post Image" height="240">
+                        </div>
+                        
                         <div class="card-body">
                             <div class="own-prof">
                                 <div class="own-prof-1">
-                                    <img src="${data.ownerImage}" alt="Owner Image" width="43" height="43">
+                                    <img src="${data.ownerImage || 'images/defauld-profile.jpg'}" alt="Owner Image" width="43" height="43">
                                     <div class="own-de">
-                                        <h6 class="mb-0"><strong>${profileLink}</strong><span class="moment">• ${postedMoment}</span></h6>
+                                        <h6 class="mb-0"><strong>${profileLink}</strong><span class="moment"> ${formatViews(data.views || 0)} views • ${postedMoment}</span></h6>
                                         <p class="card-text">${truncatedDescription}</p>
                                     </div>
                                 </div>
@@ -425,7 +516,80 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
         showSkeletonLoader();
         setTimeout(() => {
             displayAllPosts();
-        }, 1000);
+        }, 500);
+    </script>
+    <script>
+        // Example data (you can replace this with your dynamic posts/usernames from Firestore)
+const postsData = [
+    { username: "", postTitle: "Login form" },
+    { username: "JaneSmith", postTitle: "Navbar Designs" },
+    { username: "AlexBrown", postTitle: "Button Styles" },
+    { username: "ChrisMiller", postTitle: "Toggles and Switches" },
+    // Add more posts or usernames
+];
+
+// Function to show suggestions in the dropdown
+function showSuggestions(inputValue) {
+    const suggestionsList = document.getElementById("suggestionsList");
+
+    if (inputValue.length === 0) {
+        suggestionsList.style.display = "none";
+        return;
+    }
+
+    // Filter postsData based on input
+    const filteredData = postsData.filter(item => 
+        item.username.toLowerCase().includes(inputValue.toLowerCase()) || 
+        item.postTitle.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+    // If no matches, hide the dropdown
+    if (filteredData.length === 0) {
+        suggestionsList.style.display = "none";
+        return;
+    }
+
+    // Generate list items for the dropdown
+    suggestionsList.innerHTML = "";
+    filteredData.forEach(item => {
+        const listItem = document.createElement("li");
+        listItem.textContent = `${item.username} - ${item.postTitle}`;
+        listItem.onclick = function() {
+            // Set the selected suggestion in the input field
+            document.getElementById("searchInput").value = `${item.username} - ${item.postTitle}`;
+            // You can also redirect to the post or user profile here
+            suggestionsList.style.display = "none"; // Hide the dropdown
+        };
+        suggestionsList.appendChild(listItem);
+    });
+
+    suggestionsList.style.display = "block";
+}
+
+// Hide the dropdown when clicking outside
+document.addEventListener("click", function(event) {
+    const searchInput = document.getElementById("searchInput");
+    const suggestionsList = document.getElementById("suggestionsList");
+
+    if (!searchInput.contains(event.target) && !suggestionsList.contains(event.target)) {
+        suggestionsList.style.display = "none";
+    }
+});
+// Fetch posts dynamically from Firestore
+function fetchPosts() {
+    db.collection('posts').get().then(querySnapshot => {
+        const posts = [];
+        querySnapshot.forEach(doc => {
+            const data = doc.data();
+            posts.push({ username: data.username, title: data.title });
+        });
+    }).catch(error => {
+        console.error('Error fetching posts:', error);
+    });
+}
+
+// Call fetchPosts to populate the posts array on page load
+fetchPosts();
     </script>
 </body>
 
