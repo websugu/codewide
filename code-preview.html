@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,65 +7,644 @@
     <link rel="stylesheet" href="styles/code-preview.css">  <!-- Your CSS file -->
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles/Profile.css">
+    <link rel="stylesheet" href="styles/Posts.css">
     <!-- font-family -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="icon" type="image/x-icon" href="images/favicon.png">
+    <link rel="icon" type="image/x-icon" href="images/bintcode-fav - Copy.png">
     <!-- icons -->
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
     rel="stylesheet"
 />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Prism.js for syntax highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     
 </head>
+<style>
+/* Modal overlay */
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal content box */
+.modal-content {
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transform: scale(0.9);
+    color: var(--text-color);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+.modal-content i{
+    font-size: 70px;
+}
+/* Close button */
+.close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.2s ease;
+}
+
+.close:hover {
+    color: var(--text-color);
+}
+
+/* Modal title */
+.modal-content h2 {
+    margin-bottom: 15px;
+    color: var(--text-color);
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+}
+
+/* Modal text */
+.modal-content p {
+    margin-bottom: 25px;
+    color: var(--text-color);
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Style for Continue button */
+#continueBtn {
+    background: var(--create-btn-bg-color);
+    color: var(--txts-btn-color);
+    border: none;
+    padding: 12px 30px;
+    cursor: pointer;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+#continueBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+/* Download Modal Styles */
+#downloadModal .modal-content {
+    text-align: center;
+}
+
+#progressContainer {
+    width: 100%;
+    background-color: var(--create-btn-bg-color);
+    border-radius: 25px;
+    margin: 20px 0;
+    height: 20px;
+    overflow: hidden;
+    color: var(--txts-btn-color);
+}
+
+#progressBar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 25px;
+    transition: width 0.2s ease;
+}
+
+/* Lightbox styles */
+.lightbox {
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.lightbox.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+}
+
+.lightbox .close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 40px;
+    color: var(--txts-btn-color);
+    cursor: pointer;
+}
+
+/* Code preview styles */
+.code-preview-container {
+    margin-top: 20px;
+    border: 1px solid rgba(117, 117, 117, 0.274);
+    border-radius: 10px;
+    padding: 15px;
+    background-color: var(--bg-color);
+}
+
+.code-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.code-preview-header h4 {
+    margin: 0;
+}
+
+.code-theme-toggle {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.code-preview pre {
+    margin: 0;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+.copy-btn {
+    background-color: var(--create-btn-bg-color);
+    color: var(--txts-btn-color);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Emoji reactions */
+.emoji-reactions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.emoji-btn {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.emoji-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Full screen toggle */
+.fullscreen-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Report button */
+.report-btn {
+    background:var(--create-btn-bg-color);
+    padding: 5px 15px;
+    border-radius: 5px;
+    border: none;
+    color: var(--txts-btn-color);
+    cursor: pointer;
+    margin-left: 0px;
+}
+
+/* Follow button */
+.follow-btn {
+    background-color: var(--create-btn-bg-color);
+    color: var(--txts-btn-color);
+    border: none;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Related posts */
+.related-posts {
+    margin-top: 30px;
+    border-top: 1px solid rgba(117, 117, 117, 0.274);
+    padding-top: 20px;
+}
+
+.related-posts h4 {
+    margin-bottom: 15px;
+}
+
+.related-post-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid rgba(117, 117, 117, 0.274);
+    border-radius: 5px;
+}
+
+.related-post-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.related-post-item a {
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+/* Loading animation */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 24px;
+    color: #666;
+}
+
+.hidden {
+    display: none;
+}
+</style>
 <body class="light-theme">
     <div id="loading" class="loading">Loading...</div>
     <div id="postContainer" style="display: none;margin-top: 20px;margin-bottom: 20px;">
-        <!-- <div>
-        <img id="profileImage" src="" alt="Profile Image">
-        <p id="followerCount">0 Followers</p>
-        </div> -->
         
-        <div id="postContent"></div>
-        <button id="themeToggle" class="Toggle" style="border: none;background:transparent;display: none;"><i class="ri-toggle-line"></i></button>
-        <div id="commentsSection">
-            <!-- Comments will be dynamically loaded here -->
+        <div class="holl-page-preview">
+            <div>
+                <div class="prev-green">
+                <div class="prev-yellow">
+                <div id="postContent"></div>
+                <button id="themeToggle" class="Toggle" style="border: none;background:transparent;display: none;"><i class="ri-toggle-line"></i></button>
+
+                
+                </div>
+                
+                <div class="prev-red">
+                    <div class="status">
+                    <div>
+                        <small id="if">Status</small><br><br>
+                        <h5 id="showstatus"></h5>
+                        <p id="freecode"></p>
+                    </div>
+                    <div>
+                        <p>Open source <span style="float: right;"><i class="ri-check-line"></i></span></p>
+                        <hr style="background-color: rgba(63, 63, 63, 0.601);">
+                        <p>Published <span style="float: right;color:gray" id="posted"><i class="ri-check-line"></i></span></p>
+                        <hr style="background-color: rgba(63, 63, 63, 0.601);">
+                        <p>Permission <span style="float: right;"><i class="ri-checkbox-circle-fill"></i></span></p>
+                        <hr style="background-color: rgba(63, 63, 63, 0.601);">
+                        <p>Post Owner <span style="float: right;color:rgb(128, 128, 128)" id="postowner"></span></p>
+                        <!-- <button id="openModalBtn">Open Modal</button> -->
+                        <button id="reportBtn" class="report-btn"><i class="ri-flag-line"></i> Report</button>
+                        <button id="followBtn" class="follow-btn" style="display: none;">Follow</button>
+                        <button id="sharePostButton" class="follow-btn"><i class="ri-share-fill"></i></button>
+                    </div>
+                </div>
+                <!-- Code Preview Section -->
+                <div id="codePreviewContainer" class="code-preview-container" style="display: none;">
+                    <div class="code-preview-header">
+                        <h4>Code Preview</h4>
+                        <button id="codeThemeToggle" class="code-theme-toggle"><i class="ri-moon-line"></i></button>
+                    </div>
+                    <pre id="codePreview"><code id="codeContent" class="language-javascript">// Sample code
+                    console.log('Hello, World!');
+                    </code></pre>
+                    <button id="copyCodeBtn" class="copy-btn">Copy Code</button>
+                </div>
+                </div>
+                
+                </div>
+                <div class="comment-div">
+                    <div class="desc">
+                            <h4 id='commentCount'></h4>
+                            <form id="commentForm">
+                                <input type="text" id="commentInput" placeholder="Add a comment..." required>
+                                <button type="submit">Comment</button>
+                                
+                            </form>
+                        </div>
+                        <div id="commentsSection">
+                            <!-- Comments will be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+            
         </div>
-    
-        <form id="commentForm">
-            <input type="text" id="commentInput" placeholder="Add a comment..." required>
-            <button type="submit">Comment</button>
-        </form>
+
+        <!-- Related Posts Section -->
+        <div id="relatedPosts" class="related-posts" style="display: none;">
+            <h4>Related Posts</h4>
+            <div id="relatedPostsList"></div>
+        </div>
     </div>
-    
+    <!-- share option -->
+    <!-- popup -->
+     <!-- Button to open the modal -->
+<!-- Modal for Create Profile -->
+<div id="popupModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <i class="ri-account-circle-fill"></i>
+        <h2>Create Profile</h2>
+        <p>You need to create a profile to like posts. Click "Create Profile" to get started.</p>
+        <button id="continueBtn">Create Profile</button>
+    </div>
+</div>
+
+
+
+   <!-- Modal for Sharing the Link (for unsupported browsers) -->
+<div id="shareModal" style="display:none;">
+    <p>Share this link:</p>
+    <input type="text" id="shareLink" readonly>
+    <button onclick="copyLink()">Copy Link</button>
+</div>
+
+<!-- Modal for Download -->
+<div id="downloadModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="hideDownloadModal()">&times;</span>
+        <i class="ri-download-line"></i>
+        <h2 id="downloadTitle">Download code processing…</h2>
+        <div id="progressContainer">
+            <div id="progressBar"></div>
+        </div>
+        <p id="downloadMessage"></p>
+    </div>
+</div>
+
+<!-- Lightbox for Image Zoom -->
+<div id="lightbox" class="lightbox">
+    <span class="close" onclick="closeLightbox()">&times;</span>
+    <img id="lightboxImg" src="" alt="Zoomed Image">
+</div>
+
+<!-- Report Modal -->
+<div id="reportModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeReportModal()">&times;</span>
+        <i class="ri-flag-line"></i>
+        <h2>Report Post</h2>
+        <p>Why are you reporting this post?</p>
+        <select id="reportReason">
+            <option value="inappropriate">Inappropriate content</option>
+            <option value="spam">Spam</option>
+            <option value="harassment">Harassment</option>
+            <option value="other">Other</option>
+        </select><br>
+        <button onclick="submitReport()">Submit Report</button>
+    </div>
+</div>
+
+<!--  -->
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-auth.js"></script>
+    <script src="firebaseConfig.js"></script>
     <script src="scripts.js"></script>
+<script>
+    // Get modal element
+const modal = document.getElementById("popupModal");
 
-    <!-- <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.1.2/firebase-firestore.js"></script> -->
-    <script>
-        // Firebase configuration and initialization
-const firebaseConfig = {
-    apiKey: "AIzaSyChHJORSiWCfP94HFA7b2-zu1tewsSCNIU",
-    authDomain: "codewide-9c807.firebaseapp.com",
-    projectId: "codewide-9c807",
-    storageBucket: "codewide-9c807.appspot.com",
-    messagingSenderId: "402735947518",
-    appId: "1:402735947518:web:93c1c91954727b40148faf"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+// Get close button (x)
+const closeBtn = document.getElementsByClassName("close")[0];
+
+// Get continue button
+const continueBtn = document.getElementById("continueBtn");
+
+// Function to show modal
+function showModal() {
+    modal.classList.add('show');
+}
+
+// Function to hide modal
+function hideModal() {
+    modal.classList.remove('show');
+}
+
+// Close modal when clicking the close button
+closeBtn.addEventListener('click', hideModal);
+
+// Close modal when clicking anywhere outside of the modal content
+modal.addEventListener('click', function(event) {
+    if (event.target === modal) {
+        hideModal();
+    }
+});
+
+// Continue button functionality
+continueBtn.addEventListener('click', function() {
+    hideModal();
+    window.location.href = 'ProfileCreation.html';
+});
+
+// Lightbox functions
+function openLightbox(src) {
+    document.getElementById('lightboxImg').src = src;
+    document.getElementById('lightbox').classList.add('show');
+}
+
+function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('show');
+}
+
+// Report modal functions
+function openReportModal() {
+    document.getElementById('reportModal').classList.add('show');
+}
+
+function closeReportModal() {
+    document.getElementById('reportModal').classList.remove('show');
+}
+
+function submitReport() {
+    const reason = document.getElementById('reportReason').value;
+    // Store report in Firestore
+    db.collection('reports').add({
+        postId: postId,
+        reporterId: currentUserProfileId,
+        reason: reason,
+        timestamp: new Date()
+    }).then(() => {
+        alert('Report submitted.');
+        closeReportModal();
+    }).catch(error => {
+        console.error('Error submitting report:', error);
+    });
+}
+
+// Follow/Unfollow function
+function toggleFollow(profileId) {
+    if (!currentUserProfileId) {
+        showModal();
+        return;
+    }
+    const followBtn = document.getElementById('followBtn');
+    const userRef = db.collection('users').doc(currentUserProfileId);
+    const targetRef = db.collection('users').doc(profileId);
+
+    userRef.get().then(doc => {
+        const following = doc.data().following || [];
+        if (following.includes(profileId)) {
+            // Unfollow
+            userRef.update({ following: following.filter(id => id !== profileId) });
+            targetRef.update({ followers: firebase.firestore.FieldValue.arrayRemove(currentUserProfileId) });
+            followBtn.textContent = 'Follow';
+        } else {
+            // Follow
+            userRef.update({ following: [...following, profileId] });
+            targetRef.update({ followers: firebase.firestore.FieldValue.arrayUnion(currentUserProfileId) });
+            followBtn.textContent = 'Unfollow';
+            createNotification(profileId, 'follow', currentUserProfileId);
+        }
+    });
+}
+
+// Check if following
+function checkFollowStatus(profileId) {
+    if (!currentUserProfileId) return;
+    db.collection('users').doc(currentUserProfileId).get().then(doc => {
+        const following = doc.data().following || [];
+        document.getElementById('followBtn').textContent = following.includes(profileId) ? 'Unfollow' : 'Follow';
+    });
+}
+
+// Emoji reactions
+document.querySelectorAll('.emoji-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const emoji = this.dataset.emoji;
+        // Store reaction in Firestore (extend likes or new subcollection)
+        db.collection('posts').doc(postId).collection('reactions').doc(currentUserProfileId).set({
+            emoji: emoji,
+            timestamp: new Date()
+        }, { merge: true });
+        // Update UI
+        loadReactionCounts();
+    });
+});
+
+// Function to load reaction counts
+function loadReactionCounts() {
+    db.collection('posts').doc(postId).collection('reactions').get().then(snapshot => {
+        const counts = {};
+        snapshot.forEach(doc => {
+            const emoji = doc.data().emoji;
+            counts[emoji] = (counts[emoji] || 0) + 1;
+        });
+        // Update the spans
+        document.querySelectorAll('.emoji-btn').forEach(btn => {
+            const emoji = btn.dataset.emoji;
+            const span = btn.querySelector('span');
+            if (span) {
+                span.textContent = counts[emoji] || 0;
+            }
+        });
+    }).catch(error => {
+        console.error('Error loading reaction counts:', error);
+    });
+}
+
+// Code theme toggle
+document.getElementById('codeThemeToggle').addEventListener('click', function() {
+    const codePre = document.getElementById('codePreview');
+    if (codePre.classList.contains('dark-theme')) {
+        codePre.classList.remove('dark-theme');
+        this.innerHTML = '<i class="ri-moon-line"></i>';
+    } else {
+        codePre.classList.add('dark-theme');
+        this.innerHTML = '<i class="ri-sun-line"></i>';
+    }
+});
+
+// Copy code button
+document.getElementById('copyCodeBtn').addEventListener('click', function() {
+    const codeText = document.getElementById('codeContent').textContent;
+    navigator.clipboard.writeText(codeText).then(() => {
+        alert('Code copied to clipboard!');
+    });
+});
+
+// Full screen toggle (placeholder, implement with API)
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'F11') {
+        // Toggle full screen
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+});
+
+// Report button
+document.getElementById('reportBtn').addEventListener('click', openReportModal);
+
+// Follow button
+document.getElementById('followBtn').addEventListener('click', () => {
+    const profileId = getUrlParameter('profileId') || data.profileId; // Assuming data is available
+    toggleFollow(profileId);
+});
+
+// Firebase configuration and initialization (db is already initialized in firebaseConfig.js)
 
 // Function to get URL parameters
 function getUrlParameter(name) {
@@ -114,43 +693,87 @@ function displayPost() {
     // Show loading animation
     loading.classList.remove('hidden');
 
-    db.collection('posts').doc(postId).get().then(doc => {
+    const postRef = db.collection('posts').doc(postId);
+    postRef.get().then(doc => {
         if (doc.exists) {
             const data = doc.data();
+            const currentViews = (data.views || 0) + 1;
             const postedMoment = timeAgo(data.timestamp.toDate());
             const profileLink = `<a href="Profile.html?profileId=${data.profileId}" class="own-pro">${data.ownerName}</a>`;
 
             document.getElementById('postContent').innerHTML = `
             <div>
-                <img src="${data.postImageUrl}" alt="Post Image" width="200" height="350" class="img-1"><br>
-                <div class="own-v-code">
+            <div style="margin: auto;">
+            <p style="font-weight: 500;"> <i class="ri-arrow-left-line"></i></p>
+        </div>
+            <div>
+             <div class="prew-page-post">
+                <img id="postImage" src="${data.postImageUrl}" alt="Post Image" width="200" height="390" class="img-1" onclick="openLightbox('${data.postImageUrl}')">
+
+                <div class="own-v-code-top">
+                    <div class="own-v-code">
                     <div>
-                        <img src="${data.ownerImage}" alt="Owner Image" width="45" height="45" style="border-radius:5px;border:1px solid gray">
+                        <img src="${data.ownerImage}" alt="Owner Image" style="border-radius:50%;border:1px solid gray">
                     </div>
                     <div class="own-v-code-1">
                         <h3><strong>${profileLink}</strong></h3>
-                        <small>Post Owner</small>
+                        <small class="smallx">Post Owner</small>
                     </div>
-                </div><br>
+                </div>
 
                 <div>
-                    <span class="moment" style="float:left">Posted on : ${postedMoment}</span>
-                </div><br>
-                <div>
-                    <p id="viewsCount"><i class="ri-organization-chart"></i> 0 Views</p>
-                </div><br>
-                <p>${data.description}</p>
-                <div class="dow-lik">
-                <a class="download-c" href="${data.zipFileUrl}" download><i class="ri-download-2-line"></i> Download Code</a><br>
-                <button id="likeButton"><i class="ri-thumb-up-line"></i> ${data.likes ? data.likes.length : 0}</button>
+                  <button id="likeButton"><i class="ri-thumb-up-line"></i> ${data.likes ? data.likes.length : 0}</button>
+                  <button id="savePostButton" onclick="toggleSavePost(postId)">Save Post</button>
                 </div>
-            </div>   
-            <div class="comment-h">
-                <h3>Comments :</h3> 
+                </div>
+             </div>
+
+
+                <hr style="background-color: rgba(63, 63, 63, 0.601);">
+                <div>
+                    <a href="${data.livepreview}" id="live"></a>
+                    <a href="${data.youtube}" id="youtube"></a>
+                </div>
+                <div class="post-d-v">
+                <div>
+                    <span class="moment" style="float:left"><i class="ri-time-line"></i> ${postedMoment}</span>
+                </div>
+                <div>
+                    <span id="viewsCount" class="moment"><i class="ri-organization-chart"></i> ${formatViewsCount(currentViews)} views</span>
+                </div>
+                <div>
+                    <span id="downloadsCount" class="moment"><i class="ri-download-line"></i> ${formatViewsCount(data.downloads || 0)} downloads</span>
+                </div>
+                <div>
+                    <span id="downloadsCount" class="moment"><i class="fa-solid fa-fire-flame-curved" style="color: #f26507;"></i> ${formatViewsCount(data.downloads || 0)} StreakCode</span>
+                </div>
+                </div>
+                <div class="descc-1">
+                    <h4>${data.titles || '<h5 style="color:rgba(107, 107, 107, 0.377);"><i>No title as been added</i></h5>'}</h4>
+                    <p id="description"></p>
+                </div>
+            </div>
+
             </div>
             `;
+            postRef.update({ views: firebase.firestore.FieldValue.increment(1) });
+            // featurs js
+            document.getElementById('live').innerHTML=(data.livepreview ? '<button class="features"><i class="ri-external-link-line"></i> Live Preview</button>' : '<p style= "display:none">No link added</p>');
+            document.getElementById('youtube').innerHTML=(data.youtube ? '<button class="features" id="livecss"><i class="ri-play-large-line"></i> Watch Video</button>' : '<p style= "display:none">No link added</p>');
+            document.getElementById('description').innerHTML= `<p>${data.description}</p>`;
+            // document.getElementById('showstatus').innerHTML= data.price;
+            document.getElementById('posted').innerText= postedMoment;
+            document.getElementById('postowner').innerText= data.ownerName;
+            document.getElementById('freecode').innerHTML= data.zipFileUrl ? `<button class="free" onclick="downloadCode('${data.zipFileUrl}')"><i class="ri-checkbox-circle-line" style="color:green"></i> Get source code</button>` : `<button class="free" disabled><i class="ri-close-circle-line" style="color:red"></i> Source code unavailable</button>`;
+            
+            // Check if post has code
+            if (data.codeSnippet) {
+                document.getElementById('codeContent').textContent = data.codeSnippet;
+                document.getElementById('codePreviewContainer').style.display = 'block';
+                Prism.highlightElement(document.getElementById('codeContent'));
+            }
 
-            // Check if current user has already liked the post
+            // Check if current user has already liked the post  
             if (data.likes && data.likes.includes(currentUserProfileId)) {
                 document.getElementById('likeButton').innerHTML = `<i class="ri-thumb-up-fill"></i> ${data.likes.length}`;
             }
@@ -164,19 +787,71 @@ function displayPost() {
 
             // Handle likes
             document.getElementById('likeButton').addEventListener('click', () => {
-                toggleLike(data.likes || []);
+                toggleLike(data.likes || [], data.profileId);
             });
+
+            // Check follow status
+            checkFollowStatus(data.profileId);
+
+            // Load related posts
+            loadRelatedPosts(data.profileId);
         } else {
             console.error('No post found with the given ID.');
             alert('Post not found.');
         }
     }).catch(error => {
         console.error('Error fetching post:', error);
+        loading.classList.add('hidden');
+        postContainer.innerHTML = '<p>Error loading post. Please try again later.</p>';
+        postContainer.style.display = 'block';
     });
 }
 
+// Function to load related posts
+function loadRelatedPosts(ownerId) {
+    db.collection('posts').where('profileId', '==', ownerId).limit(3).get().then(snapshot => {
+        const relatedList = document.getElementById('relatedPostsList');
+        relatedList.innerHTML = '';
+        snapshot.forEach(doc => {
+            if (doc.id !== postId) {
+                const data = doc.data();
+                relatedList.innerHTML += `
+                    <div class="related-post-item" onclick="window.location.href='code-preview.html?postId=${doc.id}'">
+                        <div class="related-post-item-inside">
+                            <div>
+                                <img src="${data.postImageUrl}" alt="Related Post">
+                            </div>
+                            <div>
+                                <a>${data.titles || 'Untitled'}</a><br>
+                                <a>view post</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+        if (relatedList.innerHTML) {
+            document.getElementById('relatedPosts').style.display = 'block';
+        }
+    });
+}
+
+
+
+
 // Function to toggle likes
-function toggleLike(currentLikes) {
+function toggleLike(currentLikes, profileId) {
+    if (!currentUserProfileId) {
+        // User does not have a profile, show modal
+        showModal();
+        return;
+    }
+
+    if (currentUserProfileId === profileId) {
+        // Prevent liking own post
+        return;
+    }
+
     const postDoc = db.collection('posts').doc(postId);
 
     if (currentLikes.includes(currentUserProfileId)) {
@@ -192,6 +867,8 @@ function toggleLike(currentLikes) {
         const updatedLikes = [...currentLikes, currentUserProfileId];
         postDoc.update({ likes: updatedLikes }).then(() => {
             document.getElementById('likeButton').innerHTML = `<i class="ri-thumb-up-fill"></i> ${updatedLikes.length}`;
+            // Create notification for the post owner
+            createNotification(profileId, 'like', currentUserProfileId, postId);
         }).catch(error => {
             console.error('Error liking post:', error);
         });
@@ -199,37 +876,171 @@ function toggleLike(currentLikes) {
 }
 
 // Function to display comments
-function displayComments() {
+// Function to display comments with reply option, likes, and dislikes
+async function displayComments() {
     const commentsSection = document.getElementById('commentsSection');
-    commentsSection.innerHTML = ''; // Clear existing comments
+    const commentCountElement = document.getElementById('commentCount');
 
-    db.collection('posts').doc(postId).collection('comments').orderBy('timestamp', 'asc').get().then(snapshot => {
+    if (!commentsSection) {
+        console.error("❌ Element with id 'commentsSection' not found.");
+        return;
+    }
+
+    commentsSection.innerHTML = '<p>Loading comments...</p>';
+
+    if (!postId) {
+        console.error("❌ postId is undefined or null.");
+        commentsSection.innerHTML = '<p>Error: Missing post ID.</p>';
+        return;
+    }
+
+    try {
+        // Fetch all comments ordered by timestamp
+        const snapshot = await db
+            .collection('posts')
+            .doc(postId)
+            .collection('comments')
+            .orderBy('timestamp', 'asc')
+            .get();
+
+        const totalComments = snapshot.size;
+        if (commentCountElement) commentCountElement.innerText = `${totalComments} Comments`;
+
+        console.log(`🗨️ Loaded ${totalComments} comments for postId:`, postId);
+
         if (snapshot.empty) {
-            commentsSection.innerHTML = '<p style="text-align:center;padding-top:140px"><i class="ri-question-answer-fill"></i> No comments yet</p>'; // Show "No comments yet" if no comments
-        } else {
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const isOwner = data.userId === currentUserProfileId; // Check if the current user is the owner of the comment
-                const deleteButton = isOwner ? `<button onclick="deleteComment('${doc.id}')" class="comment-delete"><i class="ri-delete-bin-6-line"></i> Delete your comment</button>` : '';
-
-                const commentElement = `
-                    <div class="comment">
-                        <div class="comment-header">
-                            <a href="Profile.html?profileId=${data.userId}" class="own-pro">${data.username}</a>
-                        </div>
-                        <p><i class="ri-corner-down-right-fill"></i> ${data.text} <small>(${timeAgo(data.timestamp.toDate())})</small></p>
-                        ${deleteButton}
-                    </div>
-                `;
-                commentsSection.innerHTML += commentElement;
-            });
+            commentsSection.innerHTML =
+                '<p style="text-align:center;padding-top:140px"><i class="ri-question-answer-fill"></i> No comments yet</p>';
+            return;
         }
-    }).catch(error => {
-        console.error('Error fetching comments:', error);
-        commentsSection.innerHTML = '<p>Error loading comments</p>'; // Handle error case
-    });
+
+        const commentsHTML = [];
+
+        // Loop through comments
+        for (const doc of snapshot.docs) {
+            const data = doc.data();
+            if (!data) continue;
+
+            console.log("💬 Comment data:", data);
+
+            const isOwner = data.userId === currentUserProfileId;
+            const deleteButton = isOwner
+                ? `<button onclick="deleteComment('${doc.id}')" class="comment-delete"><i class="ri-delete-bin-6-line"></i></button>`
+                : '';
+
+            // Default values
+            let profileImage = 'https://i.pinimg.com/736x/ef/69/6c/ef696c8f834062707f48f2de45510079.jpg';
+            let username = data.username || 'View Profile';
+            let timeText = data.timestamp ? timeAgo(data.timestamp.toDate()) : 'Just now';
+
+            // ✅ Fetch user's profile if not stored in comment
+            try {
+                const userDoc = await db.collection('users').doc(data.userId).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    profileImage = userData.profileImageUrl || profileImage;
+                    username = userData.username || userData.name || username;
+                } else {
+                    console.warn(`⚠️ No user document found for userId: ${data.userId}`);
+                }
+            } catch (err) {
+                console.error('⚠️ Failed to fetch user profile:', err);
+            }
+
+            // Build comment HTML
+            commentsHTML.push(`
+                <div class="comment">
+                    <div class="comment-header">
+                        <img src="${profileImage}" alt="Profile" style="width:30px;height:30px;border-radius:50%;object-fit:cover;">
+                        <a href="Profile.html?profileId=${data.userId}" class="own-pro">${username}</a>
+                        <small>(${timeText})</small>
+                        <p><i class="ri-corner-down-right-fill"></i> ${data.text || ''}</p>
+                    </div>
+
+                    <div id="replies-${doc.id}" class="replies" style="padding-left:10px"></div>
+
+                    <div id="replyForm-${doc.id}" style="display: none;">
+                        <div class="reply-form">
+                            <textarea id="replyInput-${doc.id}" placeholder="Write a reply..."></textarea>
+                            <button onclick="submitReply('${doc.id}')" class='submitReply'>
+                                <i class="ri-send-plane-2-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="like-dislike">
+                        ${deleteButton}
+                        <button onclick="toggleReplyForm('${doc.id}')" class="reply-btn">Reply</button>
+                    </div>
+                </div>
+            `);
+        }
+
+        // Append all comments
+        commentsSection.innerHTML = commentsHTML.join('');
+
+        // Load replies for each comment
+        for (const doc of snapshot.docs) {
+            displayReplies(doc.id);
+        }
+    } catch (error) {
+        console.error('🔥 Error fetching comments:', error);
+        commentsSection.innerHTML =
+            '<p>Unable to load comments. Please check your connection and try again later.</p>';
+    }
 }
 
+
+// Toggle reply form visibility
+function toggleReplyForm(commentId) {
+    const replyForm = document.getElementById(`replyForm-${commentId}`);
+    replyForm.style.display = replyForm.style.display === 'none' ? 'block' : 'none';
+}
+
+// Submit reply to Firestore
+function submitReply(commentId) {
+    const replyInput = document.getElementById(`replyInput-${commentId}`);
+    const replyText = replyInput.value.trim();
+    const currentUser = localStorage.getItem('username');
+
+    if (replyText) {
+        db.collection('posts').doc(postId).collection('comments').doc(commentId).collection('replies').add({
+            userId: currentUserProfileId,
+            username: currentUser,
+            text: replyText,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+            replyInput.value = ''; // Clear input after submission
+            displayReplies(commentId); // Refresh replies
+        }).catch(error => {
+            console.error('Error posting reply:', error);
+        });
+    }
+}
+
+// Display replies for a specific comment
+function displayReplies(commentId) {
+    const repliesContainer = document.getElementById(`replies-${commentId}`);
+    repliesContainer.innerHTML = ''; // Clear existing replies
+
+    db.collection('posts').doc(postId).collection('comments').doc(commentId).collection('replies')
+        .orderBy('timestamp', 'asc').get().then(snapshot => {
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const replyElement = `
+                    <div class="reply">
+                        <div class="reply-header">
+                            <a href="Profile.html?profileId=${data.userId}" class="own-pro">${data.username || 'View Profile'}</a><small>(${timeAgo(data.timestamp.toDate())})</small>
+                        </div>
+                        <p><i class="ri-corner-down-right-fill"></i> ${data.text}</p>
+                    </div>
+                `;
+                repliesContainer.innerHTML += replyElement;
+            });
+        }).catch(error => {
+            console.error('Error loading replies:', error);
+        });
+}
 
 // Function to delete a comment
 function deleteComment(commentId) {
@@ -243,22 +1054,23 @@ function deleteComment(commentId) {
 // Function to handle comment submission
 document.getElementById('commentForm').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    const commentText = document.getElementById('commentInput').value;
-    let username = localStorage.getItem('username'); // Assuming the username is stored in localStorage
-    if (!username) {
-        username.innerHTML = "Anonymous"; // Default to "Anonymous" if username is null or not found
+
+    if (!currentUserProfileId) {
+        showModal();
+        return;
     }
+
+    const commentText = document.getElementById('commentInput').value;
+    const username = localStorage.getItem('username'); // Assuming the username is stored in localStorage
 
     if (commentText.trim()) {
         const comment = {
-            userId: currentUserProfileId,  // Assuming current user's profile ID is available
+            userId: currentUserProfileId,
             username: username,
             text: commentText,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         };
 
-        // Add the comment to Firestore
         db.collection('posts').doc(postId).collection('comments').add(comment).then(() => {
             document.getElementById('commentInput').value = ''; // Clear the comment input
             displayComments(); // Refresh the comment section
@@ -268,15 +1080,10 @@ document.getElementById('commentForm').addEventListener('submit', function(e) {
     }
 });
 
-
 // Initialize page
 displayPost();
 
-    </script>  <!-- Your JS file -->
-
-    <script>
-
-        // Helper function to format large numbers
+// Helper function to format large numbers
 function formatViewsCount(number) {
     if (number >= 1000000) {
         return (number / 1000000).toFixed(1) + 'M'; // For 1 million or more
@@ -286,41 +1093,79 @@ function formatViewsCount(number) {
         return number; // For less than 1 thousand
     }
 }
-        // Function to increment views count for the post
-function incrementViews(postId) {
-    const postRef = db.collection('posts').doc(postId);
-    
-    // Increment the view count using Firestore's increment function
-    postRef.update({
-        views: firebase.firestore.FieldValue.increment(1)
-    }).then(() => {
-        console.log('View count incremented successfully.');
-        displayViews(postId);  // Call function to display the updated views
-    }).catch(error => {
-        console.error('Error incrementing view count:', error);
-    });
-}
 
-// Function to display views on the code-preview page
-function displayViews(postId) {
-    const viewsElement = document.getElementById('viewsCount');
-
-    db.collection('posts').doc(postId).get().then(doc => {
-        if (doc.exists) {
-            const data = doc.data();
-            const views = data.views || 0;
-            viewsElement.innerHTML =`<i class="ri-organization-chart"></i>  ${formatViewsCount(views)} Views`; // Use the format function
+// Additional missing functions
+function toggleSavePost(postId) {
+    if (!currentUserProfileId) {
+        showModal();
+        return;
+    }
+    const userRef = db.collection('users').doc(currentUserProfileId);
+    userRef.get().then(doc => {
+        const savedPosts = doc.data().savedPosts || [];
+        const saveBtn = document.getElementById('savePostButton');
+        if (savedPosts.includes(postId)) {
+            // Unsave
+            userRef.update({ savedPosts: savedPosts.filter(id => id !== postId) });
+            saveBtn.textContent = 'Save Post';
+        } else {
+            // Save
+            userRef.update({ savedPosts: [...savedPosts, postId] });
+            saveBtn.textContent = 'Unsave Post';
         }
-    }).catch(error => {
-        console.error('Error fetching views:', error);
     });
 }
 
+function downloadCode(zipFileUrl) {
+    if (!currentUserProfileId) {
+        showModal();
+        return;
+    }
+    // Increment downloads count in Firestore
+    const postRef = db.collection('posts').doc(postId);
+    postRef.update({ downloads: firebase.firestore.FieldValue.increment(1) }).then(() => {
+        console.log('Download count incremented');
+    }).catch(error => {
+        console.error('Error incrementing download count:', error);
+    });
+    // Show download modal
+    document.getElementById('downloadModal').classList.add('show');
+    const progressBar = document.getElementById('progressBar');
+    const downloadMessage = document.getElementById('downloadMessage');
+    downloadMessage.textContent = 'Preparing download...';
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += 10;
+        progressBar.style.width = progress + '%';
+        if (progress >= 100) {
+            clearInterval(interval);
+            downloadMessage.textContent = 'Download ready!';
+            setTimeout(() => {
+                window.open(zipFileUrl, '_blank');
+                hideDownloadModal();
+            }, 500);
+        }
+    }, 200);
+}
 
-// Initialize views on page load
-incrementViews(postId);
-    </script>
+function hideDownloadModal() {
+    document.getElementById('downloadModal').classList.remove('show');
+}
 
-    <script></script>
+function copyLink() {
+    const shareLink = document.getElementById('shareLink');
+    shareLink.select();
+    document.execCommand('copy');
+    alert('Link copied to clipboard!');
+}
+
+// Event listener for share button
+document.getElementById('sharePostButton').addEventListener('click', function() {
+    const shareLink = document.getElementById('shareLink');
+    shareLink.value = window.location.href;
+    document.getElementById('shareModal').style.display = 'block';
+});
+
+</script>
 </body>
 </html>
