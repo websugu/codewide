@@ -248,7 +248,7 @@ hr{
     text-align: left;
 }
 /* Button Styles */
-#createPostButton{
+#createPostButton, #contactMeButton{
     background-color:var(--create-btn-bg-color);
     color: var(--txts-btn-color);
     border: none;
@@ -314,7 +314,7 @@ hr{
     border-radius: 5px;
     cursor: pointer;
     transition: all ease-out 0.40s;
-    background-color:var(--popup-bg-color);
+    /* background-color:var(--popup-bg-color); */
     font-size: 15px;
 }#followerCount:hover ,#profileLikes:hover ,#viewsCount:hover{
     
@@ -354,6 +354,7 @@ hr{
     text-align: center;
     font-size: 15px;
     font-weight: 400;
+    width: 100%;
 }
 hr{
     border: 1px solid var(--text-color-p);
@@ -399,6 +400,8 @@ hr{
     border-radius: 20px;
     width: 35%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+    height: fit-content;
 }
 .not-yet{
     margin: 50px auto;
@@ -423,7 +426,7 @@ hr{
     padding: 10px 20px;
     border-radius: 50px;
     cursor: pointer;
-    font-weight: 400;
+    font-weight: 600;
     font-size: 15px;
 }
 .follower-item-1{
@@ -1366,6 +1369,11 @@ hr{
 }
 .delete{
     top: 180px;right:10px;
+}
+.top-1{
+    width: 90%;
+    margin: auto;
+    text-align: center;
 }
 }
 
