@@ -4,7 +4,7 @@ body.light-theme {
     --bg-color:  #ffffff;
     --text-color: #000000;
     --text-color-gray:#676666;
-    --text-color-p:#434343;
+    --text-color-p:#2f2f2f;
     --btn-bg-color: #ffffff;
     --btn-text-color: #fff;
     --btn-outline-color: rgba(122, 123, 125, 0.334);
@@ -12,17 +12,17 @@ body.light-theme {
     --dropdown-item-bg-color: #ffffff;
     --create-btn-bg-color: #030303;
     --txts-btn-color:  #ffffff;
-    --popup-bg-color:  #ffffff;
+    --popup-bg-color:  hsl(0 0% 96.08% / 1);
     --owner-bg-color:  #ffffff;
 }
 
 body.dark-theme {
     --logo-color:#e2e1de;
     --image-color: 1;
-    --bg-color:#090c12;
+    --bg-color:hsl(0 0% 6.67% / 1);
     --text-color: #ffffff;
     --text-color-gray:#989898;
-    --text-color-p:#9b9b9b;
+    --text-color-p:rgb(167, 167, 167);;
     --btn-bg-color: #131111;
     --btn-text-color: #fff;
     --btn-outline-color: rgba(255, 255, 255, 0.11);
@@ -30,7 +30,7 @@ body.dark-theme {
     --dropdown-item-bg-color: #ffffff;
     --create-btn-bg-color: #ffffff;
     --txts-btn-color:  #000000;
-    --popup-bg-color:  #0d1218;
+    --popup-bg-color:  hsl(0 0% 11.76% / 1);
     --owner-bg-color:  #292c3215;
 }
 
@@ -41,6 +41,5 @@ div.sticky {
     background-color: var(--bg-color);
     z-index: 100;
     padding: 10px 0;
-    margin-bottom: 30px;
-
+    margin-bottom: 20px;
   }
