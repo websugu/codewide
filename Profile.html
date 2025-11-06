@@ -87,7 +87,7 @@
 <body>
     <button id="themeToggle" class="Toggle" style="border: none;background:transparent;display: none;"><i class="ri-toggle-line"></i></button>
     <div class="container mt-4">
-    <button class="back" onclick="window.location.href='Posts.html' "><i class="ri-arrow-left-line"></i> back</button>
+    <button class="back" onclick="window.location.href='Posts.html' "><i class="ri-arrow-left-line"></i></button>
         <!-- Profile Information -->
         <div id="profileContainer">
             <div class="prof-page-f">
@@ -137,7 +137,7 @@
                     </div>    
                     </div>
                     <div>
-                    <button id="followButton">Subscribe</button>
+                    <button id="followButton" style="background:none;border: none;cursor:default;">Subscribe</button>
                     <button id="contactMeButton" onclick="openContactModal()" style="display: none;"><i class="ri-mail-line"></i> Contact</button>
                     <button id="createPostButton" class="" style="display:none;"><i class="ri-add-large-fill"></i> Create</button>
                     <button id="openModalBtn2" class="btn-followers" style="display: none; font-size: 20px;font-weight: 650;border-radius: 50px;"><i class="ri-more-2-fill"></i></button>
@@ -1001,7 +1001,7 @@ function toggleFollow(currentFollowers) {
         // User is already following, unfollow
         const updatedFollowers = currentFollowers.filter(followerId => followerId !== currentUserProfileId);
         profileDoc.update({ followers: updatedFollowers }).then(() => {
-            document.getElementById('followButton').innerText = 'Subscribe';
+            document.getElementById('followButton').innerHTML = '<button id="followButton" class="followButton">Subscribe</button>';
             document.getElementById('followerCount').innerText = `${updatedFollowers.length} Subscribers`;
         }).catch(error => {
             console.error('Error unfollowing profile:', error);
@@ -1010,7 +1010,7 @@ function toggleFollow(currentFollowers) {
         // User is not following, follow
         const updatedFollowers = [...currentFollowers, currentUserProfileId];
         profileDoc.update({ followers: updatedFollowers }).then(() => {
-            document.getElementById('followButton').innerText = 'Subscribed';
+            document.getElementById('followButton').innerHTML = '<button class="subscribed-btn">Subscribed</button>';
             document.getElementById('followerCount').innerText = `${updatedFollowers.length} Subscribers`;
             // Create notification for the profile owner
             createNotification(profileId, 'Subscribe', currentUserProfileId);
@@ -1044,11 +1044,11 @@ function toggleFollow(currentFollowers) {
                     // Check if the current user is following this profile
                     if (data.followers && data.followers.includes(currentUserProfileId)) {
                         // User is already following
-                        document.getElementById('followButton').innerText = 'Subscribed';
+                        document.getElementById('followButton').innerHTML = '<button class="subscribed-btn">Subscribed</button>';
 
                     } else {
                         // User is not following
-                        document.getElementById('followButton').innerText = 'Subscribe';
+                        document.getElementById('followButton').innerHTML = '<button id="followButton" class="followButton">Subscribe</button>';
                         
                     }
         
