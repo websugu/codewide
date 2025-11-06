@@ -259,15 +259,26 @@ hr{
 }#createPostButton i{
     font-weight: 650;
 }
-#followButton{
+.followButton{
     background-color: var(--create-btn-bg-color);
     color: var(--txts-btn-color);
     border-radius: 50px;
     border: 1px solid;
     padding: 10px 30px;
     cursor: pointer;
-     font-weight: 650;
+    font-weight: 650;
 }
+.subscribed-btn{
+    background-color: var(--subscribed-btn);
+    color: var(--text-color);
+    border-radius: 50px;
+    border:none;
+    padding: 10px 30px;
+    cursor: pointer;
+    font-weight: 650;
+}
+
+
 .post{
     position: relative;
     cursor: pointer;
@@ -300,7 +311,7 @@ hr{
     background-color: rgb(149, 11, 11);
 }
 #followButton:hover{
-    box-shadow: 0 5px 15px rgba(128, 127, 127, 0.211);
+    opacity: 0.50px;
 }
 
 #deleteProfileButton{
