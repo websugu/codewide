@@ -28,7 +28,7 @@
     border-radius: 50%;
     padding: 5px;
     object-fit: cover;
-    width:50% ;
+    width:30% ;
     margin: auto;
 }
 
@@ -128,7 +128,7 @@
                             <div id="views-skeleton" class="skeleton-text"></div>
                         
                             <!-- Actual content hidden initially -->
-                            <p id="followerCount" style="display: none;">0 Followers </p>
+                            <p id="followerCount" style="display: none;">0 Subscribers </p>
                             
                             <p id="profileLikes" style="display: none;">0 Likes </p>
                             
@@ -137,9 +137,9 @@
                     </div>    
                     </div>
                     <div>
-                    <button id="followButton">Follow</button>
-                    <button id="createPostButton" class="" style="display:none;"><i class="ri-add-large-fill"></i> Create New Post</button>
-                    <button id="openModalBtn2" class="btn-followers" style="display: none; font-size: 20px;font-weight: 600;"><i class="ri-more-2-fill"></i></button> 
+                    <button id="followButton">Subscribe</button>
+                    <button id="createPostButton" class="" style="display:none;"><i class="ri-add-large-fill"></i> Create</button>
+                    <button id="openModalBtn2" class="btn-followers" style="display: none; font-size: 20px;font-weight: 650;border-radius: 50px;"><i class="ri-more-2-fill"></i></button> 
                    
                     </div> 
                 
@@ -217,7 +217,7 @@
                 <div id="followersModal" class="modal" style="text-align: center;">
                     <div class="modal-content">
                         <span class="close" id="closeFollowersModal">&times;</span>
-                        <h4 id="Followers">Followers</h4>
+                        <h4 id="Followers">Subscribers</h4>
                         <div id="followersList">
                             <!-- Followers will be dynamically added here -->
                         </div>
@@ -966,8 +966,8 @@ function toggleFollow(currentFollowers) {
         // User is already following, unfollow
         const updatedFollowers = currentFollowers.filter(followerId => followerId !== currentUserProfileId);
         profileDoc.update({ followers: updatedFollowers }).then(() => {
-            document.getElementById('followButton').innerText = 'Follow';
-            document.getElementById('followerCount').innerText = `${updatedFollowers.length} Followers`;
+            document.getElementById('followButton').innerText = 'Subscribe';
+            document.getElementById('followerCount').innerText = `${updatedFollowers.length} Subscribers`;
         }).catch(error => {
             console.error('Error unfollowing profile:', error);
         });
@@ -975,10 +975,10 @@ function toggleFollow(currentFollowers) {
         // User is not following, follow
         const updatedFollowers = [...currentFollowers, currentUserProfileId];
         profileDoc.update({ followers: updatedFollowers }).then(() => {
-            document.getElementById('followButton').innerText = 'Following';
-            document.getElementById('followerCount').innerText = `${updatedFollowers.length} Followers`;
+            document.getElementById('followButton').innerText = 'Subscribed';
+            document.getElementById('followerCount').innerText = `${updatedFollowers.length} Subscribers`;
             // Create notification for the profile owner
-            createNotification(profileId, 'follow', currentUserProfileId);
+            createNotification(profileId, 'Subscribe', currentUserProfileId);
         }).catch(error => {
             console.error('Error following profile:', error);
         });
@@ -995,17 +995,17 @@ function toggleFollow(currentFollowers) {
                     document.getElementById('name').innerText = data.name || 'No name';
                     document.getElementById('bio').innerHTML = data.bio || '<p><i> No description has been added to this profile</i></p>';
                     document.getElementById('addlink').innerHTML =(data.addlink ? '<p class="addlink"><i class="ri-global-line" style="color: var(--text-color-p);"></i> Visite website</p>' : '<p style= "display:none">No link added</p>');
-                    document.getElementById('followerCount').innerText = `${data.followers ? data.followers.length : 0} Followers`;
-                    document.getElementById('Followers').innerText = `${data.followers ? data.followers.length : 0} Followers`;
+                    document.getElementById('followerCount').innerText = `${data.followers ? data.followers.length : 0} Subscribers`;
+                    document.getElementById('Followers').innerText = `${data.followers ? data.followers.length : 0} Subscribers`;
                     document.getElementById('addlink').title = data.addlink;
                     // Check if the current user is following this profile
                     if (data.followers && data.followers.includes(currentUserProfileId)) {
                         // User is already following
-                        document.getElementById('followButton').innerText = 'Following';
+                        document.getElementById('followButton').innerText = 'Subscribed';
 
                     } else {
                         // User is not following
-                        document.getElementById('followButton').innerText = 'Follow';
+                        document.getElementById('followButton').innerText = 'Subscribe';
                         
                     }
         
