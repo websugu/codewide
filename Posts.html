@@ -62,14 +62,12 @@
                      </div>
                      
                     <ul class="navbar-nav ml-auto" >
-                        <div id="onpen-search">
+                        <div id="onpen-search" style="margin-right: 10px;">
                         <input id="searchInput" type="text" class="form-inp" placeholder="Search posts or name..." oninput="showSuggestions(this.value)">
                         <!-- <ul id="suggestionsList" class="dropdown-list" style="display: none;"></ul> Dropdown List -->
                      </div>
-                        <li class="nav-item">
-                            <button  id="myprof"  onclick="myprofile()">
-                                <img id="profileImage" src="images/defauld-profile.jpg" alt="" style="width: 40px; height: 40px; border-radius: 50%;border: 2px solid var(--txts-btn-color);">
-                            </button>
+                        <li class="nav-item" onclick="myprofile()">
+                            <img id="profileImage" src="images/defauld-profile.jpg" alt="" style="width: 45px; height: 45px; border-radius: 50%;border: 1pxpx solid gray;cursor: pointer;margin-right: ;">
                         </li>
                     </ul>
                 </div> 
@@ -93,7 +91,7 @@
     <div class="sticky">
         <div class="tag-buttons-container">
             <div>
-                <a href="create-post.html"><button class="btn btn-outline-primary me-3" style="font-size: 15px;font-weight: 460;border-radius: 20px;text-wrap: nowrap"><i class="ri-book-shelf-line"></i> Categories</button></a>
+                <a onclick="myprofile()"><button class="btn btn-outline-primary me-3" style="font-size: 15px;font-weight: 600;border-radius: 20px;text-wrap: nowrap;background-color: var(--create-btn-bg-color);color: var(--txts-btn-color);border: none;"><i class="ri-add-large-fill"></i> Create</button></a>
             </div>
             <!-- <button class="prev btn-light" onclick="scrollTags(-1)"><i class="ri-arrow-left-line"></i></button> -->
             <div class="tag-buttons">
