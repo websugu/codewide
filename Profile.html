@@ -138,10 +138,11 @@
                     </div>
                     <div>
                     <button id="followButton">Subscribe</button>
+                    <button id="contactMeButton" onclick="openContactModal()" style="display: none;"><i class="ri-mail-line"></i> Contact</button>
                     <button id="createPostButton" class="" style="display:none;"><i class="ri-add-large-fill"></i> Create</button>
-                    <button id="openModalBtn2" class="btn-followers" style="display: none; font-size: 20px;font-weight: 650;border-radius: 50px;"><i class="ri-more-2-fill"></i></button> 
-                   
-                    </div> 
+                    <button id="openModalBtn2" class="btn-followers" style="display: none; font-size: 20px;font-weight: 650;border-radius: 50px;"><i class="ri-more-2-fill"></i></button>
+
+                    </div>
                 
                
                     <!-- Button to View Followers -->
@@ -221,9 +222,29 @@
                         <div id="followersList">
                             <!-- Followers will be dynamically added here -->
                         </div>
-                        
+
                     </div>
                 </div>
+        <!-- Modal for displaying full bio -->
+        <div id="bioModal" class="modal" style="text-align: center;">
+            <div class="modal-content">
+                <span class="close" id="closeBioModal">&times;</span>
+                <h4>Bio</h4>
+                <div id="fullBioContent">
+                    <!-- Full bio will be displayed here -->
+                </div>
+            </div>
+        </div>
+        <!-- Modal for displaying contact email -->
+        <div id="contactModal" class="modal" style="text-align: center;">
+            <div class="modal-content">
+                <span class="close" onclick="closeContactModal()">&times;</span>
+                <h4>Contact Information</h4>
+                <div id="contactEmailContent">
+                    <!-- Email will be displayed here -->
+                </div>
+            </div>
+        </div>
         <!-- options -->
         <div id="optionsModal" class="modal">
             <div class="modal-content" id="modal-content-suc">
@@ -459,6 +480,12 @@
     </div>
 </div>
 <script>
+    // Bio modal functions
+    function openBioModal(fullBio) {
+        document.getElementById('fullBioContent').innerHTML = fullBio;
+        document.getElementById('bioModal').style.display = 'block';
+    }
+
 document.addEventListener('DOMContentLoaded', function() {
     // Handle closing the createProfileModal
     document.getElementById('closeCreateProfileModal').addEventListener('click', function() {
@@ -479,6 +506,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const editProfilePopup = document.getElementById('editProfilePopup');
         const optionsModal = document.getElementById('optionsModal');
         const followersModal = document.getElementById('followersModal');
+        const bioModal = document.getElementById('bioModal');
 
         if (event.target == createProfileModal) {
             createProfileModal.style.display = 'none';
@@ -501,6 +529,13 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.target == followersModal) {
             followersModal.style.display = 'none';
         }
+        if (event.target == bioModal) {
+            bioModal.style.display = 'none';
+        }
+    });
+
+    document.getElementById('closeBioModal').addEventListener('click', function() {
+        document.getElementById('bioModal').style.display = 'none';
     });
 });
 </script>
@@ -993,7 +1028,15 @@ function toggleFollow(currentFollowers) {
                     document.getElementById('profileImage').src = data.profileImageUrl || 'images/defauld-profile.jpg';
                     document.getElementById('username').innerText = data.username || 'No username';
                     document.getElementById('name').innerText = data.name || 'No name';
-                    document.getElementById('bio').innerHTML = data.bio || '<p><i> No description has been added to this profile</i></p>';
+                    const bioText = data.bio || '';
+                    const bioElement = document.getElementById('bio');
+                    if (bioText.length > 100) {
+                        const truncated = bioText.substring(0, 100) + '... ';
+                        bioElement.innerHTML = truncated + '<span class="show-more" style="color: var(--text-color); cursor: pointer;">Show more</span>';
+                        bioElement.querySelector('.show-more').addEventListener('click', () => openBioModal(bioText));
+                    } else {
+                        bioElement.innerHTML = bioText;
+                    }
                     document.getElementById('addlink').innerHTML =(data.addlink ? '<p class="addlink"><i class="ri-global-line" style="color: var(--text-color-p);"></i> Visite website</p>' : '<p style= "display:none">No link added</p>');
                     document.getElementById('followerCount').innerText = `${data.followers ? data.followers.length : 0} Subscribers`;
                     document.getElementById('Followers').innerText = `${data.followers ? data.followers.length : 0} Subscribers`;
@@ -1024,7 +1067,8 @@ function toggleFollow(currentFollowers) {
                         document.getElementById('editProfileBtn').style.display = 'inline'
                         document.getElementById('deleteProfileButton').style.display = 'inline'
                         document.getElementById('openModalBtn').style.display = 'inline';
-                        document.getElementById('openModalBtn2').style.display= 'inline'
+                        document.getElementById('openModalBtn2').style.display= 'inline';
+                        document.getElementById('contactMeButton').style.display='none'
         
                         // Handle edit button click 
                         document.getElementById('editProfileButton').addEventListener('click', () => {
@@ -1040,7 +1084,8 @@ function toggleFollow(currentFollowers) {
                         document.getElementById('editProfileBtn').style.display = 'none'
                         document.getElementById('deleteProfileButton').style.display = 'none'
                         document.getElementById('openModalBtn').style.display = 'none';
-                        document.getElementById('openModalBtn2').style.display= 'none'
+                        document.getElementById('openModalBtn2').style.display= 'none';
+                        document.getElementById('contactMeButton').style.display='inline'
                     }
                 } else {
                     console.error('No profile found with the given ID.');
@@ -1235,29 +1280,7 @@ function closeSuccessModal() {
         }
         
         
-        // Function to delete post (only for profile owner)
-        // Function to delete post (only for profile owner)
-function deletePost(postId) {
-    if (profileId === currentUserProfileId) {
-        // Show a confirmation dialog before deleting the post
-        const confirmDelete = confirm("Do you want to delete this post?");
-        
-        if (confirmDelete) {
-            // If the user confirms, proceed with deletion
-            db.collection('posts').doc(postId).delete().then(() => {
-                alert('Post deleted successfully.');
-                displayMyPosts();  // Refresh the posts section
-            }).catch(error => {
-                console.error('Error deleting post:', error);
-            });
-        } else {
-            // If the user cancels, do nothing
-            console.log('Post deletion canceled.');
-        }
-    } else {
-        alert('You do not have permission to delete this post.');
-    }
-}
+
 
         
         // Load posts initially
@@ -1458,7 +1481,7 @@ function fetchFollowers(profileId) {
                                 </div>
                             
                                 <div>
-                                    <a href="Profile.html?profileId=${followerId}"><button>Follow</button></a>
+                                    <a href="Profile.html?profileId=${followerId}"><button>Visite</button></a>
                                 </div>
                                 
                             </div>
@@ -1719,6 +1742,26 @@ function closeEditProfilePopup() {
 
 
 document.getElementById('editProfileBtn').onclick = openEditProfilePopup;
+    </script>
+    <script>
+        // Function to open the contact modal and display email
+        function openContactModal() {
+            db.collection('profiles').doc(profileId).get().then(doc => {
+                if (doc.exists) {
+                    const data = doc.data();
+                    const email = data.email || 'No email provided';
+                    document.getElementById('contactEmailContent').innerHTML = `<p>${email}</p>`;
+                    document.getElementById('contactModal').style.display = 'block';
+                }
+            }).catch(error => {
+                console.error('Error fetching profile:', error);
+            });
+        }
+
+        // Function to close the contact modal
+        function closeContactModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
     </script>
 </body>
 </html>
