@@ -56,8 +56,8 @@
                     
                 <div class="collapse navbar-collapse" id="navbarNav" >
                     <div class="links">
-                        <a href="">Features</a>
-                        <a href="">community</a>
+                        <a href="Posts.html" style="color: var(--text-color);font-weight: 500;">Discover</a>
+                        <a href="Community.html">Community</a>
                         <button id="themeToggle" class="Toggle" style="border: none;background:transparent;"><i class="ri-toggle-line" style="color: rgb(40, 37, 37);"></i></button>
                      </div>
                      
@@ -67,7 +67,7 @@
                         <!-- <ul id="suggestionsList" class="dropdown-list" style="display: none;"></ul> Dropdown List -->
                      </div>
                         <li class="nav-item" onclick="myprofile()">
-                            <img id="profileImage" src="images/defauld-profile.jpg" alt="" style="width: 45px; height: 45px; border-radius: 50%;border: 1pxpx solid gray;cursor: pointer;margin-right: ;">
+                            <img id="profileImage" src="images/defauld-profile.jpg" alt="" style="width: 45px; height: 45px; border-radius: 50%;border: 1pxpx solid gray;cursor: pointer;">
                         </li>
                     </ul>
                 </div> 
@@ -95,14 +95,13 @@
             </div>
             <!-- <button class="prev btn-light" onclick="scrollTags(-1)"><i class="ri-arrow-left-line"></i></button> -->
             <div class="tag-buttons">
-                <!-- <button class="btn btn-outline-primary active me-2" onclick="filterByTag('all')">All</button> -->
-                <!-- <button class="btn btn-outline-primary active me-2" onclick="filterByTag('all')">All</button> -->
-                <button class="btn btn-outline-primary me-2">Login Forms</button>
-                <button class="btn btn-outline-primary me-2">Navbars</button>
-                <button class="btn btn-outline-primary me-2" >Inputs</button>
-                <button class="btn btn-outline-primary me-2" >Landing Pages</button>
-                <button class="btn btn-outline-primary me-2" >Buttons</button>
-                <button class="btn btn-outline-primary me-2" >Toggles</button>          
+                <button class="btn btn-outline-primary active me-2" onclick="filterByTag('all')">All</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Login Forms')">Login Forms</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Navbars')">Navbars</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Inputs')">Inputs</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Landing Pages')">Landing Pages</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Buttons')">Buttons</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Toggles')">Toggles</button>
             </div>
             <!-- <button class="next btn-light" onclick="scrollTags(1)"><i class="ri-arrow-right-line"></i></button> -->
         </div>
@@ -410,6 +409,8 @@ function generateUUID() {
             postsSection.innerHTML = '';  // Clear existing posts
             let postsFound = false;  // To track if any posts match the filters
 
+            console.log('Displaying posts for tag:', selectedTag, 'search:', searchQuery);
+
             // Function to truncate ownerName
 function truncateOwnerName(name, maxLength) {
     if (name.length > maxLength) {
@@ -427,25 +428,31 @@ function formatViews(views) {
     }
   }
 db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
+    console.log('Fetched posts count:', snapshot.size);
     snapshot.forEach(doc => {
         const data = doc.data();
-        const truncatedOwnerName = truncateOwnerName(data.ownerName, 30); // Truncate ownerName to 10 characters
+        console.log('Post data:', doc.id, data);
+        const ownerName = data.ownerName || 'Anonymous';
+        const truncatedOwnerName = truncateOwnerName(ownerName, 30);
         const profileLink = `<a href="Profile.html?profileId=${data.profileId}"  class="link-pro">${truncatedOwnerName}</a>`;
-        const truncatedDescription = truncateDescription(data.description, 7);
+        const truncatedDescription = truncateDescription(data.description || '', 7);
         const postedMoment = timeAgo(data.timestamp.toDate());
 
         // Filter based on search query and selected tag
-        const searchText = (data.ownerName + ' ' + data.description).toLowerCase();
-        const hasTag = selectedTag === 'all' || data.tags.includes(selectedTag);
+        const searchText = (ownerName + ' ' + (data.description || '')).toLowerCase();
+        const hasTag = selectedTag === 'all' || (data.tags && data.tags.includes(selectedTag));
 
-        if (searchText.includes(searchQuery.toLowerCase()) && hasTag) {
+        console.log('Search text:', searchText, 'Has tag:', hasTag, 'Matches:', searchText.includes(searchQuery.toLowerCase()) && hasTag);
+
+        if (searchText.includes(searchQuery.toLowerCase()) && hasTag && !(data.tags && data.tags.includes('community'))) {
+            const postImageUrl = data.postImageUrl || 'images/default-post.jpg';
             const postElement = `
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card" onclick="openCodePreview('${doc.id}')">
                         <div>
-                            <img class="card-img-top" src="${data.postImageUrl}" alt="Post Image" height="240">
+                            <img class="card-img-top" src="${postImageUrl}" alt="Post Image" height="240">
                         </div>
-                        
+
                         <div class="card-body">
                             <div class="own-prof">
                                 <div class="own-prof-1">
@@ -460,7 +467,7 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
                         </div>
                     </div>
                 </div>
-                
+
             `;
             postsSection.innerHTML += postElement;
             postsFound = true;  // A post has been found
@@ -473,6 +480,8 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
     } else {
         document.getElementById('notFoundMessage').style.display = 'none';
     }
+}).catch(error => {
+    console.error('Error fetching posts:', error);
 }).finally(() => {
     hideSkeletonLoader();
 });
@@ -592,4 +601,3 @@ fetchPosts();
 </body>
 
 </html>
-
