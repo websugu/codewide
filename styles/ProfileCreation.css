@@ -20,10 +20,11 @@
     #openLinkDeviceModal{
     background-color: var(--create-btn-bg-color);
     color: var(--txts-btn-color);
-    border-radius: 5px;
+    border-radius: 50px;
     border: none;
-    padding: 5px;
+    padding:10px 12px;
     margin-right: 10px;
+    font-weight: 600;
 
     }
     .page-design{
@@ -41,6 +42,14 @@
         padding: 10px;
         font-weight: 550;
     }
+    .logo-streakcode{
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+  letter-spacing: -1.50px;
+  color: var(--logo-color);
+}
     /* Form Container */
     .form{
         display: grid;
@@ -49,9 +58,10 @@
         justify-content: center;
     }
     .form-div {
-        width: 615px;margin: 10px auto;
+        max-width: 615px;
+        width: 100%;margin: 10px auto;
     }.form-div label{
-        font-size: 12px;
+    font-size: 12px;
     color: var(--text-color);
     font-weight: 200;
     }
@@ -128,13 +138,14 @@
     button[type="submit"]{
         background-color: var(--create-btn-bg-color);
         color: var(--txts-btn-color);
-        padding: 12px 25px;
+        padding: 12px 30px;
         border: none;
         border-radius: 50px;
         font-size: 16px;
         cursor: pointer;
         transition: background-color 0.3s;
-        margin:10px auto;
+        margin:15px auto;
+        font-weight: 650;
     }
     
     /* button[type="submit"]:hover {
@@ -269,18 +280,21 @@
         background-color: var( --popup-bg-color);
         color: var(--text-color);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        margin: 15% auto;
+        margin: 0% auto;
         padding: 25px;
         width: 80%;
+        height: 100vh;
         max-width: 500px;
         text-align: left;
-        border-radius: 10px;
+        border-radius: none;
+        overflow: auto;
     }
     .modal-content h3{
         font-size: 1.50rem;
         font-weight: 550;
         padding-bottom: 10px;
         color: var(--text-color);
+        text-align: center;
     }
     .modal-content p{
         font-size: 1.00rem;
@@ -289,10 +303,10 @@
     .modal-content button{
         background-color: var(--create-btn-bg-color);
         color: var(--txts-btn-color);
-        padding: 10px;
+        padding: 10px 30px;
         border-radius: 50px;
         border: none;
-        float: right;
+        font-weight: 600;
     }
     /* .close {
         color: #aaa;
@@ -308,18 +322,49 @@
         text-decoration: none;
     }
     
+    /* Avatar Grid */
+    .avatar-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        justify-items: center;
+    }
+
+    .avatar-option {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: border-color 0.3s;
+        object-fit: cover;
+    }
+
+    .avatar-option:hover {
+        border-color: var(--text-color);
+    }
+
     /* Mobile responsiveness */
     @media (max-width: 768px) {
         form {
             padding: 15px;
         }
-        
+
         h1 {
             font-size: 1.5rem;
         }
-    
+
         button[type="submit"] {
             padding: 10px;
+        }
+
+        .avatar-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .avatar-option {
+            width: 70px;
+            height: 70px;
         }
     }
     @media (max-width: 741px) {
@@ -372,16 +417,18 @@
     }
     @media (max-width:416px){
         .modal-content {
-            background-color: var( --popup-bg-color);
-            color: var(--text-color);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 50% auto;
-            padding: 25px;
-            width: 95%;
-            max-width: 500px;
-            text-align: left;
-            border-radius: 10px;
-        }
+        background-color: var( --popup-bg-color);
+        color: var(--text-color);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin: 0% auto;
+        padding: 25px;
+        width: 100%;
+        height: 100vh;
+        max-width: 100%;
+        text-align: left;
+        border-radius: none;
+        overflow: auto;
+    }
         .modal-content h3{
             font-size: 1.20rem;
             font-weight: 550;
@@ -394,5 +441,7 @@
         }
         #openLinkDeviceModal{
             margin-right: 10px;
+            padding: 10px;
+            font-size: 15px;
         }
     }
