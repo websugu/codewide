@@ -26,6 +26,7 @@
 <body class="light-theme">
     
     <!-- Navbar -->
+     <!-- Navbar (Optional) -->
     <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: #7676762e 1px solid;">
         <div class="container-fluid">
             <div onclick="window.location.href='Posts.html'" style="cursor: pointer;">
@@ -33,22 +34,22 @@
                     <div>
                         <i class="fa-solid fa-fire-flame-curved" style="color: #f26507;"></i>
                     </div>
-                    <div class="logo-streakcode">
+                    <div class="logo-streakcode" style='font-family: "Montserrat", sans-serif;'>
                         StreakCode
                     </div>
                 </div>
             </div>
-            <div style="display: flex;align-items: center;gap: 10px;">
-                <button onclick="myprofile()" id="myprof" class="full-prof">My profile</button>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="ri-menu-search-line"></i>
+            <div style="display: flex;align-items: center;gap: 0px;">
+                <button onclick="myprofile()" id="myprof" class="full-prof">Profile</button>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="background: none;color: var(--text-color);">
+                    <i class="ri-search-2-line"></i>
                 </button>
             </div>
                     
                 <div class="collapse navbar-collapse" id="navbarNav" >
                     <div class="links">
-                        <a href="Posts.html" >Discover</a>
-                        <a href="Community.html" style="color: var(--text-color);font-weight: 500;">Community</a>
+                        <a href="Posts.html">Discover</a>
+                        <a href="Community.html"  style="color: var(--text-color);font-weight: 500;">Community</a>
                         <button id="themeToggle" class="Toggle" style="border: none;background:transparent;"><i class="ri-toggle-line" style="color: rgb(40, 37, 37);"></i></button>
                      </div>
                      
@@ -183,7 +184,9 @@
             <img id="commentsModalOwnerImage" src="" alt="Owner Image" class="rounded-circle mr-3" width="50" height="50">
             <span id="commentsModalOwnerName" class="font-weight-bold"></span>
         </div>
-        <h5 id="commentsModalDescription" class="card-text"></h5>
+        <div class="card-text">
+            <h5 id="commentsModalDescription"></h5>
+        </div>
         <h4 id="commentsModalTitle">Comments</h4>
         <div id="commentsList" class="comments-list">
             <!-- Comments will be listed here -->
@@ -496,7 +499,7 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
                         const profileData = profileDoc.exists ? profileDoc.data() : null;
                         const ownerName = profileData ? profileData.name : 'Unknown';
                         const ownerImage = profileData ? profileData.profileImageUrl : 'images/defauld-profile.jpg';
-                        document.getElementById('commentsModalTitle').textContent = `Comments on ${ownerName}`;
+                        document.getElementById('commentsModalTitle').textContent = `Comments:`;
                         document.getElementById('commentsModalDescription').textContent = data.description;
                         document.getElementById('commentsModalOwnerName').textContent = ownerName;
                         document.getElementById('commentsModalOwnerImage').src = ownerImage;
@@ -536,7 +539,7 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
                         const commentTime = timeAgo(commentData.timestamp.toDate());
 
                         const commentDiv = document.createElement('div');
-                        commentDiv.className = 'comment-item d-flex p-2 border-bottom';
+                        commentDiv.className = 'comment-item d-flex p-3 ';
                         commentDiv.innerHTML = `
                             <img src="${commenterImage}" alt="${commenterName}" class="rounded-circle mr-3" style="width: 40px; height: 40px;">
                             <div>
