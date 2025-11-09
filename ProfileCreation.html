@@ -15,6 +15,18 @@
     href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
     rel="stylesheet"
 />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- font-family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <!-- font-family 2 -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="icon" type="image/x-icon" href="images/bintcode-fav - Copy.png">
     <link rel="stylesheet" href="styles/ProfileCreation.css">
     <link rel="stylesheet" href="styles/style.css">
     <script>
@@ -115,14 +127,28 @@
     }
 </style>
 <body>
-    <div style="background-color: rgba(95, 95, 95, 0.097);border-bottom: 1px solid var(--text-color-p);display: flex;align-items: center;cursor: pointer;justify-content: space-between;padding: 0px 5px;">
+    <div style=" border-bottom: 1px solid rgba(74, 74, 74, 0.24);display: flex;align-items: center;cursor: pointer;justify-content: space-around;padding: 10px 0;">
         <!-- <div>
             <div style="background:var(--create-btn-bg-color);width:fit-content;padding:10px 16px;border-radius:50%">
                 <div style="padding:5px;background:var(--txts-btn-color); border-radius:0px 50px 50px 0px"></div>
                 <div style="padding:8px;background:var(--txts-btn-color); border-radius:0px 50px 50px 0px; margin-top:2px"></div>
             </div>
         </div> -->
-        <h3 class="back" id="profileAction" onclick="window.location.href='Posts.html'"><i class="ri-arrow-left-line"></i> Discover</h3>
+        <div onclick="window.location.href='Posts.html'" style="cursor: pointer;">
+                <div style="display: flex;align-items: center;gap: 5px;font-weight: 700;font-size: 25px;">
+                    <div>
+                        <i class="fa-solid fa-fire-flame-curved" style="color: #f26507;"></i>
+                    </div>
+                    <div class="logo-streakcode">
+                        StreakCode
+                    </div>
+                </div>
+                <!-- <img src="images/Screenshot_2025-07-05_233237-removebg-preview.png" alt="" class="logo"> -->
+                <!-- <div style="background:var(--create-btn-bg-color);width:fit-content;padding:10px 15px;border-radius:50%">
+                    <div style="padding:4px;background:var(--txts-btn-color); border-radius:0px 50px 50px 0px"></div>
+                    <div style="padding:7px;background:var(--txts-btn-color); border-radius:0px 50px 50px 0px; margin-top:2px"></div>
+                </div> -->
+            </div>
         <button id="openLinkDeviceModal">Connect Profile</button>
     </div>
     <div>
@@ -136,17 +162,46 @@
 
 <!-- The Modal for Link Device -->
 <div id="linkDeviceModal" class="modal">
-    <div class="modal-content">
+    <div class="modal-content" style="text-align: center;">
         <span class="close" id="closeLinkDeviceModal">&times;</span>
-        <h2><i class="ri-qr-code-line"></i></h2>
-        <h3>Link Your Device</h3>
-        <form id="deviceLinkForm">
+        <h2 style="font-size: 50px;"><i class="ri-qr-code-line"></i></h2>
+        <div style="text-align: center;">
+            <h3>Connect With Code</h3>
+            <form id="deviceLinkForm">
             <input type="text" id="linkCode" required placeholder="Enter code" maxlength="8"/>
             <small id="linkStatus" style="color: red;"></small> <!-- Incorrect code message will appear here -->
             <div>
-                <button type="submit">Link Device</button>
+                <button type="submit">Connect Profile</button>
             </div>
-        </form> 
+        </form>
+        </div>
+    </div>
+</div>
+
+<!-- The Modal for Pick Avatar -->
+<div id="pickAvatarModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="closePickAvatarModal">&times;</span>
+        <h3>Pick an Avatar</h3>
+        <div class="avatar-grid">
+            <img src="Pick Avatars/Avatar-1.jpeg" alt="Avatar 1" class="avatar-option" data-url="Pick Avatars/Avatar-1.jpeg">
+            <img src="Pick Avatars/Avatar-2.jpeg" alt="Avatar 2" class="avatar-option" data-url="Pick Avatars/Avatar-2.jpeg">
+            <img src="Pick Avatars/Avatar-3.jpeg" alt="Avatar 3" class="avatar-option" data-url="Pick Avatars/Avatar-3.jpeg">
+            <img src="Pick Avatars/Avatar-4.jpeg" alt="Avatar 4" class="avatar-option" data-url="Pick Avatars/Avatar-4.jpeg">
+            <img src="Pick Avatars/avatar-5.jpeg" alt="Avatar 5" class="avatar-option" data-url="Pick Avatars/avatar-5.jpeg">
+            <img src="Pick Avatars/Avatar-6.jpeg" alt="Avatar 6" class="avatar-option" data-url="Pick Avatars/Avatar-6.jpeg">
+            <img src="Pick Avatars/Avatar-7.jpeg" alt="Avatar 1" class="avatar-option" data-url="Pick Avatars/Avatar-7.jpeg">
+            <img src="Pick Avatars/Avatar-8.jpeg" alt="Avatar 2" class="avatar-option" data-url="Pick Avatars/Avatar-8.jpeg">
+            <img src="Pick Avatars/Avatar-9.jpeg" alt="Avatar 3" class="avatar-option" data-url="Pick Avatars/Avatar-9.jpeg">
+            <img src="Pick Avatars/Avatar-10.jpeg" alt="Avatar 4" class="avatar-option" data-url="Pick Avatars/Avatar-10.jpeg">
+            <img src="Pick Avatars/avatar-11.jpeg" alt="Avatar 5" class="avatar-option" data-url="Pick Avatars/avatar-11.jpeg">
+            <img src="Pick Avatars/Avatar-12.jpeg" alt="Avatar 6" class="avatar-option" data-url="Pick Avatars/Avatar-12.jpeg">
+            <img src="Pick Avatars/Avatar-13.jpeg" alt="Avatar 1" class="avatar-option" data-url="Pick Avatars/Avatar-13.jpeg">
+            <img src="Pick Avatars/Avatar-14.jpeg" alt="Avatar 2" class="avatar-option" data-url="Pick Avatars/Avatar-14.jpeg">
+            <img src="Pick Avatars/Avatar-15.jpeg" alt="Avatar 3" class="avatar-option" data-url="Pick Avatars/Avatar-15.jpeg">
+            <img src="Pick Avatars/Avatar-16.jpeg" alt="Avatar 4" class="avatar-option" data-url="Pick Avatars/Avatar-16.jpeg">
+            <img src="Pick Avatars/avatar-17.jpeg" alt="Avatar 5" class="avatar-option" data-url="Pick Avatars/avatar-17.jpeg">
+        </div>
     </div>
 </div>
 
@@ -155,6 +210,7 @@
         <input type="file" id="profileImage" accept="image/*" style="display: none;"/>
         <img id="profileImagePreview" src="images/defauld-profile.jpg" alt="Profile Image Preview" style="margin-bottom: 20px;"/><br>
         <label for="profileImage" class="upload-btn">Upload image</label>
+        <button type="button" id="pickAvatarBtn" class="upload-btn" style="margin-left: 10px;background: none;border: none;padding: none;">Pick an Avatar</button>
         <button id="themeToggle" class="Toggle" style="border: none;background:transparent;display: none;"><i class="ri-toggle-line"></i></button>
     </div>
     
@@ -193,8 +249,11 @@
                       <span id="linkErrorMessage" style="color: red; display: none;">Please enter a valid URL.</span>
                 </div>
                   
-                  <div>
-                      <button type="submit">Continue</button>
+                  <div style="text-align: center;">
+                      <button type="submit">Create Profile</button>
+                  </div>
+                  <div style="text-align: center;">
+                        <small>Lost your profile? <a style="font-weight: 600;cursor: pointer;color: rgb(41, 41, 240);" id="openLinkDeviceModaldown"> Recover</a></small>
                   </div>
             </div>
             
@@ -338,9 +397,13 @@
         // Link device modal
         const linkDeviceModal = document.getElementById('linkDeviceModal');
         const openModalBtn = document.getElementById('openLinkDeviceModal');
+        const openModalBtndown = document.getElementById('openLinkDeviceModaldown');
         const closeModalBtn = document.getElementById('closeLinkDeviceModal');
 
         openModalBtn.onclick = function() {
+            linkDeviceModal.style.display = 'block';
+        };
+         openModalBtndown.onclick = function() {
             linkDeviceModal.style.display = 'block';
         };
         closeModalBtn.onclick = function() {
@@ -374,6 +437,34 @@
             });
         });
 
+        // Pick Avatar modal
+        const pickAvatarModal = document.getElementById('pickAvatarModal');
+        const pickAvatarBtn = document.getElementById('pickAvatarBtn');
+        const closePickAvatarModal = document.getElementById('closePickAvatarModal');
+
+        pickAvatarBtn.onclick = function() {
+            pickAvatarModal.style.display = 'block';
+        };
+        closePickAvatarModal.onclick = function() {
+            pickAvatarModal.style.display = 'none';
+        };
+        window.onclick = function(event) {
+            if (event.target === pickAvatarModal) {
+                pickAvatarModal.style.display = 'none';
+            }
+        };
+
+        // Avatar selection
+        document.querySelectorAll('.avatar-option').forEach(img => {
+            img.addEventListener('click', function() {
+                const avatarUrl = this.getAttribute('data-url');
+                document.getElementById('profileImagePreview').src = avatarUrl;
+                // Clear the file input since we're using an avatar
+                document.getElementById('profileImage').value = '';
+                pickAvatarModal.style.display = 'none';
+            });
+        });
+
         // Consolidated form submission
         document.getElementById('createProfileForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -386,6 +477,7 @@
             const bio = document.getElementById('bio').value;
             const file = document.getElementById('profileImage').files[0];
             const addlink = document.getElementById('addlink').value;
+            const avatarUrl = document.getElementById('profileImagePreview').src.startsWith('Pick Avatars/') ? document.getElementById('profileImagePreview').src : '';
 
             // Validations
             if (!username || !name || !email || !password) {
@@ -450,6 +542,8 @@
                             }
                         );
                     });
+                } else if (avatarUrl) {
+                    downloadURL = avatarUrl;
                 }
 
                 const docId = profileId || Date.now().toString();
