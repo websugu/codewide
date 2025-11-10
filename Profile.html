@@ -33,14 +33,6 @@
 }
 
 
-#modal-content-edit {
-    background-color: var(--popup-bg-color);
-    text-align: var(--text-color);
-    margin: 4% auto; /* 15% from the top and centered */
-    padding: 10px;
-    width: 40%; /* Could be more or less, depending on screen size */
-}
-
 #editUsername{
     text-transform: lowercase;
 }
@@ -311,64 +303,62 @@
                                 </div>
                             </div>
                         </div>
-                        <div">
+                        <div>
+                            <div class="dropdown">
+                                <p class="dropdown-btn">More Options</p>
+                                <div class="dropdown-content">
+                                    <div class="custom-checkbox">
+                                        <label class="hover-content">
+                                            <input type="checkbox" id="option1" onchange="toggleInput(this, 'input-container1')">
+                                            Add Live Preview Link
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div><br>
+                                    <div class="custom-checkbox">
+                                        <label class="hover-content">
+                                            <input type="checkbox" id="option3" onchange="toggleInput(this, 'input-container3')">
+                                            Add YouTube Channel URL
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div><br>
+                                    <div class="custom-checkbox">
+                                        <label class="hover-content">
+                                            <input type="checkbox" id="option4" onchange="toggleInput(this, 'input-container4')">
+                                            Add Source Code
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                    <!-- <div class="custom-checkbox">
+                                        <label class="hover-content">
+                                            <input type="checkbox" id="option5" onchange="toggleInput(this, 'input-container5')">
+                                            Add Price
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div> -->
+                                </div>
+                            </div>
                             <!-- Title and Description Section -->
                         <div class="form-section">
                             <input type="text" placeholder="Enter title" class="title" id="titles" required>
                             <textarea id="description" class="form-control" placeholder="Add a detailed description" required></textarea>
                         </div>
 
-                        <!-- Options Section -->
-                        <div class="form-section">
-                            <div class="dropdown">
-                                <h3 class="dropdown-btn">More Options</h3>
-                                <div class="dropdown-content">
-                                    <div class="custom-checkbox">
-                                        <label class="hover-content">
-                                            <input type="checkbox" id="option1" onchange="toggleInput(this, 'input-container1')">
-                                            Add Live Preview
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="custom-checkbox">
-                                        <label class="hover-content">
-                                            <input type="checkbox" id="option3" onchange="toggleInput(this, 'input-container3')">
-                                            Add YouTube Channel
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="custom-checkbox">
-                                        <label class="hover-content">
-                                            <input type="checkbox" id="option4" onchange="toggleInput(this, 'input-container4')">
-                                            Allow Download Code
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                    <div class="custom-checkbox">
-                                        <label class="hover-content">
-                                            <input type="checkbox" id="option5" onchange="toggleInput(this, 'input-container5')">
-                                            Add Price
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
 
                             <!-- Optional Inputs -->
                             <div class="features-inputs">
-                                <div id="input-container1" class="input-container" style="display: block;">
-                                    <label for="livepreview">Live Preview URL</label>
+                                <div id="input-container1" class="input-container" style="display: none;">
+                                    <label for="livepreview">Live Preview Link</label>
                                     <input type="url" id="livepreview" placeholder="Enter live preview URL">
                                 </div>
-                                <div id="input-container3" class="input-container" style="display: block;">
+                                <div id="input-container3" class="input-container" style="display: none;">
                                     <label for="youtube">YouTube Channel URL</label>
                                     <input type="url" id="youtube" placeholder="Enter your YouTube channel URL">
                                 </div>
                                 <div id="input-container4" class="input-container" style="display: none;">
-                                    <label for="zipFile">Code ZIP File</label>
+                                    <label for="zipFile">Source Code</label>
                                     <input type="file" class="form-control-file" id="zipFile" accept=".zip" style="display: none;">
                                     <button type="button" id="selectZipFileBtn">Select ZIP File</button>
-                                    <small id="zipFileName" style="font-style: italic; color: var(--text-color-p)">No file chosen</small>
+                                    <small id="zipFileName" style="font-style: italic; color: var(--text-color-p)">Upload only Zip file</small>
                                 </div>
                                 <div id="input-container5" class="input-container" style="display: none;">
                                     <label for="price">Price</label>
