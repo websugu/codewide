@@ -1,0 +1,445 @@
+/* Settings Page Styles */
+*{
+     font-family: "Outfit", sans-serif;
+      font-weight: 400;
+      box-sizing: border-box;
+      font-style: normal;
+}
+body{
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+.settings-header {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+    background-color: var(--bg-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.back-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5PX 10px;
+    border-radius: 50PX;
+    transition: background-color 0.2s;
+}
+
+.back-btn:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.settings-header h1 {
+    margin: 0;
+    margin-left: 15px;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.settings-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--popup-bg-color);
+}
+
+.settings-section {
+    margin-bottom: 30px;
+}
+
+.settings-section h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.settings-section h3 i {
+    color: var(--text-color-p);
+}
+
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.1);
+}
+
+.setting-item:last-child {
+    border-bottom: none;
+}
+
+.setting-item.clickable {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.setting-item.clickable:hover {
+    background-color: rgba(128, 128, 128, 0.05);
+}
+
+.setting-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+}
+
+.setting-content i {
+    font-size: 20px;
+    color: var(--text-color-p);
+    min-width: 20px;
+}
+
+.setting-title {
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 2px;
+}
+
+.setting-description {
+    font-size: 14px;
+    color: var(--text-color-gray);
+}
+
+/* Profile ID Display */
+.profile-id-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(128, 128, 128, 0.05);
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.copy-btn {
+    background: none;
+    border: none;
+    color: var(--text-color-p);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.copy-btn:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+    color: var(--text-color);
+}
+
+/* Theme Toggle */
+.theme-toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#currentThemeText {
+    font-size: 16px;
+    color: var(--text-color);
+}
+
+.theme-toggle-btn {
+    background: none;
+    border: 2px solid var(--text-color-p);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 24px;
+    color: var(--text-color);
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--text-color);
+    transform: scale(1.05);
+}
+
+.theme-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: var(--popup-bg-color);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--text-color);
+}
+
+.close:hover {
+    opacity: 0.7;
+}
+
+.modal h2 {
+    color: var(--text-color);
+    margin-bottom: 10px;
+}
+
+.modal h3 {
+    color: var(--text-color);
+    margin-bottom: 15px;
+}
+
+.modal p {
+    color: var(--text-color-gray);
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.cancel-btn, .delete-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cancel-btn {
+    background-color: var(--btn-bg-color);
+    color: var(--text-color);
+    border: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+.cancel-btn:hover {
+    background-color: rgba(128, 128, 128, 0.1);
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* Toggle Switch Styles */
+.toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--text-color-gray);
+    transition: 0.4s;
+    border-radius: 24px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--btn-bg-color);
+    transition: 0.4s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--text-color);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(26px);
+}
+
+/* Select Dropdown Styles */
+.visibility-select {
+    padding: 8px 12px;
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 14px;
+    min-width: 120px;
+}
+
+.visibility-select:focus {
+    outline: none;
+    border-color: var(--text-color-p);
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-size: 14px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--text-color-p);
+}
+
+/* Button Styles */
+.save-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+    background-color: #45a049;
+}
+
+/* Storage Info Styles */
+.storage-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .settings-container {
+        padding: 15px;
+    }
+
+    .settings-header {
+        padding: 15px;
+    }
+
+    .settings-header h1 {
+        font-size: 20px;
+    }
+
+    .setting-content {
+        gap: 12px;
+    }
+
+    .setting-title {
+        font-size: 16px;
+    }
+
+    .setting-description {
+        font-size: 13px;
+    }
+
+    .profile-id-display {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+
+    .theme-toggle-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
+    }
+
+    .toggle-container {
+        gap: 12px;
+    }
+
+    .toggle-switch {
+        width: 45px;
+        height: 22px;
+    }
+
+    .toggle-slider:before {
+        height: 16px;
+        width: 16px;
+        left: 3px;
+        bottom: 3px;
+    }
+
+    input:checked + .toggle-slider:before {
+        transform: translateX(23px);
+    }
+
+    .visibility-select {
+        min-width: 100px;
+        font-size: 13px;
+    }
+
+    .form-group input {
+        padding: 10px;
+        font-size: 13px;
+    }
+}
