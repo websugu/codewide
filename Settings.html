@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - StreakCode</title>
+    <link rel="icon" type="image/x-icon" href="images/bintcode-fav - Copy.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/Settings.css">
+    <!-- font-family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="icon" type="image/x-icon" href="images/bintcode-fav - Copy.png">
+</head>
+<body>
+    <button id="themeToggle" class="Toggle" style="border: none;background:transparent;display: none;"><i class="ri-toggle-line"></i></button>
+
+    <!-- Navigation Header -->
+    <div class="settings-header">
+        <button class="back-btn" onclick="window.location.href='Profile.html?profileId=' + localStorage.getItem('profileId')">
+            <i class="ri-arrow-left-line"></i>
+        </button>
+        <h1>Settings</h1>
+    </div>
+
+    <div class="settings-container">
+        <!-- Profile ID Section -->
+        <div class="settings-section">
+            <h3><i class="ri-user-line"></i> Profile Information</h3>
+            <div class="setting-item">
+                <label>Profile ID</label>
+                <div class="profile-id-display">
+                    <span id="profileIdDisplay">Loading...</span>
+                    <button id="copyProfileIdBtn" class="copy-btn" title="Copy Profile ID">
+                        <i class="ri-file-copy-line"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Theme Settings -->
+        <div class="settings-section">
+            <h3><i class="ri-palette-line"></i> Appearance</h3>
+            <div class="setting-item">
+                <label>Theme</label>
+                <div class="theme-toggle-container">
+                    <span id="currentThemeText">Light Theme</span>
+                    <button id="themeToggleBtn" class="theme-toggle-btn">
+                        <i class="ri-sun-line" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Management -->
+        <div class="settings-section">
+            <h3><i class="ri-settings-line"></i> Profile Management</h3>
+            <!-- <div class="setting-item clickable" onclick="window.location.href='ProfileCreation.html?profileId=' + localStorage.getItem('profileId')">
+                <div class="setting-content">
+                    <i class="ri-edit-line"></i>
+                    <div>
+                        <div class="setting-title">Edit Profile</div>
+                        <div class="setting-description">Update your profile information, bio, and links</div>
+                    </div>
+                </div>
+                <i class="ri-arrow-right-line"></i>
+            </div> -->
+            <div class="setting-item clickable" onclick="window.location.href='SavedPosts.html'">
+                <div class="setting-content">
+                    <i class="ri-bookmark-line"></i>
+                    <div>
+                        <div class="setting-title">Saved Posts</div>
+                        <div class="setting-description">View your saved posts and projects</div>
+                    </div>
+                </div>
+                <i class="ri-arrow-right-line"></i>
+            </div>
+        </div>
+
+        <!-- Privacy & Security -->
+        <div class="settings-section">
+            <h3><i class="ri-lock-line"></i> Privacy & Security</h3>
+            <div class="setting-item">
+                <label>Profile Visibility</label>
+                <div class="toggle-container">
+                    <span id="profileVisibilityText">Public</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="profileVisibilityToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label>Who can see your posts</label>
+                <select id="postVisibilitySelect" class="visibility-select">
+                    <option value="everyone">Everyone</option>
+                    <!-- <option value="followers">Subscribers only</option>
+                    <option value="private">Private</option> -->
+                </select>
+            </div>
+            <div class="setting-item">
+                <label>Who can Subscribe you</label>
+                <div class="toggle-container">
+                    <span id="followPermissionText">Everyone</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="followPermissionToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <!-- <div class="setting-item clickable" onclick="openChangePasswordModal()">
+                <div class="setting-content">
+                    <i class="ri-key-line"></i>
+                    <div>
+                        <div class="setting-title">Change Password</div>
+                        <div class="setting-description">Update your account password</div>
+                    </div>
+                </div>
+                <i class="ri-arrow-right-line"></i>
+            </div> -->
+            <div class="setting-item">
+                <label>Two-Factor Authentication</label>
+                <div class="toggle-container">
+                    <span id="twoFactorText">Disabled</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="twoFactorToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="settings-section">
+            <h3><i class="ri-database-line"></i> Data Management</h3>
+            <div class="setting-item">
+                <div class="storage-info">
+                    <div class="setting-title">Storage Usage</div>
+                    <div class="setting-description" id="storageUsage">Calculating...</div>
+                </div>
+            </div>
+            <div class="setting-item clickable" onclick="downloadUserData()">
+                <div class="setting-content">
+                    <i class="ri-download-line"></i>
+                    <div>
+                        <div class="setting-title">Download Your Data</div>
+                        <div class="setting-description">Export all your profile data as JSON</div>
+                    </div>
+                </div>
+                <i class="ri-arrow-right-line"></i>
+            </div>
+            <div class="setting-item clickable" onclick="clearCache()">
+                <div class="setting-content">
+                    <i class="ri-refresh-line"></i>
+                    <div>
+                        <div class="setting-title">Clear Cache</div>
+                        <div class="setting-description">Clear local storage and cached data</div>
+                    </div>
+                </div>
+                <i class="ri-arrow-right-line"></i>
+            </div>
+        </div>
+
+        <!-- Account Settings -->
+        <div class="settings-section">
+            <h3><i class="ri-shield-line"></i> Account</h3>
+            <!-- <div class="setting-item clickable" onclick="openDeleteAccountModal()">
+                 <div class="setting-content">
+                    <i class="ri-delete-bin-line"></i>
+                    <div>
+                        <div class="setting-title">Delete Account</div>
+                        <div class="setting-description">Permanently delete your account and all associated data</div>
+                    </div>
+                </div>
+                <i class="ri-arrow-right-line"></i>
+            </div> -->
+            <div class="setting-item clickable" onclick="openDeleteProfileModal()">
+                <div class="setting-content">
+                    <i class="ri-user-unfollow-line"></i>
+                    <div>
+                        <div class="setting-title">Delete Profile</div>
+                        <div class="setting-description">Remove your profile while keeping account active</div>
+                    </div>
+                </div>
+                <i class="ri-arrow-right-line"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Profile Confirmation Modal -->
+    <div id="deleteProfileModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeDeleteProfileModal()">&times;</span>
+            <div style="text-align: center;">
+                <h2><i class="ri-alert-fill" style="color: rgb(128, 28, 28);"></i></h2>
+                <h3>Confirm Deletion</h3>
+                <p>Are you sure you want to delete your profile?<br> This action cannot be undone.</p>
+                <div class="modal-actions">
+                    <button class="cancel-btn" onclick="closeDeleteProfileModal()">Cancel</button>
+                    <button class="delete-btn" onclick="confirmDeleteProfile()">Yes, Delete Profile</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeChangePasswordModal()">&times;</span>
+            <div style="text-align: center;">
+                <h2><i class="ri-key-line" style="color: var(--text-color);"></i></h2>
+                <h3>Change Password</h3>
+                <form id="changePasswordForm">
+                    <div class="form-group">
+                        <input type="password" id="currentPassword" placeholder="Current Password" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="newPassword" placeholder="New Password" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="confirmPassword" placeholder="Confirm New Password" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="cancel-btn" onclick="closeChangePasswordModal()">Cancel</button>
+                        <button type="submit" class="save-btn">Change Password</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Confirmation Modal -->
+    <div id="deleteAccountModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeDeleteAccountModal()">&times;</span>
+            <div style="text-align: center;">
+                <h2><i class="ri-alert-fill" style="color: rgb(128, 28, 28);"></i></h2>
+                <h3>Confirm Account Deletion</h3>
+                <p>Are you sure you want to delete your account?<br>This will permanently delete all your data including profiles, posts, and cannot be undone.</p>
+                <div class="form-group">
+                    <input type="password" id="deleteAccountPassword" placeholder="Enter your password to confirm" required>
+                </div>
+                <div class="modal-actions">
+                    <button class="cancel-btn" onclick="closeDeleteAccountModal()">Cancel</button>
+                    <button class="delete-btn" onclick="confirmDeleteAccount()">Yes, Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeSuccessModal()">&times;</span>
+            <div style="text-align: center;">
+                <h2><i class="ri-checkbox-circle-fill" style="color: rgb(30, 146, 30);"></i></h2>
+                <h3 id="successTitle">Action Completed</h3>
+                <p id="successMessage">Your action has been completed successfully.</p>
+                <div>
+                    <button onclick="closeSuccessModal()">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/6.0.2/firebase.js"></script>
+    <script src="firebaseConfig.js"></script>
+    <script src="scripts.js"></script>
+
+    <script>
+        // Initialize settings on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeTheme();
+            loadProfileId();
+            initializePrivacySettings();
+            calculateStorageUsage();
+
+            // Theme toggle button functionality
+            document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+
+            // Privacy settings event listeners
+            document.getElementById('profileVisibilityToggle').addEventListener('change', toggleProfileVisibility);
+            document.getElementById('postVisibilitySelect').addEventListener('change', changePostVisibility);
+            document.getElementById('followPermissionToggle').addEventListener('change', toggleFollowPermission);
+            document.getElementById('twoFactorToggle').addEventListener('change', toggleTwoFactorAuth);
+
+            // Form event listeners
+            document.getElementById('changePasswordForm').addEventListener('submit', handleChangePassword);
+        });
+
+        function initializeTheme() {
+            const storedTheme = localStorage.getItem('theme');
+            const isLightTheme = storedTheme ? storedTheme === 'light' : true;
+
+            document.body.classList.toggle('light-theme', isLightTheme);
+            document.body.classList.toggle('dark-theme', !isLightTheme);
+
+            updateThemeDisplay(isLightTheme);
+        }
+
+        function updateThemeDisplay(isLightTheme) {
+            const themeText = document.getElementById('currentThemeText');
+            const themeIcon = document.getElementById('themeIcon');
+
+            if (isLightTheme) {
+                themeText.textContent = 'Light Theme';
+                themeIcon.className = 'ri-sun-line';
+            } else {
+                themeText.textContent = 'Dark Theme';
+                themeIcon.className = 'ri-moon-line';
+            }
+        }
+
+        function toggleTheme() {
+            const isLightTheme = document.body.classList.contains('light-theme');
+
+            document.body.classList.toggle('light-theme');
+            document.body.classList.toggle('dark-theme');
+
+            const newIsLightTheme = !isLightTheme;
+            localStorage.setItem('theme', newIsLightTheme ? 'light' : 'dark');
+
+            updateThemeDisplay(newIsLightTheme);
+        }
+
+        function loadProfileId() {
+            const profileId = localStorage.getItem('profileId');
+            if (profileId) {
+                document.getElementById('profileIdDisplay').textContent = profileId;
+            } else {
+                document.getElementById('profileIdDisplay').textContent = 'Not available';
+            }
+        }
+
+        // Copy Profile ID functionality
+        document.getElementById('copyProfileIdBtn').addEventListener('click', function() {
+            const profileId = document.getElementById('profileIdDisplay').textContent;
+            if (profileId && profileId !== 'Not available') {
+                navigator.clipboard.writeText(profileId).then(() => {
+                    // Show temporary success feedback
+                    const btn = this;
+                    const originalIcon = btn.innerHTML;
+                    btn.innerHTML = '<i class="ri-check-line"></i>';
+                    btn.style.color = '#4CAF50';
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalIcon;
+                        btn.style.color = '';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+            }
+        });
+
+        // Modal functions
+        function openDeleteProfileModal() {
+            document.getElementById('deleteProfileModal').style.display = 'block';
+        }
+
+        function closeDeleteProfileModal() {
+            document.getElementById('deleteProfileModal').style.display = 'none';
+        }
+
+        function closeSuccessModal() {
+            document.getElementById('successModal').style.display = 'none';
+        }
+
+        function confirmDeleteProfile() {
+            const profileId = localStorage.getItem('profileId');
+
+            if (profileId) {
+                db.collection('profiles').doc(profileId).delete().then(() => {
+                    localStorage.removeItem('profileId');
+                    localStorage.removeItem('profileCreated');
+                    localStorage.removeItem('username');
+
+                    closeDeleteProfileModal();
+                    document.getElementById('successModal').style.display = 'block';
+                }).catch(error => {
+                    console.error('Error deleting profile:', error);
+                    alert('Error deleting profile. Please try again.');
+                });
+            }
+        }
+
+        function redirectToHome() {
+            window.location.href = 'Welcome.html';
+        }
+
+        // Privacy & Security Functions
+        function initializePrivacySettings() {
+            // Load saved privacy settings from localStorage
+            const profileVisibility = localStorage.getItem('profileVisibility') === 'private';
+            const postVisibility = localStorage.getItem('postVisibility') || 'everyone';
+            const followPermission = localStorage.getItem('followPermission') === 'restricted';
+            const twoFactorEnabled = localStorage.getItem('twoFactorEnabled') === 'true';
+
+            // Update UI elements
+            document.getElementById('profileVisibilityToggle').checked = profileVisibility;
+            document.getElementById('profileVisibilityText').textContent = profileVisibility ? 'Private' : 'Public';
+
+            document.getElementById('postVisibilitySelect').value = postVisibility;
+
+            document.getElementById('followPermissionToggle').checked = followPermission;
+            document.getElementById('followPermissionText').textContent = followPermission ? 'Approved only' : 'Everyone';
+
+            document.getElementById('twoFactorToggle').checked = twoFactorEnabled;
+            document.getElementById('twoFactorText').textContent = twoFactorEnabled ? 'Enabled' : 'Disabled';
+        }
+
+        function toggleProfileVisibility() {
+            const isPrivate = this.checked;
+            localStorage.setItem('profileVisibility', isPrivate ? 'private' : 'public');
+            document.getElementById('profileVisibilityText').textContent = isPrivate ? 'Private' : 'Public';
+
+            // Save to Firebase (assuming user is logged in)
+            const profileId = localStorage.getItem('profileId');
+            if (profileId) {
+                db.collection('profiles').doc(profileId).update({
+                    isPrivate: isPrivate
+                }).catch(error => console.error('Error updating profile visibility:', error));
+            }
+        }
+
+        function changePostVisibility() {
+            const visibility = this.value;
+            localStorage.setItem('postVisibility', visibility);
+
+            // Save to Firebase
+            const profileId = localStorage.getItem('profileId');
+            if (profileId) {
+                db.collection('profiles').doc(profileId).update({
+                    postVisibility: visibility
+                }).catch(error => console.error('Error updating post visibility:', error));
+            }
+        }
+
+        function toggleFollowPermission() {
+            const isRestricted = this.checked;
+            localStorage.setItem('followPermission', isRestricted ? 'restricted' : 'everyone');
+            document.getElementById('followPermissionText').textContent = isRestricted ? 'Approved only' : 'Everyone';
+
+            // Save to Firebase
+            const profileId = localStorage.getItem('profileId');
+            if (profileId) {
+                db.collection('profiles').doc(profileId).update({
+                    followPermission: isRestricted ? 'restricted' : 'everyone'
+                }).catch(error => console.error('Error updating follow permission:', error));
+            }
+        }
+
+        function toggleTwoFactorAuth() {
+            const isEnabled = this.checked;
+            localStorage.setItem('twoFactorEnabled', isEnabled.toString());
+            document.getElementById('twoFactorText').textContent = isEnabled ? 'Enabled' : 'Disabled';
+
+            // In a real implementation, this would integrate with an authentication service
+            if (isEnabled) {
+                alert('Two-factor authentication setup would be implemented here with a proper auth service.');
+            }
+        }
+
+        // Change Password Functions
+        function openChangePasswordModal() {
+            document.getElementById('changePasswordModal').style.display = 'block';
+        }
+
+        function closeChangePasswordModal() {
+            document.getElementById('changePasswordModal').style.display = 'none';
+            document.getElementById('changePasswordForm').reset();
+        }
+
+        function handleChangePassword(event) {
+            event.preventDefault();
+
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match.');
+                return;
+            }
+
+            if (newPassword.length < 6) {
+                alert('Password must be at least 6 characters long.');
+                return;
+            }
+
+            // In a real implementation, this would verify current password and update via Firebase Auth
+            alert('Password change functionality would be implemented with Firebase Authentication.');
+            closeChangePasswordModal();
+        }
+
+        // Data Management Functions
+        function calculateStorageUsage() {
+            let totalSize = 0;
+            for (let key in localStorage) {
+                if (localStorage.hasOwnProperty(key)) {
+                    totalSize += localStorage[key].length + key.length;
+                }
+            }
+
+            const sizeInKB = (totalSize / 1024).toFixed(2);
+            document.getElementById('storageUsage').textContent = `${sizeInKB} KB used`;
+        }
+
+        function downloadUserData() {
+            const profileId = localStorage.getItem('profileId');
+            if (!profileId) {
+                alert('No profile data available.');
+                return;
+            }
+
+            // Collect user data
+            const userData = {
+                profileId: profileId,
+                localStorage: { ...localStorage },
+                exportDate: new Date().toISOString(),
+                platform: 'StreakCode'
+            };
+
+            // Create and download JSON file
+            const dataStr = JSON.stringify(userData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(dataBlob);
+            link.download = `streakcode-data-${profileId}-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            showSuccess('Data Exported', 'Your data has been downloaded successfully.');
+        }
+
+        function clearCache() {
+            if (confirm('Are you sure you want to clear all cached data? This will log you out and reset all local preferences.')) {
+                localStorage.clear();
+                showSuccess('Cache Cleared', 'All cached data has been cleared. You will be redirected to the home page.');
+                setTimeout(() => {
+                    window.location.href = 'Welcome.html';
+                }, 2000);
+            }
+        }
+
+        // Delete Account Functions
+        function openDeleteAccountModal() {
+            document.getElementById('deleteAccountModal').style.display = 'block';
+        }
+
+        function closeDeleteAccountModal() {
+            document.getElementById('deleteAccountModal').style.display = 'none';
+            document.getElementById('deleteAccountPassword').value = '';
+        }
+
+        function confirmDeleteAccount() {
+            const password = document.getElementById('deleteAccountPassword').value;
+            if (!password) {
+                alert('Please enter your password to confirm.');
+                return;
+            }
+
+            // In a real implementation, this would verify password and delete account via Firebase Auth
+            alert('Account deletion would be implemented with Firebase Authentication. This is a demo.');
+            closeDeleteAccountModal();
+        }
+
+        // Success Modal Functions
+        function showSuccess(title, message) {
+            document.getElementById('successTitle').textContent = title;
+            document.getElementById('successMessage').textContent = message;
+            document.getElementById('successModal').style.display = 'block';
+        }
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            const deleteProfileModal = document.getElementById('deleteProfileModal');
+            const changePasswordModal = document.getElementById('changePasswordModal');
+            const deleteAccountModal = document.getElementById('deleteAccountModal');
+            const successModal = document.getElementById('successModal');
+
+            if (event.target === deleteProfileModal) {
+                closeDeleteProfileModal();
+            }
+            if (event.target === changePasswordModal) {
+                closeChangePasswordModal();
+            }
+            if (event.target === deleteAccountModal) {
+                closeDeleteAccountModal();
+            }
+            if (event.target === successModal) {
+                closeSuccessModal();
+            }
+        });
+    </script>
+</body>
+</html>
