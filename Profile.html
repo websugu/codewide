@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>Codiium</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles/Profile.css">
@@ -12,11 +12,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="icon" type="image/x-icon" href="images/bintcode-fav - Copy.png">
+    <link rel="icon" type="image/x-icon" href="images/fav-icon-browser.png">
     <!-- icons -->
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
-    rel="stylesheet"
+    rel="stylesheet"`   
 />
     <!-- Cropper.js CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
@@ -79,7 +79,7 @@
 <body>
     <button id="themeToggle" class="Toggle" style="border: none;background:transparent;display: none;"><i class="ri-toggle-line"></i></button>
     <div class="container mt-4">
-    <button class="back" onclick="window.location.href='Posts.html' "><i class="ri-arrow-left-line"></i></button>
+    <button class="back" onclick="window.history.back()" ><i class="ri-arrow-left-line"></i></button>
         <!-- Profile Information -->
         <div id="profileContainer">
             <div class="prof-page-f">
@@ -128,12 +128,11 @@
                         </div>
                     </div>    
                     </div>
-                    <div>
-                    <button id="followButton" style="background:none;border: none;cursor:default;">Subscribe</button>
-                    <button id="contactMeButton" onclick="openContactModal()" style="display: none;"><i class="ri-mail-line"></i> Contact</button>
-                    <button id="createPostButton" class="" style="display:none;"><i class="ri-add-large-fill"></i> Create</button>
-                    <button id="openModalBtn2" class="btn-followers" style="display: none; font-size: 20px;font-weight: 650;border-radius: 50px;"><i class="ri-more-2-fill"></i></button>
-
+                    <div class="actions-btn" style="text-align: center;">
+                        <button id="followButton" style="background:none;border: none;cursor:default;">Subscribe</button>
+                        <button id="contactMeButton" onclick="openContactModal()" style="display: none;"><i class="ri-mail-line"></i> Contact</button>
+                        <button id="createPostButton" class="" style="display:none;"><i class="ri-add-large-fill"></i> Create</button>
+                        <button id="openModalBtn2" class="btn-followers" style="display: none; font-size: 20px;font-weight: 650;border-radius: 50px;"><i class="ri-more-2-fill"></i></button>
                     </div>
                 
                
@@ -181,8 +180,12 @@
             <!-- Create New Post Button -->
             <!-- My Posts Section -->
             <!-- <p class="text-center">Projects</p> -->
+         <div class="posts-header" id="postsheader">
+            <h3 id="postCount">0 Pojects</h3>
+            <input type="text" id="searchPosts" placeholder="Search posts...">
+         </div>
          <div id="myPostsSection">
-            
+
             <!-- Posts will be dynamically added here -->
          </div>
      </div>
@@ -332,20 +335,21 @@
                                             Add Source Code
                                             <span class="checkmark"></span>
                                         </label>
-                                    </div>
-                                    <!-- <div class="custom-checkbox">
+                                    </div><br>
+                                    <div class="custom-checkbox">
                                         <label class="hover-content">
-                                            <input type="checkbox" id="option5" onchange="toggleInput(this, 'input-container5')">
-                                            Add Price
+                                            <input type="checkbox" id="option5" onchange="toggleInput(this, 'input-container5')" >
+                                            Sale My Project
                                             <span class="checkmark"></span>
                                         </label>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                             <!-- Title and Description Section -->
                         <div class="form-section">
                             <input type="text" placeholder="Enter title" class="title" id="titles" required>
                             <textarea id="description" class="form-control" placeholder="Add a detailed description" required></textarea>
+                            
                         </div>
 
 
@@ -367,8 +371,16 @@
                                 </div>
                                 <div id="input-container5" class="input-container" style="display: none;">
                                     <label for="price">Price</label>
-                                    <input type="number" id="price" placeholder="Enter price">
+                                    <input type="text" id="price" placeholder="$" maxlength="3">
                                 </div>
+                            </div>
+                            <div class="visibility-selector">
+                                <label for="postVisibility">Who can see this post?</label>
+                                <select id="postVisibility" class="form-control">
+                                    <option value="everyone">Everyone</option>
+                                    <option value="followers">Subscribers only</option>
+                                    <option value="private">Private (Only me)</option>
+                                </select>
                             </div>
                         </div>
 
@@ -735,7 +747,6 @@ window.onload = function() {
             if (likesCount > 100 && followersCount > 100) {
                 userRef.update({ isTopContributor: true })
                     .then(() => {
-                        console.log('User marked as Top Contributor');
                     })
                     .catch((error) => {
                         console.error('Error updating user to Top Contributor:', error);
@@ -980,7 +991,9 @@ document.getElementById('zipFile').addEventListener('change', (event) => {
         
         // Get the current logged-in user's profile ID from localStorage or however you store it
         const currentUserProfileId = localStorage.getItem('profileId'); // Assuming you store the current user's profileId in localStorage
-        
+
+        let isProfilePrivate = false; // Global flag for profile privacy
+
         // Function to display profile information and handle follow/unfollow logic
 // Function to toggle follow/unfollow
 function toggleFollow(currentFollowers) {
@@ -1020,6 +1033,7 @@ function toggleFollow(currentFollowers) {
             db.collection('profiles').doc(profileId).get().then(doc => {
                 if (doc.exists) {
                     const data = doc.data();
+                    isProfilePrivate = data.isPrivate || false; // Set global flag for profile privacy
                     document.getElementById('profileImage').src = data.profileImageUrl || 'images/defauld-profile.jpg';
                     document.getElementById('username').innerText = data.username || 'No username';
                     document.getElementById('name').innerText = data.name || 'No name';
@@ -1044,15 +1058,15 @@ function toggleFollow(currentFollowers) {
                     } else {
                         // User is not following
                         document.getElementById('followButton').innerHTML = '<button id="followButton" class="followButton">Subscribe</button>';
-                        
+
                     }
-        
+
                     // Add event listener to follow/unfollow button
                     document.getElementById('followButton').addEventListener('click', () => {
                         toggleFollow(data.followers || []);
-                        
+
                     });
-        
+
                     // Check if the current user is the owner of the profile
                     if (profileId === currentUserProfileId) {
                         // The user is the owner, show the Edit button and Create New Post button
@@ -1064,12 +1078,12 @@ function toggleFollow(currentFollowers) {
                         document.getElementById('openModalBtn').style.display = 'inline';
                         document.getElementById('openModalBtn2').style.display= 'inline';
                         document.getElementById('contactMeButton').style.display='none'
-        
-                        // Handle edit button click 
+
+                        // Handle edit button click
                         document.getElementById('editProfileButton').addEventListener('click', () => {
                             window.location.href = `ProfileCreation.html?profileId=${profileId}`; // Redirect to edit page
                         });
-        
+
                         // Show the post creation section for the profile owner
                     } else {
                         // The user is not the owner, hide the Edit button and Create New Post button
@@ -1081,13 +1095,18 @@ function toggleFollow(currentFollowers) {
                         document.getElementById('openModalBtn').style.display = 'none';
                         document.getElementById('openModalBtn2').style.display= 'none';
                         document.getElementById('contactMeButton').style.display='inline'
+
+                        // Check if contact is disabled
+                        if (data.disableContact) {
+                            document.getElementById('contactMeButton').style.display = 'none';
+                        }
                     }
                 } else {
                     console.error('No profile found with the given ID.');
                     if(profileId === currentUserProfileId){
                     document.getElementById('followButton').innerText = 'Deleted Profile';
                     }
-                    
+
                 }
             }).catch(error => {
                 console.error('Error fetching profile:', error);
@@ -1170,6 +1189,7 @@ function deletePost(postId) {
     const price = document.getElementById('price').value;
     const youtube = document.getElementById('youtube').value;
     const titles = document.getElementById('titles').value;
+    const visibility = document.getElementById('postVisibility').value;
 
     // Reference to Firestore and Storage
     const postsCollection = db.collection('posts');
@@ -1207,6 +1227,7 @@ function deletePost(postId) {
             price: price,
             youtube: youtube,
             titles: titles,
+            visibility: visibility,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
     }).then(() => {
@@ -1239,33 +1260,101 @@ function closeSuccessModal() {
             return description;
         }
         // Function to display user's posts on Profile.html
-        function displayMyPosts() {
+        function displayMyPosts(searchTerm = '') {
             const postsSection = document.getElementById('myPostsSection');
-            postsSection.innerHTML = '';  // Clear existing posts
-        
-            db.collection('posts').where('profileId', '==', profileId).get().then(snapshot => {
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    const isOwner = profileId === currentUserProfileId;
-                    const deleteButton = isOwner ? `<button class="delete" onclick="deletePost('${doc.id}')"><i class="ri-delete-bin-line"></i> Delete</button>` : '';
-                    const truncatedDescription = truncateDescription(data.description, 3);
-        
-                    const postElement = `
-                    <div class="post" >
-                        <div onclick="openCodePreview('${doc.id}')">
-                            <img src="${data.postImageUrl}" alt="Post Image" width="100"><br>
-                            <p>${truncatedDescription}</p>
-                            <a href="${data.zipFileUrl}" download style="display:none">Get Code</a>
-                        </div>    
-                            ${deleteButton}
-                        
+            postsSection.innerHTML = '';
+
+            // First, get profile data to determine visibility permissions
+            db.collection('profiles').doc(profileId).get().then(profileDoc => {
+                if (!profileDoc.exists) {
+                    postsSection.innerHTML = '<p>Profile not found.</p>';
+                    document.getElementById('postCount').innerText = '0 Projects';
+                    return;
+                }
+
+                const profileData = profileDoc.data();
+                const followers = profileData.followers || [];
+                const isOwner = profileId === currentUserProfileId;
+                const isFollower = followers.includes(currentUserProfileId);
+                const isPrivate = profileData.isPrivate || false;
+
+                // Check if profile is private and viewer is not the owner
+                if (isPrivate && !isOwner) {
+                    postsheader.innerHTML = `
+                    <div class="privat-msg">
+                        <i class="ri-lock-2-line"></i>
+                        <h3>This profile is private.</3>
+                            <p>This user activated the private <br> profile privacy</p>
+                    </div>`;
+                    document.getElementById('postCount').innerText = '0 Projects';
+                    return;
+                }
+
+                // Show skeleton loaders
+                const skeletonHTML = `
+                    <div class="skeleton-post">
+                        <div class="skeleton-post-img"></div>
+                        <div class="skeleton-post-text"></div>
                     </div>
-                        
-                    `;
-                    postsSection.innerHTML += postElement;
+                `.repeat(4);
+                postsSection.innerHTML = skeletonHTML;
+
+                // Now get posts
+                db.collection('posts').where('profileId', '==', profileId).get().then(snapshot => {
+                    let posts = [];
+                    snapshot.forEach(doc => {
+                        const data = doc.data();
+                        posts.push({id: doc.id, data: data});
+                    });
+
+                    // Filter posts based on visibility
+                    posts = posts.filter(post => {
+                        const vis = post.data.visibility || 'everyone';
+                        if (isOwner) return true;
+                        if (vis === 'private') return false;
+                        if (vis === 'followers' && !isFollower) return false;
+                        return true;
+                    });
+
+                    // Filter posts based on search term
+                    if (searchTerm) {
+                        posts = posts.filter(post => {
+                            const title = post.data.titles || '';
+                            const desc = post.data.description || '';
+                            return title.toLowerCase().includes(searchTerm.toLowerCase()) || desc.toLowerCase().includes(searchTerm.toLowerCase());
+                        });
+                    }
+
+                    // Clear skeleton loaders and update post count
+                    postsSection.innerHTML = '';
+                    document.getElementById('postCount').innerText = `${posts.length} Projects`;
+
+                    posts.forEach(post => {
+                        const data = post.data;
+                        const deleteButton = isOwner ? `<button class="delete" onclick="deletePost('${post.id}')"><i class="ri-delete-bin-line"></i> Delete</button>` : '';
+                        const truncatedDescription = truncateDescription(data.description, 3);
+
+                        const postElement = `
+                        <div class="post" >
+                            <div onclick="openCodePreview('${post.id}')">
+                                <img src="${data.postImageUrl}" alt="Post Image" width="100"><br>
+                                <p>${truncatedDescription}</p>
+                                <a href="${data.zipFileUrl}" download style="display:none">Get Code</a>
+                            </div>
+                                ${deleteButton}
+
+                        </div>
+
+                        `;
+                        postsSection.innerHTML += postElement;
+                    });
+                }).catch(error => {
+                    console.error('Error displaying posts:', error);
+                    postsSection.innerHTML = '<p>Error loading posts.</p>';
                 });
             }).catch(error => {
-                console.error('Error displaying posts:', error);
+                console.error('Error fetching profile:', error);
+                postsSection.innerHTML = '<p></p>';
             });
         }
         
@@ -1280,8 +1369,14 @@ function closeSuccessModal() {
         
         // Load posts initially
         displayMyPosts();
-        
-        
+
+        // Add event listener for search input
+        document.getElementById('searchPosts').addEventListener('input', function() {
+            const searchTerm = this.value.trim();
+            displayMyPosts(searchTerm);
+        });
+
+
     </script>
     <script>
             // post image preview with cropping
@@ -1499,7 +1594,7 @@ function fetchFollowers(profileId) {
     });
 }
 
-console.log(followerData.profileImage);  // Log to see the fetched image URL
+
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
