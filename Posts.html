@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posts</title>
+    <title>Codiium</title>
     <!-- font-family -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="icon" type="image/x-icon" href="images/bintcode-fav - Copy.png">
+    <link rel="icon" type="image/x-icon" href="images/fav-icon-browser.png">
     <!-- icons -->
      <link rel="stylesheet" href="Profile.html">
     <link
@@ -33,12 +33,12 @@
     <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: #7676762e 1px solid;">
         <div class="container-fluid">
             <div onclick="window.location.href='Posts.html'" style="cursor: pointer;">
-                <div style="display: flex;align-items: center;gap: 5px;font-weight: 700;font-size: 25px;">
+                <div style="display: flex;align-items: center;gap: 5px;">
                     <div>
-                        <i class="fa-solid fa-fire-flame-curved" style="color: #f26507;"></i>
+                        <img src="images/Codiium-logo-1-less-padding.png" alt="" width="24" style="filter: brightness(var(--image-color));">
                     </div>
-                    <div class="logo-streakcode">
-                        StreakCode
+                    <div class="logo-streakcode" style="font-size: 27px;font-weight: 700;">
+                        Codiium
                     </div>
                 </div>
                 <!-- <img src="images/Screenshot_2025-07-05_233237-removebg-preview.png" alt="" class="logo"> -->
@@ -59,7 +59,7 @@
                         <a href="Posts.html" style="color: var(--text-color);font-weight: 500;">Discover</a>
                         <a href="Community.html">Community</a>
                         <button id="themeToggle" class="Toggle" style="border: none;background:transparent;"><i class="ri-toggle-line" style="color: rgb(40, 37, 37);"></i></button>
-                     </div>
+                     </div> 
                      
                     <ul class="navbar-nav ml-auto" >
                         <div id="onpen-search" style="margin-right: 10px;">
@@ -91,7 +91,7 @@
     <div class="sticky">
         <div class="tag-buttons-container">
             <div>
-                <a onclick="myprofile()"><button class="btn btn-outline-primary me-3" style="font-size: 15px;font-weight: 600;border-radius: 20px;text-wrap: nowrap;background-color: var(--create-btn-bg-color);color: var(--txts-btn-color);border: none;"><i class="ri-add-large-fill"></i> Create</button></a>
+                <a onclick="myprofile()"><button class="btn btn-outline-primary me-3" style="font-size: 15px;font-weight: 600;border-radius: 50px;text-wrap: nowrap;background-color: var(--create-btn-bg-color);color: var(--txts-btn-color);border: none;padding: 9px 25px;"><i class="ri-add-large-fill"></i> Create</button></a>
             </div>
             <!-- <button class="prev btn-light" onclick="scrollTags(-1)"><i class="ri-arrow-left-line"></i></button> -->
             <div class="tag-buttons">
@@ -137,7 +137,15 @@
         </div>
 
         <!-- Not Found Message -->
-        <div id="notFoundMessage">No posts found</div>
+        <div id="notFoundMessage">
+            <i class="ri-wifi-off-line"></i>
+            <h3>Lost Connection</h3>
+            <p>Post not found or no internet <br> access</p>
+
+            <button id="refreshBtn" onclick="location.reload()" style="font-size: 16px;font-weight: 600;border-radius: 50px;text-wrap: nowrap;background-color: var(--create-btn-bg-color);color: var(--txts-btn-color);border: none;padding: 10px 20px;">
+                Refresh Page
+            </button>
+        </div>
 
         <!-- Posts Section -->
         <div id="allPostsSection" class="row" style="display:none;">
@@ -467,7 +475,6 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
                         </div>
                     </div>
                 </div>
-
             `;
             postsSection.innerHTML += postElement;
             postsFound = true;  // A post has been found
@@ -601,4 +608,3 @@ fetchPosts();
 </body>
 
 </html>
-
