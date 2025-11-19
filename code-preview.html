@@ -99,7 +99,14 @@
     font-size: 16px;
     line-height: 1.5;
 }
-
+#ownerDetails{
+    margin: auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}#ownerDetails h4{
+    font-weight: 600;
+}
 /* Style for Continue button */
 #continueBtn {
     background: var(--create-btn-bg-color);
@@ -272,6 +279,25 @@
     border-radius: 5px;
     cursor: pointer;
     margin-left: 10px;
+}
+
+/* Send Email button */
+.send-email-btn {
+    background: var(--create-btn-bg-color);
+    color: var(--txts-btn-color);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+}.send-email-btn i{
+    font-size: 14px;
+}
+
+.send-email-btn:hover {
+    opacity: 0.8;
 }
 
 /* Related posts */
@@ -451,6 +477,22 @@
     </div>
 </div>
 
+<!-- Buy Project Modal -->
+<div id="buyModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeBuyModal()">&times;</span>
+        <i class="ri-shopping-basket-line"></i>
+        <h2>Buy Project</h2>
+        <p>Contact the owner to purchase this project.</p>
+        <div id="ownerDetails">
+            <img id="ownerImage" src="" alt="Owner Image" style="width: 40px; height: 40px; border-radius: 50%; margin-bottom: 10px;">
+            <h4 id="ownerName"></h4>
+            <p style="display: none;"><strong>Email:</strong> <span id="ownerEmail"></span></p>
+        </div>
+        <button id="sendEmailBtn" class="send-email-btn"><i class="ri-mail-line"></i> Send Email</button>
+    </div>
+</div>
+
 <!--  -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -532,6 +574,66 @@ function submitReport() {
     });
 }
 
+// Buy modal functions
+function openBuyModal(profileId) {
+    // Clear previous data
+    document.getElementById('ownerImage').src = 'https://i.pinimg.com/736x/ef/69/6c/ef696c8f834062707f48f2de45510079.jpg';
+    document.getElementById('ownerName').textContent = 'Loading...';
+    document.getElementById('ownerEmail').textContent = 'Loading...';
+
+    // Show modal first
+    document.getElementById('buyModal').classList.add('show');
+
+    // Fetch owner details from Firestore
+    db.collection('profiles').doc(profileId).get().then(doc => {
+        console.log('Fetched user doc:', doc.exists, doc.data());
+        if (doc.exists) {
+            const data = doc.data();
+            console.log('User data:', data);
+            // Use common Firebase field names
+            document.getElementById('ownerImage').src = data.photoURL || data.profileImageUrl || data.profileImage || 'https://i.pinimg.com/736x/ef/69/6c/ef696c8f834062707f48f2de45510079.jpg';
+            document.getElementById('ownerName').textContent = data.displayName || data.name || data.username || 'Unknown';
+            document.getElementById('ownerEmail').textContent = data.email || 'Not provided';
+            // Add email functionality
+            const sendEmailBtn = document.getElementById('sendEmailBtn');
+            if (data.email) {
+                sendEmailBtn.onclick = function () {
+  const subject = encodeURIComponent('Inquiry About Your Project – via Codiium');
+
+  const body = encodeURIComponent(
+    `Hi ${data.name},\n\n` +
+    `I am interested in your project. Here is the link:\n${window.location.href}\n\n` +
+    `Price: ${data.price}`
+  );
+
+  window.location.href = `mailto:${data.email}?subject=${subject}&body=${body}`;
+};
+
+                sendEmailBtn.disabled = false;
+            } else {
+                sendEmailBtn.disabled = true;
+                sendEmailBtn.textContent = 'Email not available';
+            }
+        } else {
+            console.error('Owner profile not found.');
+            document.getElementById('ownerName').textContent = 'Profile not found';
+            document.getElementById('ownerEmail').textContent = 'N/A';
+            document.getElementById('sendEmailBtn').disabled = true;
+            document.getElementById('sendEmailBtn').textContent = 'Email not available';
+        }
+    }).catch(error => {
+        console.error('Error fetching owner details:', error);
+        document.getElementById('ownerName').textContent = 'Error loading';
+        document.getElementById('ownerEmail').textContent = 'N/A';
+        document.getElementById('sendEmailBtn').disabled = true;
+        document.getElementById('sendEmailBtn').textContent = 'Email not available';
+    });
+}
+
+function closeBuyModal() {
+    document.getElementById('buyModal').classList.remove('show');
+}
+
 // Follow/Unfollow function
 function toggleFollow(profileId) {
     if (!currentUserProfileId) {
@@ -565,6 +667,51 @@ function checkFollowStatus(profileId) {
     db.collection('users').doc(currentUserProfileId).get().then(doc => {
         const following = doc.data().following || [];
         document.getElementById('followBtn').textContent = following.includes(profileId) ? 'Unfollow' : 'Follow';
+    });
+}
+
+// Check if saved
+function checkSaveStatus(postId) {
+    if (!currentUserProfileId) return;
+    db.collection('users').doc(currentUserProfileId).collection('savedPosts').doc(postId).get().then(doc => {
+        document.getElementById('savePostButton').textContent = doc.exists ? 'Saved' : 'Save';
+    }).catch(error => {
+        console.error('Error checking save status:', error);
+    });
+}
+
+// Toggle save post
+function toggleSavePost(postId) {
+    if (!currentUserProfileId) {
+        showModal();
+        return;
+    }
+    const userRef = db.collection('users').doc(currentUserProfileId);
+    const savedPostRef = userRef.collection('savedPosts').doc(postId);
+
+    savedPostRef.get().then(doc => {
+        if (doc.exists) {
+            // Unsave
+            savedPostRef.delete().then(() => {
+                document.getElementById('savePostButton').textContent = 'Save';
+                console.log('Post unsaved');
+            }).catch(error => {
+                console.error('Error unsaving post:', error);
+            });
+        } else {
+            // Save
+            savedPostRef.set({
+                postId: postId,
+                savedAt: firebase.firestore.FieldValue.serverTimestamp()
+            }).then(() => {
+                document.getElementById('savePostButton').textContent = 'Saved';
+                console.log('Post saved');
+            }).catch(error => {
+                console.error('Error saving post:', error);
+            });
+        }
+    }).catch(error => {
+        console.error('Error toggling save:', error);
     });
 }
 
@@ -704,7 +851,7 @@ function displayPost() {
             document.getElementById('postContent').innerHTML = `
             <div>
             <div style="margin: auto;">
-            <p style="font-weight: 500;"> <i class="ri-arrow-left-line"></i></p>
+            <button class="back-btn" onclick="window.history.back()"> <i class="ri-arrow-left-line"></i></button>
         </div>
             <div>
              <div class="prew-page-post">
@@ -723,7 +870,8 @@ function displayPost() {
 
                 <div>
                   <button id="likeButton"><i class="ri-thumb-up-line"></i> ${data.likes ? data.likes.length : 0}</button>
-                  <button id="savePostButton" onclick="toggleSavePost(postId)">Save Post</button>
+                  <button id="savePostButton" onclick="toggleSavePost(postId)">Save</button>
+                  ${data.price ? `<button id="projectPriceButton" onclick="openBuyModal('${data.profileId}')">$${data.price}</button>` : ''}
                 </div>
                 </div>
              </div>
@@ -745,7 +893,7 @@ function displayPost() {
                     <span id="downloadsCount" class="moment"><i class="ri-download-line"></i> ${formatViewsCount(data.downloads || 0)} downloads</span>
                 </div>
                 <div>
-                    <span id="downloadsCount" class="moment"><i class="fa-solid fa-fire-flame-curved" style="color: #f26507;"></i> ${formatViewsCount(data.downloads || 0)} StreakCode</span>
+                    <span id="streakCodeCount" class="moment"><i class="fa-solid fa-fire-flame-curved" style="color: #f26507;"></i> ${formatViewsCount(data.downloads || 0)} StreakCode</span>
                 </div>
                 </div>
                 <div class="descc-1">
@@ -792,6 +940,9 @@ function displayPost() {
 
             // Check follow status
             checkFollowStatus(data.profileId);
+
+            // Check save status
+            checkSaveStatus(postId);
 
             // Load related posts
             loadRelatedPosts(data.profileId);
@@ -1094,27 +1245,7 @@ function formatViewsCount(number) {
     }
 }
 
-// Additional missing functions
-function toggleSavePost(postId) {
-    if (!currentUserProfileId) {
-        showModal();
-        return;
-    }
-    const userRef = db.collection('users').doc(currentUserProfileId);
-    userRef.get().then(doc => {
-        const savedPosts = doc.data().savedPosts || [];
-        const saveBtn = document.getElementById('savePostButton');
-        if (savedPosts.includes(postId)) {
-            // Unsave
-            userRef.update({ savedPosts: savedPosts.filter(id => id !== postId) });
-            saveBtn.textContent = 'Save Post';
-        } else {
-            // Save
-            userRef.update({ savedPosts: [...savedPosts, postId] });
-            saveBtn.textContent = 'Unsave Post';
-        }
-    });
-}
+
 
 function downloadCode(zipFileUrl) {
     if (!currentUserProfileId) {
