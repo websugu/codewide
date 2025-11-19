@@ -11,7 +11,7 @@ body {
     font-style: normal;
 }
 .logo-streakcode{
-    font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
   font-weight: 800;
   font-style: normal;
@@ -57,7 +57,6 @@ h1 {
     padding-bottom: 0px;
 }
 .own-de{
-    line-height: 25px;
 }
 .moment{
     font-size: small;
@@ -76,7 +75,7 @@ h1 {
     font-size: 14px;
     padding-top: 3px;
     letter-spacing: .014em;
-    line-height: 20px;
+    line-height: 10px;
 }
 .link-pro{
     color: var(--text-color);
@@ -161,10 +160,17 @@ strong{
 /* Not Found Message */
 #notFoundMessage {
     display: none;
-    font-size: 1.5rem;
     color: red;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 100px;
+}
+#notFoundMessage h3{
+font-size: 1.6rem;
+}
+#notFoundMessage i{
+    font-size: 35px;
+}#notFoundMessage p{
+    color: var(--text-color-gray);
 }
 
 /* start from nav here */
@@ -190,9 +196,9 @@ strong{
     line-height: 24px;
     letter-spacing: .009em;
     padding: 8px;
- 
     font-weight: 450;
     color: var(--text-color-gray);
+    transition: color 0.3s ease;
 }.links a:hover{
     color: var(--text-color);
     text-decoration: none;
@@ -296,7 +302,7 @@ strong{
     font-weight: 420;
     color: var(--text-color);
     border: 1px solid #282727;
-    /* background-color: var(--popup-bg-color); */
+    background-color: var(--popup-bg-color);
 }
 .tag-buttons .btn:hover{
     background-color: #6d6d6d1b;
@@ -306,8 +312,8 @@ strong{
 }
 /* Style for the active button */
 .tag-buttons .btn.active {
-    background-color: #0016d9;
-    color: white;
+    background-color: var(--create-btn-bg-color);
+    color: var(--txts-btn-color);
     border-color: #007bff;
 }
 
@@ -434,7 +440,7 @@ strong{
 .modal-content button{
     background-color: var(--create-btn-bg-color);
     color: var(--txts-btn-color);
-    padding: 10px;
+    padding: 12px 25px;
     border-radius: 50px;
     border: none;
     margin: 2px;
@@ -625,6 +631,18 @@ strong{
     .get-code{
         padding: 20px;
     }
+        .navbar {
+        max-width: 98%;
+        margin: auto;
+        padding: 10px 0;
+    }
+    .container-fluid {
+    max-width: 98%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: auto;
+}
 }
 @media (max-width: 376px){
     .modal-content {
@@ -685,5 +703,8 @@ strong{
     align-items: center;
     justify-content: space-between;
     margin: auto;
+}
+.own-de{
+    line-height: 18px;
 }
 }
