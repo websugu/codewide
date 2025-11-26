@@ -246,12 +246,16 @@ hr{
 }
 .prof-posts{
     text-align: left;
+    max-width: 100%;
+    width: 100%;
 }
 .posts-header{
     text-align: left;
-    margin-bottom: 30px;
-}.posts-header h3{
-    font-weight: 700;
+    margin-bottom: 10px;
+}.posts-header h2{
+    font-weight: 500;
+    font-size: medium;
+    text-align: right;
 }.posts-header input{
     border-radius: 50px;
     padding: 5px 10px;
@@ -260,6 +264,7 @@ hr{
     background-color: var(--subscribed-btn);
     color: var(--text-color);
     border: none;
+    margin-bottom: 30px;
 }
 .privat-msg {
     text-align: center;
@@ -1003,7 +1008,13 @@ hr{
 }
 
 }
-
+@media (max-width: 768px) {
+    .popup-content {
+        width: 100%;
+        margin: 10px auto;
+        height: 100vh;
+    }
+}
 @media (max-width: 755px){
     .popup-content {
         background-color: var( --popup-bg-color);
@@ -1258,10 +1269,10 @@ hr{
     cursor: pointer;
     font-size: 14px;
 }
-.form-section input, .form-section textarea {
+.form-section textarea {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border: 1px solid var(--text-color-p);
     border-radius: 5px;
     background-color: var(--bg-color);
@@ -1269,6 +1280,21 @@ hr{
     border: none;
     font-size: 18px;
     font-weight: 500;
+}
+.form-section .title{
+    width: 100%;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid var(--text-color-p);
+    border-radius: 0;
+    background-color: transparent;
+    color: var(--text-color);
+    font-size: 20px;
+    font-weight: 500;
+    outline: none;
 }
 .form-section textarea {
     resize: vertical;
@@ -1399,7 +1425,9 @@ hr{
         margin:auto;
         padding: 10px;
     }
+    
 }
+
 @media (max-width:416px){
     .modal-content {
         background-color: var(--bg-color);
@@ -1451,5 +1479,6 @@ hr{
     margin: auto;
     text-align: center;
 }
+
 }
 
