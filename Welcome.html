@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="scripts.js"></script>
+  <link rel="icon" type="image/x-icon" href="images/fav-icon-browser.png">
 <!-- icons -->
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
@@ -267,7 +268,15 @@
       font-family: 'Montserrat';font-optical-sizing: auto;
       font-weight: 800;font-style: normal;letter-spacing: -1.50px;color: var(--logo-color);
     }
-
+.flex{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.img-2{
+  border-radius: 50px;
+  border: 1px solid var(--text-color-gray);
+}
     .feature-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -290,23 +299,22 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.06);
     }
 
-    .feature-card img {
+    .img-1 {
       width: 100%;
       border-radius: 10px;
-      margin-bottom: 25px;
     }
+    .img-2{
 
+    }
     .feature-card h3 {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 700;
-      margin-bottom: 10px;
       color: var(--text-color);
     }
 
     .feature-card p {
       color: var(--text-color-gray);
       font-size: 0.95rem;
-      line-height: 1.6;
     }
 
     .feature-card a {
@@ -559,24 +567,24 @@
       <!-- <a href="#">Pricing</a> -->
       <!-- <a href="#">Log in</a> -->
       <button id="themeToggle" class="Toggle" style="border: none;background:transparent;display: none;"><i class="ri-toggle-line" style="color: rgb(40, 37, 37);"></i></button>
-      <button class="join-btn">Create now</button>
+      <button class="join-btn">Get Started</button>
     </div>
   </div>
 
   <!-- Hero Section -->
   <section class="hero">
     <img src="images/Codiium-logo-1-less-padding.png" alt="App icon" class="logo-icon"/>
-    <h1>Discover and share real-world web projects—& source code.</h1>
-    <p>Featuring over 100,000 developers and 1,000 Projects on web —<br>New content weekly.</p>
+    <h1>“Show your creativity <br>and let clients find your <br>work on Codiium.”</h1>
+    <p>A platform built for developers, designers, and digital<br> creators to share their best work</p>
     <div class="cta-buttons">
-      <button class="btn-black">Discover All</button>
-      <button class="btn-white">See our plans →</button>
+      <button class="btn-black">Discover Projects</button>
+      <button class="btn-white">Start creacting →</button>
     </div>
   </section>
 
   <!-- Trusted Brands -->
   <section class="trusted">
-    <p>Top contributor developers</p>
+    <p>Community Members</p>
     <div class="brands">
       <img src="https://i.pinimg.com/736x/6f/a3/6a/6fa36aa2c367da06b2a4c8ae1cf9ee02.jpg" alt="Uber">
       <img src="https://i.pinimg.com/736x/6f/a3/6a/6fa36aa2c367da06b2a4c8ae1cf9ee02.jpg" alt="Headspace">
@@ -590,22 +598,44 @@
 
   <!-- Features Section -->
   <section class="features">
-    <h2>From inspiration to creation.</h2>
+    <h2>More project Inspiration.</h2>
     <div class="feature-grid">
       <div class="feature-card">
-        <img src="https://firebasestorage.googleapis.com/v0/b/codewide-9c807.appspot.com/o/posts%2F1728983388883%2Fimages%2Fbedimcode-post%201.png?alt=media&token=a84e3b65-bb02-49ce-b899-fd5c27e6329e?resize=400x300" alt="Copy to Figma">
-        <h3>Copy to Figma</h3>
-        <p>Download designs you like or copy it straight into Figma with our new <a href="#">Figma plugin</a>.</p>
+        <img src="images/bedimcode-post.png?resize=400x300" alt="Copy to Figma" class="img-1">
+        <div class="flex">
+          <div>
+            <img src="https://avatars.githubusercontent.com/u/61248995?v=4" alt="" width="40" class="img-2">
+          </div>
+          <div>
+            <h3>Bedimcode</h3>
+            <p>Responsive sidebar menu using html css and javascript, sidebar...</p>
+          </div>
+        </div>
       </div>
       <div class="feature-card">
-        <img src="https://firebasestorage.googleapis.com/v0/b/codewide-9c807.appspot.com/o/posts%2F1728983388883%2Fimages%2Fbedimcode-post%201.png?alt=media&token=a84e3b65-bb02-49ce-b899-fd5c27e6329e?resize=400x300" alt="Save to collections">
-        <h3>Save to collections</h3>
-        <p>Collect your favorite designs and upload your own screenshots into one place.</p>
+        <img src="images/transcend-free-template-1.jpg?resize=400x300" alt="Save to collections" class="img-1">
+        <div class="flex">
+          <div>
+            <img src="images/fav-icon-browser.png" alt="" class="img-2" width="40">
+          </div>
+          <div>
+           <h3>Codiium</h3>
+           <p>Showcase your works with Transcend design studio website template...</p>
+          </div>
+          
+        </div>
       </div>
       <div class="feature-card">
-        <img src="https://firebasestorage.googleapis.com/v0/b/codewide-9c807.appspot.com/o/posts%2F1728983388883%2Fimages%2Fbedimcode-post%201.png?alt=media&token=a84e3b65-bb02-49ce-b899-fd5c27e6329e?resize=400x300" alt="Leave comments">
-        <h3>Leave comments</h3>
-        <p>Take notes upon saving so you’ll never forget the context in the future.</p>
+        <img src="images/framer 1.jpg?resize=400x300" alt="Leave comments" class="img-1">
+        <div class="flex">
+          <div>
+            <img src="images/framer.webp" alt="" class="img-2" width="40">
+          </div>
+          <div>
+            <h3>Framer</h3>
+            <p>Dreelio is a premium Framer template built for SaaS products and tech...</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -632,14 +662,14 @@
                         Codiium
                     </div>
                 </div>
-        <p>Dev better digital experiences with Codiium.</p>
+        <p>Designed for pixel-perfect display of your work.</p>
       </div>
 
       <div class="footer-links">
         <div class="footer-column">
           <a href="Posts.html">Discover</a>
           <a href="Community.html">Our Community</a>
-          <a href="Team.html">Team</a>
+          <!-- <a href="Team.html">Team</a> -->
           <a href="Help.html">Help center</a>
           <a href="Welcome.html">Codiium</a>
         </div>
