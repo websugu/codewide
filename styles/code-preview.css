@@ -85,6 +85,7 @@ body {
     cursor: pointer;
     object-fit: cover;
     border: 2px solid rgba(178, 178, 178, 0.405);
+    margin-bottom: 10px;
 }
 
 .prew-page-post {
@@ -175,10 +176,10 @@ body {
     background-color: transparent;
     color: var(--text-color);
     border: 1px solid rgba(117, 117, 117, 0.274);
-    padding: 7px 15px;
-    font-size: 18px;
+    padding: 8px 15px;
+    font-size: 16px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 50px;
     outline: none;
 }
 
@@ -196,15 +197,18 @@ body {
 }
 
 .features {
-    padding: 10px;
-    font-weight: 450;
-    border-radius: 5px;
+    padding: 8px 15px;
+    font-weight: 500;
+    border-radius: 50px;
     border: 1px solid var(--create-btn-bg-color);
     background-color: var(--create-btn-bg-color);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     color: var(--txts-btn-color);
-    margin-bottom: 20px;
-    margin-top: 10px;
+    font-size: 16px;
+}.features-btn{
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 /* ==============================
@@ -491,14 +495,14 @@ body {
     align-items: center;
 }
 .related-post-item img {
-    width: 100px;
+    width: 80%;
     height: 70px;
-    border-radius: 5px;
+    border-radius: 3px;
     margin-right: 10px;
 }
-.related-post-item a {
+.related-post-item small {
     text-decoration: none;
-    color: var(--text-color);
+    color: var(--text-color-p);
 }
 
 /* ==============================
@@ -558,6 +562,11 @@ pre.dark-theme {
     justify-content: space-between;
     margin-top: 10px;
     margin-bottom: 0px;
+}
+.features-btn {
+    display: flex;
+    align-items: center;
+    gap: 2px;
 }
 
 .post-d-v {
