@@ -253,7 +253,7 @@
                       <button type="submit">Create Profile</button>
                   </div>
                   <div style="text-align: center;">
-                        <small>Forgot profile? <a style="font-weight: 600;cursor: pointer;color: rgb(41, 41, 240);" onclick="window.location.href='Profile-recover.html'"> Recover</a></small>
+                        <small>profile? <a style="font-weight: 600;cursor: pointer;color: rgb(41, 41, 240);" id="openLinkDeviceModaldown"> Recover</a></small>
                   </div>
             </div>
             
@@ -560,22 +560,6 @@
                 localStorage.setItem('profileCreated', 'true');
                 localStorage.setItem('profileId', docId);
                 localStorage.setItem('username', username);
-
-                // Update ownerName and ownerImage in all posts by this user
-                db.collection('posts').where('profileId', '==', docId).get().then(snapshot => {
-                    const updatePromises = [];
-                    snapshot.forEach(doc => {
-                        updatePromises.push(doc.ref.update({
-                            ownerName: name,
-                            ownerImage: downloadURL
-                        }));
-                    });
-                    return Promise.all(updatePromises);
-                }).then(() => {
-                    console.log('Posts updated with new profile info');
-                }).catch(error => {
-                    console.error('Error updating posts:', error);
-                });
 
                 progressContainer.style.display = 'none';
                 showToast('Profile saved successfully!', 'success');
