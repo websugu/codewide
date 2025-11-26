@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Community</title>
-    <!-- font-family -->
+    <title>Codiium</title>
+   <!-- font-family -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <!-- font-family 2 -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/style.css">
-    <link rel="icon" type="image/x-icon" href="images/bintcode-fav - Copy.png">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/style.css">
+    <link rel="icon" type="image/x-icon" href="images/fav-icon-browser.png">
     <!-- icons -->
      <link rel="stylesheet" href="Profile.html">
     <link
@@ -30,12 +34,12 @@
     <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: #7676762e 1px solid;">
         <div class="container-fluid">
             <div onclick="window.location.href='Posts.html'" style="cursor: pointer;">
-                <div style="display: flex;align-items: center;gap: 5px;font-weight: 700;font-size: 25px;">
+                <div style="display: flex;align-items: center;gap: 5px;font-weight: 700;">
                     <div>
-                        <i class="fa-solid fa-fire-flame-curved" style="color: #f26507;"></i>
+                        <img src="images/Codiium-logo-1-less-padding.png" alt="" width="24" style="filter: brightness(var(--image-color))">
                     </div>
-                    <div class="logo-streakcode" style='font-family: "Montserrat", sans-serif;'>
-                        StreakCode
+                    <div class="logo-streakcode" style='font-family: "Montserrat", sans-serif;font-size: 27px;font-weight: 700;'>
+                        Codiium
                     </div>
                 </div>
             </div>
@@ -95,7 +99,7 @@
 
     <!-- Community Members Section -->
     <div class="community-members-section my-4">
-        <h2>Join StreakCode<br> Community Members</h2>
+        <h2>Join Codiium<br> Community Members</h2>
         <p>Connect, share, and collaborate with fellow developers.</p>
         <div id="membersAvatars" class="d-flex flex-wrap justify-content-center custom-gap">
             <!-- Avatars will be loaded here -->
@@ -108,9 +112,10 @@
     <!-- Post a New Solution Section -->
     <div class="add-solution-section">
         <textarea id="newPostTextarea" class="form-control" rows="4" placeholder="Share your solution or ask for help..."></textarea>
-        <button id="submitPostBtn" class="btn btn-primary mt-2" onclick="submitNewPost()"><i class="ri-arrow-up-line"></i></button>
+        <button id="submitPostBtn" class="btn btn-primary mt-2"><i class="ri-lock-2-line"></i></button>
+        <!-- onclick="submitNewPost()" -->
     </div>
-
+   <center><small>This option is no longer available</small></center>
     <!-- Posts Container -->
     <div id="postsContainer" class="row">
         <!-- Posts will be displayed here -->
@@ -169,7 +174,7 @@
 <div id="membersModal" class="modal" style="display:none;">
     <div class="modal-content">
         <span class="close" onclick="closeMembersModal()">&times;</span>
-        <h2>All Community Members</h2>
+        <h3>Community Members</h3>
         <div id="membersList" class="members-list">
             <!-- Members will be listed here -->
         </div>
@@ -719,12 +724,12 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
                 snapshot.forEach(doc => {
                     const data = doc.data();
                     const memberDiv = document.createElement('div');
-                    memberDiv.className = 'd-flex align-items-center p-2 border-bottom';
+                    memberDiv.className = 'd-flex align-items-center p-2';
                     memberDiv.innerHTML = `
                         <img src="${data.profileImageUrl || 'images/defauld-profile.jpg'}" alt="${data.name}" class="rounded-circle mr-3" style="width: 40px; height: 40px;">
                         <div>
                             <h6 class="mb-0">${data.name || 'Anonymous'}</h6>
-                            <small class="text-muted">${data.bio || ''}</small>
+                            
                         </div>
                     `;
                     membersList.appendChild(memberDiv);
@@ -733,6 +738,7 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
                 console.error('Error loading all members:', error);
             });
         }
+// <small class="text-muted">${data.bio || ''}</small>
 
         // Function to submit new post
         function submitNewPost() {
@@ -759,7 +765,8 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
                 commentsCount: 0,
                 views: 0,
                 tags: ['community'],
-                postType: 'solution'
+                postType: 'solution',
+                isCommunityPost: true
             }).then(() => {
                 textarea.value = '';
                 alert('Post submitted successfully!');
@@ -776,7 +783,7 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
             postsContainer.innerHTML = '';
 
             try {
-                const snapshot = await db.collection('posts').orderBy('timestamp', 'desc').get();
+                const snapshot = await db.collection('posts').where('isCommunityPost', '==', true).orderBy('timestamp', 'desc').get();
                 for (const doc of snapshot.docs) {
                     const data = doc.data();
                     // Fetch profile data
