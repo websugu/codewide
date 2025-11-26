@@ -31,6 +31,9 @@
     
     <!-- Navbar (Optional) -->
     <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: #7676762e 1px solid;">
+
+    <!-- Back to Top button -->
+    <button onclick="topFunction()" id="backToTopBtn" title="Go to top">&#8679;</button>
         <div class="container-fluid">
             <div onclick="window.location.href='Posts.html'" style="cursor: pointer;">
                 <div style="display: flex;align-items: center;gap: 5px;">
@@ -67,7 +70,8 @@
                         <!-- <ul id="suggestionsList" class="dropdown-list" style="display: none;"></ul> Dropdown List -->
                      </div>
                         <li class="nav-item" onclick="myprofile()">
-                            <img id="profileImage" src="images/defauld-profile.jpg" alt="" style="width: 45px; height: 45px; border-radius: 50%;border: 1pxpx solid gray;cursor: pointer;">
+                            <img id="profileImage" src="images/defauld-profile.jpg" alt="" style="width: 45px; height: 45px; border-radius: 50%;border: 2px solid rgba(103, 103, 103, 0.585);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.055);cursor: pointer;">
                         </li>
                     </ul>
                 </div> 
@@ -95,13 +99,13 @@
             </div>
             <!-- <button class="prev btn-light" onclick="scrollTags(-1)"><i class="ri-arrow-left-line"></i></button> -->
             <div class="tag-buttons">
-                <!-- <button class="btn btn-outline-primary active me-2" onclick="filterByTag('all')">All</button> -->
-                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Login Forms')">Login Forms</button>
-                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Navbars')">Navbars</button>
-                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Inputs')">Inputs</button>
-                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Landing Pages')">Landing Pages</button>
-                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Buttons')">Buttons</button>
-                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Toggles')">Toggles</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('all')">All</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Web Design')">Web Design</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Animation')">Animation</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Branding')">Branding</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Illustration')">Illustration</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Product Design')">Product Design</button>
+                <button class="btn btn-outline-primary me-2" onclick="filterByTag('Typography')">Typography</button>
             </div>
             <!-- <button class="next btn-light" onclick="scrollTags(1)"><i class="ri-arrow-right-line"></i></button> -->
         </div>
@@ -448,11 +452,11 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
 
         // Filter based on search query and selected tag
         const searchText = (ownerName + ' ' + (data.description || '')).toLowerCase();
-        const hasTag = selectedTag === 'all' || (data.tags && data.tags.includes(selectedTag));
+        const hasTag = selectedTag === 'all' || (data.tags && data.tags.includes(selectedTag)) || ((data.description || '').toLowerCase().includes(selectedTag.toLowerCase()));
 
         console.log('Search text:', searchText, 'Has tag:', hasTag, 'Matches:', searchText.includes(searchQuery.toLowerCase()) && hasTag);
 
-        if (searchText.includes(searchQuery.toLowerCase()) && hasTag && !(data.tags && data.tags.includes('community'))) {
+        if (searchText.includes(searchQuery.toLowerCase()) && hasTag && !data.isCommunityPost) {
             const postImageUrl = data.postImageUrl || 'images/default-post.jpg';
             const postElement = `
                 <div class="col-lg-4 col-md-6 mb-4">
@@ -471,7 +475,7 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
                                     </div>
                                 </div>
                             </div>
-                            <button class="get-code" onclick="openCodePreview('${doc.id}')"><i class="ri-code-s-slash-line"></i> Get code</button>
+                            <button class="get-code" onclick="openCodePreview('${doc.id}')">View project</button>
                         </div>
                     </div>
                 </div>
@@ -501,110 +505,59 @@ db.collection('posts').orderBy('timestamp', 'desc').get().then(snapshot => {
         }
       
         
-        // Function to filter posts by tag
-    function filterByTag(tag) {
-    const searchQuery = document.getElementById('searchInput').value;
-    
-    // Display posts filtered by tag and search query
-    displayAllPosts(searchQuery, tag);
-    
-    // Get all tag buttons and remove the 'active' class from them
-    const tagButtons = document.querySelectorAll('.tag-buttons .btn');
-    tagButtons.forEach(button => button.classList.remove('active'));
-    
-    // Find the clicked button using the tag and add the 'active' class
-    const clickedButton = Array.from(tagButtons).find(button => button.innerText.toLowerCase() === tag.toLowerCase());
-    if (clickedButton) {
-        clickedButton.classList.add('active');
-    }
-}
+        // Global variable to track current selected tag
+        let currentTag = 'all';
 
+        // Function to filter posts by tag
+        function filterByTag(tag) {
+            currentTag = tag;  // Update current tag
+            const searchQuery = document.getElementById('searchInput').value;
+
+            // Display posts filtered by tag and search query
+            displayAllPosts(searchQuery, tag);
+
+            // Get all tag buttons and remove the 'active' class from them
+            const tagButtons = document.querySelectorAll('.tag-buttons .btn');
+            tagButtons.forEach(button => button.classList.remove('active'));
+
+            // Find the clicked button using the tag and add the 'active' class
+            const clickedButton = Array.from(tagButtons).find(button => button.innerText.toLowerCase() === tag.toLowerCase());
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+        }
 
         // Event listener for search input
         document.getElementById('searchInput').addEventListener('input', function () {
             const searchQuery = this.value;
-            filterByTag('all');
+            displayAllPosts(searchQuery, currentTag);
         });
 
         // Display the skeleton loader for 3 seconds and then load posts
         showSkeletonLoader();
         setTimeout(() => {
-            displayAllPosts();
+            filterByTag('all');  // Set 'All' as active initially
         }, 500);
     </script>
     <script>
-        // Example data (you can replace this with your dynamic posts/usernames from Firestore)
-const postsData = [
-    { username: "", postTitle: "Login form" },
-    { username: "JaneSmith", postTitle: "Navbar Designs" },
-    { username: "AlexBrown", postTitle: "Button Styles" },
-    { username: "ChrisMiller", postTitle: "Toggles and Switches" },
-    // Add more posts or usernames
-];
+        //Get the button
+        const backToTopBtn = document.getElementById("backToTopBtn");
 
-// Function to show suggestions in the dropdown
-function showSuggestions(inputValue) {
-    const suggestionsList = document.getElementById("suggestionsList");
+        // When the user scrolls down 300px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
 
-    if (inputValue.length === 0) {
-        suggestionsList.style.display = "none";
-        return;
-    }
+        function scrollFunction() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                backToTopBtn.style.display = "block";
+            } else {
+                backToTopBtn.style.display = "none";
+            }
+        }
 
-    // Filter postsData based on input
-    const filteredData = postsData.filter(item => 
-        item.username.toLowerCase().includes(inputValue.toLowerCase()) || 
-        item.postTitle.toLowerCase().includes(inputValue.toLowerCase())
-    );
-
-    // If no matches, hide the dropdown
-    if (filteredData.length === 0) {
-        suggestionsList.style.display = "none";
-        return;
-    }
-
-    // Generate list items for the dropdown
-    suggestionsList.innerHTML = "";
-    filteredData.forEach(item => {
-        const listItem = document.createElement("li");
-        listItem.textContent = `${item.username} - ${item.postTitle}`;
-        listItem.onclick = function() {
-            // Set the selected suggestion in the input field
-            document.getElementById("searchInput").value = `${item.username} - ${item.postTitle}`;
-            // You can also redirect to the post or user profile here
-            suggestionsList.style.display = "none"; // Hide the dropdown
-        };
-        suggestionsList.appendChild(listItem);
-    });
-
-    suggestionsList.style.display = "block";
-}
-
-// Hide the dropdown when clicking outside
-document.addEventListener("click", function(event) {
-    const searchInput = document.getElementById("searchInput");
-    const suggestionsList = document.getElementById("suggestionsList");
-
-    if (!searchInput.contains(event.target) && !suggestionsList.contains(event.target)) {
-        suggestionsList.style.display = "none";
-    }
-});
-// Fetch posts dynamically from Firestore
-function fetchPosts() {
-    db.collection('posts').get().then(querySnapshot => {
-        const posts = [];
-        querySnapshot.forEach(doc => {
-            const data = doc.data();
-            posts.push({ username: data.username, title: data.title });
-        });
-    }).catch(error => {
-        console.error('Error fetching posts:', error);
-    });
-}
-
-// Call fetchPosts to populate the posts array on page load
-fetchPosts();
+        // When the user clicks on the button, scroll to the top of the document smoothly
+        function topFunction() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
     </script>
 </body>
-
 </html>
