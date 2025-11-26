@@ -15,7 +15,7 @@
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
     rel="stylesheet"
-/>
+/><link rel="icon" type="image/x-icon" href="images/fav-icon-browser.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
@@ -334,9 +334,14 @@
   <!-- Header -->
   <header>
     <div>
-      <div style='font-family: "Montserrat", sans-serif;font-size: 25px;font-weight: 900;letter-spacing: -2px;cursor: pointer'onclick="window.location.href='Posts.html'">
-        <i class="fa-solid fa-fire-flame-curved" style="color: #f26507;"></i> StreakCode
-      </div>
+      <div style="display: flex;align-items: center;gap: 5px;justify-content: center;">
+                    <div>
+                        <img src="images/Codiium-logo-1-less-padding.png" alt="" width="24" style="filter: brightness(var(--image-color));">
+                    </div>
+                    <div class="logo-streakcode" style="font-size: 27px;font-weight: 700;">
+                        Codiium
+                    </div>
+                </div>
         <h1>Help Center</h1>
     </div>
     
@@ -375,7 +380,7 @@
   </section>
 
   <!-- FAQ Section -->
-  <section class="faq-section">
+  <!-- <section class="faq-section">
     <h2>Frequently Asked Questions</h2>
 
     <div class="faq-item">
@@ -387,8 +392,8 @@
       <button class="faq-question">What if I lost my StreakCode Profile ? <span>+</span></button>
       <div class="faq-answer">Yes! On the Team Settings page, click “Invite Members” and send invitations.</div>
     </div>
-  </section>
-
+  </section> -->
+<br><br><br>
   <!-- Modal -->
   <div class="modal" id="articleModal">
     <div class="modal-content">
@@ -404,16 +409,16 @@
         <div style="font-weight: 700;font-size: 30px;">
             <i class="fa-solid fa-fire-flame-curved" style="color: #f26507;"></i>
         </div>
-        <p>Dev better digital experiences with StreakCode.</p>
+        <p>Designed for pixel-perfect display of your work.</p>
       </div>
 
       <div class="footer-links">
         <div class="footer-column">
           <a href="Posts.html">Discover</a>
           <a href="Community.html">Our Comunity</a>
-          <a href="Team.html">Team</a>
+          <!-- <a href="Team.html">Team</a> -->
           <a href="Help.html">Help center</a>
-          <a href="Welcome.html">StreackCode</a>
+          <a href="Welcome.html">Codiium</a>
         </div>
         <div class="footer-column">
           <a href="#"><i class="ri-instagram-line"></i> Instagram</a>
@@ -455,12 +460,22 @@
       <ul>
         <li>Click on Create Profile > fill the form select Avatar or upload form your explorer > Profile is created</li>
         <li>The profile is editable once created you can manage easily</li>
-        <li>Users are adviced to genarate Code to recover the your profile.</li>
+        <li>Users are advised to generate a code to recover their profile. <a href="Profile-recover.html">Forgot Profile?</a></li>
       </ul>
       ` },
-      team: { title: "Teams & Collaboration", content: "<p>Work seamlessly with your teammates...</p>" },
-      billing: { title: "Billing & Plans", content: "<p>Understand how seat-based billing works...</p>" },
-      usage: { title: "Using the Platform", content: "<p>Discover tips to get the most from our tools...</p>" }
+      team: { title: "Teams & Collaboration", content: `
+      not yet
+      ` },
+      billing: { title: "Connect profile", content: `
+      <ul>
+        <li>Once the profile is craeted open the options model > Get Recovery Code > generate code :</li><br>
+        <img src="images/generate.png" width="200">
+        <li>Once the code generated you can now connect anywhere by connecting to your profile > create profile > click Connect profile button</li><br>
+        <img src="images/connect.png" width="200">
+      </ul>
+      ` 
+      },
+      usage: { title: "Using the Platform", content: "<p>Unavailable section</p>" }
     };
 
     const modal = document.getElementById('articleModal');
