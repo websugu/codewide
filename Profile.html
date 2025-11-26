@@ -22,7 +22,62 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
 </head>
 <style>
- 
+ .tags-selection {
+  margin: 25px 0;
+  font-family: Inter, sans-serif;
+}
+
+.tags-title {
+  font-size: 10px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.tags-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag-item {
+  cursor: pointer;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  border: 1px solid rgba(59, 59, 59, 0.393);
+}
+
+.tag-item:hover {
+  background: #45454545;
+}
+
+.tag-item input {
+  display: none;
+}
+
+.tag-item input:checked + span {
+  background: #5038ff;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.tag-item span {
+  pointer-events: none;
+}
+
+.tag-limit-msg {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #777;
+}
+
  #profileImagePreview {
     border: 2px solid #ddd;
     border-radius: 50%;
@@ -158,7 +213,7 @@
                 <!-- Add "Create Group" button -->
                 <button id="createGroupButton" class="btn btn-primary" style="display: none;">Create Group</button>
                 <!-- Add a hidden "See My Group" button -->
-    <button id="seeMyGroupBtn" style="display: none;" onclick="goToMyGroup()">See My Group</button>
+                <!-- <button id="seeMyGroupBtn" style="display: none;" onclick="goToMyGroup()">See My Group</button> -->
                 
                 
                 
@@ -181,8 +236,8 @@
             <!-- My Posts Section -->
             <!-- <p class="text-center">Projects</p> -->
          <div class="posts-header" id="postsheader">
-            <h3 id="postCount">0 Pojects</h3>
             <input type="text" id="searchPosts" placeholder="Search posts...">
+            <h2 id="postCount">0 Pojects</h2>
          </div>
          <div id="myPostsSection">
 
@@ -194,7 +249,7 @@
             <div class="modal-content" id="modal-content-suc" style="height: fit-content;">
                 <span id="closeModal" class="close" style="cursor: pointer;">&times;</span>
                 <div style="text-align: center;margin: auto;">
-                <h3>Link Devices</h3>
+                <h3>Recovery Code</h3>
                 <p>Use this code to connect your profile to<br> any devices</p>
                 <div>
                     <h6 id="generatedCode"># # # # # # # #</h6>
@@ -202,7 +257,7 @@
                 </div>
                 
                 <div>
-                    <button id="generateCodeBtn">Generate Code</button>
+                    <button id="generateCodeBtn">Generate code</button>
                 </div>
                 <div>
                     <small style="font-weight: 100;"><i class="ri-error-warning-line" style="color: red;"></i> Please do not share this code ! for secure purpose</small>
@@ -251,7 +306,7 @@
                     </div>
                     <section  id="openModalBtn">
                         <div >
-                            <i class="ri-share-box-line"></i><span style="padding-left: 10px;">Connect to a device</span>
+                            <i class="ri-share-box-line"></i><span style="padding-left: 10px;">Get Recovery Code</span>
                         </div>
                     </section>
                     <section id="editProfileBtn">
@@ -259,7 +314,8 @@
                             <i class="ri-edit-line"></i><span style="padding-left: 10px;">Edit Profile</span>
                         </div>
                     </section>
-                    <section onclick="document.getElementById('createGroupPopup').style.display = 'block'; document.getElementById('optionsModal').style.display = 'none';" style="cursor: pointer;">
+                    <section style="cursor: pointer;">
+                        <!-- onclick="document.getElementById('createGroupPopup').style.display = 'block'; document.getElementById('optionsModal').style.display = 'none';" -->
                         <div>
                             <i class="ri-group-line"></i><span style="padding-left: 10px;padding-right: 5px;">Create a new group</span> <a style="font-size: small;background-color: var(--create-btn-bg-color);
                         color: var(--txts-btn-color);padding: 5px 10px;border-radius: 20px;">Pro</a>
@@ -267,7 +323,8 @@
                     </section>
                     <section>
                         <div>
-                            <i class="ri-chat-3-line"></i><span style="padding-left: 10px;">Send a feedback</span>
+                            <i class="ri-chat-3-line"></i><span style="padding-left: 10px;">Send a feedback <a style="font-size: small;background-color: var(--create-btn-bg-color);
+                        color: var(--txts-btn-color);padding: 5px 10px;border-radius: 20px;">Pro</a></span>
                         </div>
                     </section>
                     <section onclick="window.location.href='Settings.html'">
@@ -275,9 +332,9 @@
                             <i class="ri-settings-line"></i><span style="padding-left: 10px;">Settings</span>
                         </div>
                     </section>
-                    <section>
+                    <section onclick="window.location.href='Community.html'">
                         <div>
-                            <i class="ri-community-line"></i><span style="padding-left: 10px;">Join Codewide Community</span>
+                            <i class="ri-community-line"></i><span style="padding-left: 10px;">Codiium Community</span>
                         </div>
                     </section>
 <section id="deleteProfileButton" style="display: none;">
@@ -292,7 +349,7 @@
         <div id="createPostPopup" class="popup" style="display:none;">
             <div class="popup-content position-relative">
                 <div class="modal-header">
-                    <h2>Create New Post</h2>
+                    <h2>Create Project</h2>
                     <span class="close" id="closePopup">&times;</span>
                 </div>
                 <div class="modal-body">
@@ -311,7 +368,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div>
+                        
+                            <!-- Title and Description Section -->
+                        <div class="form-section">
+                            <input type="text" placeholder="Give a title to your project" class="title" id="titles" required>
+                            <!-- <textarea id="description" class="form-control" placeholder="Add a detailed description" required></textarea> -->
+                             <textarea id="description" class="form-control" placeholder="Add a detailed description" rows="5" cols="40"></textarea>
+                            <!-- Tags Selection -->
+
+                            <div>
                             <div class="dropdown">
                                 <p class="dropdown-btn">More Options</p>
                                 <div class="dropdown-content">
@@ -345,11 +410,38 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Title and Description Section -->
-                        <div class="form-section">
-                            <input type="text" placeholder="Enter title" class="title" id="titles" required>
-                            <textarea id="description" class="form-control" placeholder="Add a detailed description" required></textarea>
-                            
+                            <div class="tags-selection">
+  <label class="tags-title">Select Tag:</label>
+
+  <div class="tags-checkboxes">
+    <label class="tag-item">
+      <input type="checkbox" value="Web Design"> <span>Web Design</span>
+    </label>
+
+    <label class="tag-item">
+      <input type="checkbox" value="Animation"> <span>Animation</span>
+    </label>
+
+    <label class="tag-item">
+      <input type="checkbox" value="Branding"> <span>Branding</span>
+    </label>
+
+    <label class="tag-item">
+      <input type="checkbox" value="Illustration"> <span>Illustration</span>
+    </label>
+
+    <label class="tag-item">
+      <input type="checkbox" value="Product Design"> <span>Product Design</span>
+    </label>
+
+    <label class="tag-item">
+      <input type="checkbox" value="Typography"> <span>Typography</span>
+    </label>
+  </div>
+
+  <!-- <p class="tag-limit-msg">You can choose up to <strong>3</strong> tags.</p> -->
+</div>
+
                         </div>
 
 
@@ -493,6 +585,30 @@
         document.getElementById('bioModal').style.display = 'block';
     }
 
+    function openContactModal() {
+        // Fetch the profile data to get the email
+        db.collection('profiles').doc(profileId).get().then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                const email = data.email || 'No email provided';
+                document.getElementById('contactEmailContent').innerHTML = `<p style="text-align:left;margin:30px auto;width:90%">Interested in hiring a creator or learning more about a product or service?<br> I m available for work,
+                We make it easy<br> 📩 Email: <a href="mailto:${email}">${email}</a></p>`;
+                document.getElementById('contactModal').style.display = 'block';
+            } else {
+                document.getElementById('contactEmailContent').innerHTML = '<p>No profile found.</p>';
+                document.getElementById('contactModal').style.display = 'block';
+            }
+        }).catch(error => {
+            console.error('Error fetching profile for contact:', error);
+            document.getElementById('contactEmailContent').innerHTML = '<p>Error loading contact information.</p>';
+            document.getElementById('contactModal').style.display = 'block';
+        });
+    }
+
+    function closeContactModal() {
+        document.getElementById('contactModal').style.display = 'none';
+    }
+
 document.addEventListener('DOMContentLoaded', function() {
     // Handle closing the createProfileModal
     document.getElementById('closeCreateProfileModal').addEventListener('click', function() {
@@ -581,10 +697,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <button type="submit" class="btn btn-primary">Create Group</button>
         </form>
     </div>
-</div>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        </div>
     <!-- Bootstrap JS and Firebase -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
@@ -594,22 +707,9 @@ document.addEventListener('DOMContentLoaded', function() {
      <script src="scripts.js"></script>
      <!-- Cropper.js JS -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-     <!-- create post options -->
-     <script>
-        // Function to show or hide the input field based on the checkbox status
-    function toggleInput(checkbox, containerId) {
-        const inputContainer = document.getElementById(containerId);
-        if (checkbox.checked) {
-            inputContainer.style.display = 'inline'; // Show input when the option is checked
-        } else {
-            inputContainer.style.display = 'none'; // Hide input when the option is unchecked
-        }
-    }
-    
-    </script>
      <!-- Notification -->
      <script>
-       
+
      </script>
      <!-- group post option -->
      <script>
@@ -678,10 +778,7 @@ document.getElementById('createGroupForm').addEventListener('submit', (e) => {
 });
 
 // see group
-// Call this function after the page loads
-window.onload = function() {
-            checkIfGroupExists();
-        };
+        // Call this function after the page loads
 
         // Function to check if the user has created a group in Firestore
         function checkIfGroupExists() {
@@ -697,9 +794,9 @@ window.onload = function() {
                             // If a group exists, show the "See My Group" button
                             document.getElementById('seeMyGroupBtn').style.display = 'inline';
                         }
-                        else{
-                            alert("no group")
-                        }
+                        // else{
+                        //     alert("no group")
+                        // }
                         
                     })
                     .catch((error) => {
@@ -1153,7 +1250,17 @@ function deletePost(postId) {
         document.getElementById('closePopup').addEventListener('click', () => {
             document.getElementById('createPostPopup').style.display = 'none';
         });
-        
+
+        // Function to show or hide the input field based on the checkbox status
+        function toggleInput(checkbox, containerId) {
+            const inputContainer = document.getElementById(containerId);
+            if (checkbox.checked) {
+                inputContainer.style.display = 'block'; // Show input when the option is checked
+            } else {
+                inputContainer.style.display = 'none'; // Hide input when the option is unchecked
+            }
+        }
+
    // Handle post submission
    document.getElementById('createPostForm').addEventListener('submit', (e) => {
     e.preventDefault();
@@ -1520,6 +1627,7 @@ function incrementProfileViews(profileId) {
 window.onload = function() {
     const profileId = getProfileIdFromUrl(); // Assume this function fetches the profile ID from the URL
     incrementProfileViews(profileId);
+    checkIfGroupExists();
 };
 // Function to get the profile ID from the URL (assuming it's passed as a query parameter)
 function getProfileIdFromUrl() {
@@ -1755,6 +1863,7 @@ document.getElementById('editProfileForm').addEventListener('submit', (e) => {
     const updatedAddlink = document.getElementById('editAddlink').value;
 
     const profileImageFile = document.getElementById('editProfileImage').files[0];
+    const currentProfileImageUrl = document.getElementById('profileImagePreview').src;
 
     if (profileImageFile && window.cropper) {
         // If a new profile image is uploaded and cropped, get the cropped image
@@ -1773,9 +1882,22 @@ document.getElementById('editProfileForm').addEventListener('submit', (e) => {
                     profileImageUrl: downloadURL
                 });
             }).then(() => {
+                // Update ownerName and ownerImage in all posts by this user
+                return db.collection('posts').where('profileId', '==', profileId).get();
+            }).then(snapshot => {
+                const updatePromises = [];
+                snapshot.forEach(doc => {
+                    updatePromises.push(doc.ref.update({
+                        ownerName: updatedName,
+                        ownerImage: downloadURL
+                    }));
+                });
+                return Promise.all(updatePromises);
+            }).then(() => {
+                console.log('Posts updated with new profile info');
                 showSuccessModal2(); // Show the success modal
             }).catch(error => {
-                console.error('Error updating profile:', error);
+                console.error('Error updating profile or posts:', error);
             });
         });
     } else if (profileImageFile) {
@@ -1794,9 +1916,22 @@ document.getElementById('editProfileForm').addEventListener('submit', (e) => {
                 profileImageUrl: downloadURL
             });
         }).then(() => {
+            // Update ownerName and ownerImage in all posts by this user
+            return db.collection('posts').where('profileId', '==', profileId).get();
+        }).then(snapshot => {
+            const updatePromises = [];
+            snapshot.forEach(doc => {
+                updatePromises.push(doc.ref.update({
+                    ownerName: updatedName,
+                    ownerImage: downloadURL
+                }));
+            });
+            return Promise.all(updatePromises);
+        }).then(() => {
+            console.log('Posts updated with new profile info');
             showSuccessModal2(); // Show the success modal
         }).catch(error => {
-            console.error('Error updating profile:', error);
+            console.error('Error updating profile or posts:', error);
         });
     } else {
         // Update Firestore with new profile data without changing the image
@@ -1807,9 +1942,22 @@ document.getElementById('editProfileForm').addEventListener('submit', (e) => {
             bio: updatedBio,
             addlink: updatedAddlink
         }).then(() => {
+            // Update ownerName and ownerImage in all posts by this user
+            return db.collection('posts').where('profileId', '==', profileId).get();
+        }).then(snapshot => {
+            const updatePromises = [];
+            snapshot.forEach(doc => {
+                updatePromises.push(doc.ref.update({
+                    ownerName: updatedName,
+                    ownerImage: currentProfileImageUrl
+                }));
+            });
+            return Promise.all(updatePromises);
+        }).then(() => {
+            console.log('Posts updated with new profile info');
             showSuccessModal2(); // Show the success modal
         }).catch(error => {
-            console.error('Error updating profile:', error);
+            console.error('Error updating profile or posts:', error);
         });
     }
 });
@@ -1833,25 +1981,6 @@ function closeEditProfilePopup() {
 
 document.getElementById('editProfileBtn').onclick = openEditProfilePopup;
     </script>
-    <script>
-        // Function to open the contact modal and display email
-        function openContactModal() {
-            db.collection('profiles').doc(profileId).get().then(doc => {
-                if (doc.exists) {
-                    const data = doc.data();
-                    const email = data.email || 'No email provided';
-                    document.getElementById('contactEmailContent').innerHTML = `<p>${email}</p>`;
-                    document.getElementById('contactModal').style.display = 'block';
-                }
-            }).catch(error => {
-                console.error('Error fetching profile:', error);
-            });
-        }
 
-        // Function to close the contact modal
-        function closeContactModal() {
-            document.getElementById('contactModal').style.display = 'none';
-        }
-    </script>
 </body>
 </html>
