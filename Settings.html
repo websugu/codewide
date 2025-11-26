@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="icon" type="image/x-icon" href="images/bintcode-fav - Copy.png">
+    <link rel="icon" type="image/x-icon" href="images/fav-icon-browser.png">
 </head>
 <body>
     <button id="themeToggle" class="Toggle" style="border: none;background:transparent;display: none;"><i class="ri-toggle-line"></i></button>
@@ -103,8 +103,8 @@
                 <label>Who can see your posts</label>
                 <select id="postVisibilitySelect" class="visibility-select">
                     <option value="everyone">Everyone</option>
-                    <!-- <option value="followers">Subscribers only</option>
-                    <option value="private">Private</option> -->
+                    <option value="followers">Subscribers only</option>
+                    <option value="private">Private</option>
                 </select>
             </div>
             <div class="setting-item">
@@ -133,6 +133,16 @@
                     <span id="twoFactorText">Disabled</span>
                     <label class="toggle-switch">
                         <input type="checkbox" id="twoFactorToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label>Disable Contact Button</label>
+                <div class="toggle-container">
+                    <span id="disableContactText">Enabled</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="disableContactToggle">
                         <span class="toggle-slider"></span>
                     </label>
                 </div>
@@ -293,6 +303,7 @@
             document.getElementById('postVisibilitySelect').addEventListener('change', changePostVisibility);
             document.getElementById('followPermissionToggle').addEventListener('change', toggleFollowPermission);
             document.getElementById('twoFactorToggle').addEventListener('change', toggleTwoFactorAuth);
+            document.getElementById('disableContactToggle').addEventListener('change', toggleDisableContact);
 
             // Form event listeners
             document.getElementById('changePasswordForm').addEventListener('submit', handleChangePassword);
@@ -405,6 +416,7 @@
             const postVisibility = localStorage.getItem('postVisibility') || 'everyone';
             const followPermission = localStorage.getItem('followPermission') === 'restricted';
             const twoFactorEnabled = localStorage.getItem('twoFactorEnabled') === 'true';
+            const disableContact = localStorage.getItem('disableContact') === 'true';
 
             // Update UI elements
             document.getElementById('profileVisibilityToggle').checked = profileVisibility;
@@ -417,6 +429,9 @@
 
             document.getElementById('twoFactorToggle').checked = twoFactorEnabled;
             document.getElementById('twoFactorText').textContent = twoFactorEnabled ? 'Enabled' : 'Disabled';
+
+            document.getElementById('disableContactToggle').checked = disableContact;
+            document.getElementById('disableContactText').textContent = disableContact ? 'Disabled' : 'Enabled';
         }
 
         function toggleProfileVisibility() {
@@ -468,6 +483,20 @@
             // In a real implementation, this would integrate with an authentication service
             if (isEnabled) {
                 alert('Two-factor authentication setup would be implemented here with a proper auth service.');
+            }
+        }
+
+        function toggleDisableContact() {
+            const isDisabled = this.checked;
+            localStorage.setItem('disableContact', isDisabled.toString());
+            document.getElementById('disableContactText').textContent = isDisabled ? 'Disabled' : 'Enabled';
+
+            // Save to Firebase
+            const profileId = localStorage.getItem('profileId');
+            if (profileId) {
+                db.collection('profiles').doc(profileId).update({
+                    disableContact: isDisabled
+                }).catch(error => console.error('Error updating disable contact setting:', error));
             }
         }
 
