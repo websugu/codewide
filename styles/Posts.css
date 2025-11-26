@@ -61,7 +61,7 @@ h1 {
 .moment{
     font-size: small;
     font-weight: 400;
-    color: var(--text-color-gray);
+    color: var(--text-color-p);
     padding-left: 10px;
 
 }
@@ -707,4 +707,28 @@ font-size: 1.6rem;
 .own-de{
     line-height: 18px;
 }
+}
+
+/* Back to Top Button Styles */
+#backToTopBtn {
+    display: none; /* Hidden by default */
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    z-index: 99;
+    font-size: 22px;
+    border: none;
+    outline: none;
+    background-color: var(--create-btn-bg-color);
+    color: var(--txts-btn-color);
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 45%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease;
+}
+
+#backToTopBtn:hover {
+    background-color: #555;
+    color: white;
 }
