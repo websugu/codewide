@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Momo+Trust+Display&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="icon" type="image/x-icon" href="images/bintcode-fav - Copy.png">
+    <link rel="icon" type="image/x-icon" href="images/fav-icon-browser.png">
     <!-- icons -->
     <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
@@ -368,13 +368,11 @@
                         <p id="freecode"></p>
                     </div>
                     <div>
-                        <p>Open source <span style="float: right;"><i class="ri-check-line"></i></span></p>
-                        <hr style="background-color: rgba(63, 63, 63, 0.601);">
                         <p>Published <span style="float: right;color:gray" id="posted"><i class="ri-check-line"></i></span></p>
                         <hr style="background-color: rgba(63, 63, 63, 0.601);">
                         <p>Permission <span style="float: right;"><i class="ri-checkbox-circle-fill"></i></span></p>
                         <hr style="background-color: rgba(63, 63, 63, 0.601);">
-                        <p>Post Owner <span style="float: right;color:rgb(128, 128, 128)" id="postowner"></span></p>
+                        <p>Project Owner <span style="float: right;color:rgb(128, 128, 128)" id="postowner"></span></p>
                         <!-- <button id="openModalBtn">Open Modal</button> -->
                         <button id="reportBtn" class="report-btn"><i class="ri-flag-line"></i> Report</button>
                         <button id="followBtn" class="follow-btn" style="display: none;">Follow</button>
@@ -864,11 +862,14 @@ function displayPost() {
                     </div>
                     <div class="own-v-code-1">
                         <h3><strong>${profileLink}</strong></h3>
-                        <small class="smallx">Post Owner</small>
+                        <small class="smallx">Project Owner</small>
                     </div>
                 </div>
 
-                <div>
+                <div class="features-btn">
+                    <a href="${data.livepreview}" id="live"></a>
+                    <a href="${data.youtube}" id="youtube"></a>
+                    
                   <button id="likeButton"><i class="ri-thumb-up-line"></i> ${data.likes ? data.likes.length : 0}</button>
                   <button id="savePostButton" onclick="toggleSavePost(postId)">Save</button>
                   ${data.price ? `<button id="projectPriceButton" onclick="openBuyModal('${data.profileId}')">$${data.price}</button>` : ''}
@@ -878,10 +879,7 @@ function displayPost() {
 
 
                 <hr style="background-color: rgba(63, 63, 63, 0.601);">
-                <div>
-                    <a href="${data.livepreview}" id="live"></a>
-                    <a href="${data.youtube}" id="youtube"></a>
-                </div>
+                
                 <div class="post-d-v">
                 <div>
                     <span class="moment" style="float:left"><i class="ri-time-line"></i> ${postedMoment}</span>
@@ -899,6 +897,7 @@ function displayPost() {
                 <div class="descc-1">
                     <h4>${data.titles || '<h5 style="color:rgba(107, 107, 107, 0.377);"><i>No title as been added</i></h5>'}</h4>
                     <p id="description"></p>
+                    ${data.tags && data.tags.length > 0 ? `<div class="post-tags" style="margin-top: 10px;"><strong>Tags:</strong> ${data.tags.map(tag => `<span class="tag-badge" style="display: inline-block; background: var(--create-btn-bg-color); color: var(--txts-btn-color); padding: 4px 8px; border-radius: 12px; font-size: 12px; margin: 2px;">${tag}</span>`).join(' ')}</div>` : ''}
                 </div>
             </div>
 
@@ -906,13 +905,13 @@ function displayPost() {
             `;
             postRef.update({ views: firebase.firestore.FieldValue.increment(1) });
             // featurs js
-            document.getElementById('live').innerHTML=(data.livepreview ? '<button class="features"><i class="ri-external-link-line"></i> Live Preview</button>' : '<p style= "display:none">No link added</p>');
-            document.getElementById('youtube').innerHTML=(data.youtube ? '<button class="features" id="livecss"><i class="ri-play-large-line"></i> Watch Video</button>' : '<p style= "display:none">No link added</p>');
+            document.getElementById('live').innerHTML=(data.livepreview ? '<button class="features"><i class="ri-external-link-line"></i> Live preview</button>' : '<p style= "display:none">No link added</p>');
+            document.getElementById('youtube').innerHTML=(data.youtube ? '<button class="features" id="livecss"><i class="ri-play-large-line"></i> Watch video</button>' : '<p style= "display:none">No link added</p>');
             document.getElementById('description').innerHTML= `<p>${data.description}</p>`;
             // document.getElementById('showstatus').innerHTML= data.price;
             document.getElementById('posted').innerText= postedMoment;
             document.getElementById('postowner').innerText= data.ownerName;
-            document.getElementById('freecode').innerHTML= data.zipFileUrl ? `<button class="free" onclick="downloadCode('${data.zipFileUrl}')"><i class="ri-checkbox-circle-line" style="color:green"></i> Get source code</button>` : `<button class="free" disabled><i class="ri-close-circle-line" style="color:red"></i> Source code unavailable</button>`;
+            document.getElementById('freecode').innerHTML= data.zipFileUrl ? `<button class="free" onclick="downloadCode('${data.zipFileUrl}')"><i class="ri-checkbox-circle-line" style="color:green"></i> Get source code</button>` : `<button class="free" disabled><i class="ri-close-circle-line" style="color:red"></i> No source available</button>`;
             
             // Check if post has code
             if (data.codeSnippet) {
@@ -974,7 +973,7 @@ function loadRelatedPosts(ownerId) {
                             </div>
                             <div>
                                 <a>${data.titles || 'Untitled'}</a><br>
-                                <a>view post</a>
+                                <small> Posted by - ${data.ownerName}</small>
                             </div>
                         </div>
                     </div>
@@ -1084,15 +1083,15 @@ async function displayComments() {
             let username = data.username || 'View Profile';
             let timeText = data.timestamp ? timeAgo(data.timestamp.toDate()) : 'Just now';
 
-            // ✅ Fetch user's profile if not stored in comment
+            // ✅ Fetch user's profile from 'profiles' collection
             try {
-                const userDoc = await db.collection('users').doc(data.userId).get();
+                const userDoc = await db.collection('profiles').doc(data.userId).get();
                 if (userDoc.exists) {
                     const userData = userDoc.data();
                     profileImage = userData.profileImageUrl || profileImage;
                     username = userData.username || userData.name || username;
                 } else {
-                    console.warn(`⚠️ No user document found for userId: ${data.userId}`);
+                    console.warn(`⚠️ No profile document found for userId: ${data.userId}`);
                 }
             } catch (err) {
                 console.error('⚠️ Failed to fetch user profile:', err);
@@ -1132,7 +1131,7 @@ async function displayComments() {
 
         // Load replies for each comment
         for (const doc of snapshot.docs) {
-            displayReplies(doc.id);
+            await displayReplies(doc.id);
         }
     } catch (error) {
         console.error('🔥 Error fetching comments:', error);
@@ -1170,27 +1169,47 @@ function submitReply(commentId) {
 }
 
 // Display replies for a specific comment
-function displayReplies(commentId) {
+async function displayReplies(commentId) {
     const repliesContainer = document.getElementById(`replies-${commentId}`);
     repliesContainer.innerHTML = ''; // Clear existing replies
 
-    db.collection('posts').doc(postId).collection('comments').doc(commentId).collection('replies')
-        .orderBy('timestamp', 'asc').get().then(snapshot => {
-            snapshot.forEach(doc => {
-                const data = doc.data();
-                const replyElement = `
-                    <div class="reply">
-                        <div class="reply-header">
-                            <a href="Profile.html?profileId=${data.userId}" class="own-pro">${data.username || 'View Profile'}</a><small>(${timeAgo(data.timestamp.toDate())})</small>
-                        </div>
-                        <p><i class="ri-corner-down-right-fill"></i> ${data.text}</p>
+    try {
+        const snapshot = await db.collection('posts').doc(postId).collection('comments').doc(commentId).collection('replies')
+            .orderBy('timestamp', 'asc').get();
+
+        for (const doc of snapshot.docs) {
+            const data = doc.data();
+            let profileImage = 'https://i.pinimg.com/736x/ef/69/6c/ef696c8f834062707f48f2de45510079.jpg';
+            let username = data.username || 'View Profile';
+
+            // Fetch user's profile from 'profiles' collection
+            try {
+                const userDoc = await db.collection('profiles').doc(data.userId).get();
+                if (userDoc.exists) {
+                    const userData = userDoc.data();
+                    profileImage = userData.profileImageUrl || profileImage;
+                    username = userData.username || userData.name || username;
+                } else {
+                    console.warn(`⚠️ No profile document found for userId: ${data.userId}`);
+                }
+            } catch (err) {
+                console.error('⚠️ Failed to fetch user profile for reply:', err);
+            }
+
+            const replyElement = `
+                <div class="reply">
+                    <div class="reply-header">
+                        <img src="${profileImage}" alt="Profile" style="width:25px;height:25px;border-radius:50%;object-fit:cover;margin-right:5px;">
+                        <a href="Profile.html?profileId=${data.userId}" class="own-pro">${username}</a><small>(${timeAgo(data.timestamp.toDate())})</small>
                     </div>
-                `;
-                repliesContainer.innerHTML += replyElement;
-            });
-        }).catch(error => {
-            console.error('Error loading replies:', error);
-        });
+                    <p><i class="ri-corner-down-right-fill"></i> ${data.text}</p>
+                </div>
+            `;
+            repliesContainer.innerHTML += replyElement;
+        }
+    } catch (error) {
+        console.error('Error loading replies:', error);
+    }
 }
 
 // Function to delete a comment
