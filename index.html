@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mobbin - Design Inspiration</title>
+  <title>Codiium</title>
   <link
     href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css"
     rel="stylesheet"
@@ -577,7 +577,7 @@
     <h1>“Show your creativity <br>and let clients find your <br>work on Codiium.”</h1>
     <p>A platform built for developers, designers, and digital<br> creators to share their best work</p>
     <div class="cta-buttons">
-      <button class="btn-black" onclick="window.location.href='Posts.html'">Discover Projects</button>
+      <button class="btn-black">Discover Projects</button>
       <button class="btn-white">Start creacting →</button>
     </div>
   </section>
@@ -586,13 +586,13 @@
   <section class="trusted">
     <p>Community Members</p>
     <div class="brands">
-      <img src="https://i.pinimg.com/736x/6f/a3/6a/6fa36aa2c367da06b2a4c8ae1cf9ee02.jpg" alt="Uber">
-      <img src="https://i.pinimg.com/736x/6f/a3/6a/6fa36aa2c367da06b2a4c8ae1cf9ee02.jpg" alt="Headspace">
-      <img src="https://i.pinimg.com/736x/6f/a3/6a/6fa36aa2c367da06b2a4c8ae1cf9ee02.jpg" alt="Meta">
-      <img src="https://i.pinimg.com/736x/6f/a3/6a/6fa36aa2c367da06b2a4c8ae1cf9ee02.jpg" alt="Airbnb">
-      <img src="https://i.pinimg.com/736x/6f/a3/6a/6fa36aa2c367da06b2a4c8ae1cf9ee02.jpg" alt="Revolut">
-      <img src="https://i.pinimg.com/736x/6f/a3/6a/6fa36aa2c367da06b2a4c8ae1cf9ee02.jpg" alt="Metalab">
-      <img src="https://i.pinimg.com/736x/6f/a3/6a/6fa36aa2c367da06b2a4c8ae1cf9ee02.jpg" alt="Pinterest">
+      <img src="https://firebasestorage.googleapis.com/v0/b/codewide-9c807.appspot.com/o/profileImages%2F1727134853467?alt=media&token=a544152e-1f9d-4620-b2fa-6a8cb2f7ec1d" alt="Uber">
+      <img src="https://firebasestorage.googleapis.com/v0/b/codewide-9c807.appspot.com/o/profileImages%2F1762321837480?alt=media&token=1cc39d47-fcd4-429c-8927-88adb780ddeb" alt="Headspace">
+      <img src="https://firebasestorage.googleapis.com/v0/b/codewide-9c807.appspot.com/o/profileImages%2F1726448639705?alt=media&token=23345f55-3361-43f4-98fb-73c884e40edf" alt="Meta">
+      <img src="https://firebasestorage.googleapis.com/v0/b/codewide-9c807.appspot.com/o/profileImages%2F1727284518181?alt=media&token=4c8d6eb1-1b69-4003-95a0-a1d9295a5c3a" alt="Airbnb">
+      <img src="https://firebasestorage.googleapis.com/v0/b/codewide-9c807.appspot.com/o/profileImages%2F1731171227309?alt=media&token=0530b00b-9902-4f71-a7d2-dfa27498cdd4" alt="Revolut">
+      <img src="https://firebasestorage.googleapis.com/v0/b/codewide-9c807.appspot.com/o/profileImages%2F1748469204539?alt=media&token=7c34fad8-7493-45d0-b971-a03cfb7e9f7a" alt="Metalab">
+      <img src="https://firebasestorage.googleapis.com/v0/b/codewide-9c807.appspot.com/o/profileImages%2F1726965274155?alt=media&token=59b264ba-f11a-4810-aa39-364789455219" alt="Pinterest">
     </div>
   </section>
 
@@ -658,7 +658,7 @@
                     <div>
                         <img src="images/Codiium-logo-1-less-padding.png" alt="" width="24" style="filter: brightness(var(--image-color));">
                     </div>
-                    <div class="logo-streakcode" style="font-size: 27px;font-weight: 700;">
+                    <div class="logo-streakcode" style="font-size: 27px;font-weight: 700;color: var(--text-color);">
                         Codiium
                     </div>
                 </div>
@@ -674,10 +674,10 @@
           <a href="Welcome.html">Codiium</a>
         </div>
         <div class="footer-column">
-          <a href="#"><i class="ri-instagram-line"></i> Instagram</a>
-          <a href="#"><i class="ri-facebook-circle-line"></i> Facebook</a>
-          <a href="#"><i class="ri-twitter-x-line"></i> (Twitter)</a>
-          <a href="#"><i class="ri-tiktok-fill"></i> Tiktok</a>
+          <a href="https://www.instagram.com/codiium_dev?igsh=MW00Ynd5czNyd3FoNA%3D%3D&utm_source=qr"><i class="ri-instagram-line"></i> Instagram</a>
+          <a href="https://facebook.com/Codiium"><i class="ri-facebook-circle-line"></i> Facebook</a>
+          <a href="https://x.com/bint_flow?s=21"><i class="ri-twitter-x-line"></i> (Twitter)</a>
+          <a href="https://www.tiktok.com/@codorax?_r=1&_t=ZS-91lh5zEtE2O"><i class="ri-tiktok-fill"></i> Tiktok</a>
         </div>
       </div>
     </div>
@@ -715,6 +715,16 @@
         document.getElementById('createProfileModal').style.display = 'block';
       }
     });
+    document.querySelector('.btn-white').addEventListener('click', function() {
+      const profileId = localStorage.getItem('profileId');
+      if (profileId) {
+        // User has a profile, redirect to their profile
+        window.location.href = `Profile.html?profileId=${profileId}`;
+      } else {
+        // User does not have a profile, show modal
+        document.getElementById('createProfileModal').style.display = 'block';
+      }
+    });
 
     // Close modal when clicking outside or on close button
     document.getElementById('closeCreateProfileModal').addEventListener('click', function() {
@@ -734,4 +744,3 @@
   </script>
 </body>
 </html>
-
